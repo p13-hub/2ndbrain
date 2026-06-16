@@ -1,0 +1,2306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1B2230">
+<title>Segundo Cerebro</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root{
+  --ink: #1B2230;
+  --ink-light: #242C3D;
+  --ink-lighter: #2E3850;
+  --parchment: #F3EFE6;
+  --parchment-dim: #DCD6C6;
+  --brass: #C9A227;
+  --sage: #5C7A6E;
+  --brick: #8B3A3A;
+  --azure: #3F6B8C;
+  --line: rgba(243,239,230,0.12);
+  --line-strong: rgba(243,239,230,0.22);
+  --serif: 'Fraunces', serif;
+  --sans: 'Inter', sans-serif;
+  --mono: 'IBM Plex Mono', monospace;
+}
+
+*{ box-sizing: border-box; }
+html,body{ margin:0; padding:0; }
+body{
+  background: var(--ink);
+  color: var(--parchment);
+  font-family: var(--sans);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+button, input, select, textarea{ font-family: inherit; }
+::selection{ background: var(--brass); color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
+  outline: 2px solid var(--brass);
+  outline-offset: 2px;
+}
+
+#app{
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 28px 20px 90px;
+}
+
+/* ---------- Header ---------- */
+.masthead{
+  display:flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--line-strong);
+  padding-bottom: 14px;
+}
+.masthead h1{
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 26px;
+  letter-spacing: 0.2px;
+  margin: 0;
+}
+.masthead .sub{
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--parchment-dim);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.capture{
+  background: var(--ink-light);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 12px;
+  margin-bottom: 18px;
+}
+.type-toggle{
+  display:flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.type-btn{
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  color: var(--parchment-dim);
+  padding: 5px 12px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-family: var(--mono);
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+.type-btn.active[data-type="nota"]{ background: var(--brass); color: var(--ink); border-color: var(--brass); }
+.type-btn.active[data-type="tarea"]{ background: var(--sage); color: var(--ink); border-color: var(--sage); }
+.type-btn.active[data-type="recordatorio"]{ background: var(--brick); color: var(--parchment); border-color: var(--brick); }
+
+.capture form{
+  display:flex;
+  gap: 8px;
+}
+.capture input[type="text"]{
+  flex: 1;
+  background: var(--ink);
+  border: 1px solid var(--line-strong);
+  color: var(--parchment);
+  padding: 10px 12px;
+  border-radius: 3px;
+  font-size: 15px;
+}
+.capture input[type="text"]::placeholder{ color: var(--parchment-dim); opacity: 0.6; }
+.capture button[type="submit"]{
+  background: var(--parchment);
+  color: var(--ink);
+  border: none;
+  padding: 10px 16px;
+  border-radius: 3px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+}
+.capture button[type="submit"]:hover{ background: var(--brass); }
+
+/* ---------- Tabs ---------- */
+.tabs{
+  display:flex;
+  gap: 2px;
+  overflow-x: auto;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+.tab{
+  background: transparent;
+  border: none;
+  color: var(--parchment-dim);
+  padding: 9px 14px;
+  font-size: 13px;
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+}
+.tab.active{ color: var(--parchment); border-bottom-color: var(--brass); }
+
+.searchwrap{
+  display:flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.searchwrap.hidden{ display:none; }
+.searchwrap input{
+  flex:1;
+  background: var(--ink-light);
+  border: 1px solid var(--line);
+  color: var(--parchment);
+  padding: 8px 10px;
+  border-radius: 3px;
+  font-size: 13px;
+}
+.tagcloud{
+  display:flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.tagchip{
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  color: var(--parchment-dim);
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.tagchip.active{ background: var(--brass); color: var(--ink); border-color: var(--brass); }
+
+/* ---------- Cards ---------- */
+.stats{
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--parchment-dim);
+  margin-bottom: 16px;
+}
+.section-label{
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--parchment-dim);
+  margin: 22px 0 10px;
+  display:flex;
+  align-items:center;
+  gap: 8px;
+}
+.section-label::after{
+  content:'';
+  flex:1;
+  height:1px;
+  background: var(--line);
+}
+.grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 12px;
+}
+.list{
+  display:flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card{
+  background: var(--parchment);
+  color: var(--ink);
+  border-radius: 3px;
+  padding: 16px 14px 12px 20px;
+  position: relative;
+  box-shadow: 0 10px 22px -16px rgba(0,0,0,0.6);
+  transition: box-shadow 0.15s ease;
+}
+.card.just-added{ box-shadow: 0 0 0 2px var(--brass), 0 10px 22px -16px rgba(0,0,0,0.6); }
+.card::before{
+  content:'';
+  position:absolute;
+  left: 6px; top: 10px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--ink);
+  opacity: 0.18;
+  box-shadow: 0 22px 0 0 rgba(27,34,48,0.18);
+}
+.card .tabstrip{
+  position:absolute;
+  left:0; top:0; bottom:0;
+  width: 4px;
+  border-radius: 3px 0 0 3px;
+}
+.card.type-nota .tabstrip{ background: var(--brass); }
+.card.type-tarea .tabstrip{ background: var(--sage); }
+.card.type-recordatorio .tabstrip{ background: var(--brick); }
+
+.card-top{
+  display:flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.card-stamp{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(27,34,48,0.5);
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+  padding-top: 4px;
+}
+.card-title{
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  color: var(--ink);
+  width: 100%;
+  padding: 2px 0;
+}
+.card-title.done{ text-decoration: line-through; opacity: 0.5; }
+.card-body{
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-top: 1px dashed rgba(27,34,48,0.18);
+  color: rgba(27,34,48,0.85);
+  font-size: 13px;
+  font-family: var(--sans);
+  resize: vertical;
+  min-height: 36px;
+  padding-top: 8px;
+  margin-top: 4px;
+}
+.card-row{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.card-tags{
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(27,34,48,0.15);
+  color: rgba(27,34,48,0.6);
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 3px 0;
+  flex: 1;
+  min-width: 90px;
+}
+.card-date, .card-priority{
+  background: transparent;
+  border: 1px solid rgba(27,34,48,0.18);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 3px 6px;
+  border-radius: 3px;
+}
+.card-check{
+  width: 16px; height: 16px;
+  accent-color: var(--sage);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.priority-dot{
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink:0;
+}
+.priority-dot.baja{ background: var(--sage); }
+.priority-dot.media{ background: var(--brass); }
+.priority-dot.alta{ background: var(--brick); }
+.card-del{
+  background: none;
+  border: none;
+  color: rgba(27,34,48,0.35);
+  cursor: pointer;
+  font-size: 13px;
+  margin-left: auto;
+  padding: 2px 4px;
+}
+.card-del:hover{ color: var(--brick); }
+.overdue-flag{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--brick);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.empty{
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--parchment-dim);
+  border: 1px dashed var(--line-strong);
+  border-radius: 4px;
+  padding: 24px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.ai-trigger{
+  display:flex;
+  align-items:center;
+  gap: 8px;
+  background: var(--ink-light);
+  border: 1px solid var(--azure);
+  color: var(--parchment);
+  padding: 11px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 13.5px;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 12px;
+}
+.ai-trigger:hover{ background: var(--ink-lighter); }
+.ai-trigger.loading{ opacity: 0.65; cursor: default; }
+.ai-trigger .icon{ font-size: 16px; }
+
+.ai-error{
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--brick);
+  margin-bottom: 14px;
+}
+
+.ai-result{
+  background: var(--parchment);
+  color: var(--ink);
+  border-radius: 3px;
+  padding: 16px 14px 14px 20px;
+  position: relative;
+  margin-bottom: 18px;
+  box-shadow: 0 10px 22px -16px rgba(0,0,0,0.6);
+}
+.ai-result .tabstrip{
+  position:absolute;
+  left:0; top:0; bottom:0;
+  width: 4px;
+  border-radius: 3px 0 0 3px;
+  background: var(--azure);
+}
+.ai-result-label{
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(27,34,48,0.5);
+  margin-bottom: 8px;
+}
+.ai-result-body{
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+.ai-result-actions{ margin-top: 10px; }
+.ai-result-actions button{
+  background: transparent;
+  border: 1px solid rgba(27,34,48,0.25);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.ai-result-actions button:hover{ border-color: var(--azure); color: var(--azure); }
+
+.muted{ color: var(--parchment-dim); font-family: var(--mono); font-size: 13px; }
+
+.collapse-toggle{
+  background: none;
+  border: none;
+  color: var(--parchment-dim);
+  font-family: var(--mono);
+  font-size: 11px;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  margin-top: 6px;
+}
+
+/* ---------- Finanzas ---------- */
+.fin-capture{
+  background: var(--ink-light);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 14px;
+  margin-bottom: 18px;
+}
+.fin-row{
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.fin-type-toggle{
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.fin-type-btn{
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  color: var(--parchment-dim);
+  padding: 5px 14px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-family: var(--mono);
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+.fin-type-btn.active[data-fintype="ingreso"]{ background: var(--sage); color: var(--ink); border-color: var(--sage); }
+.fin-type-btn.active[data-fintype="gasto"]{ background: var(--brick); color: var(--parchment); border-color: var(--brick); }
+.fin-input{
+  background: var(--ink);
+  border: 1px solid var(--line-strong);
+  color: var(--parchment);
+  padding: 9px 10px;
+  border-radius: 3px;
+  font-size: 14px;
+  font-family: var(--sans);
+}
+.fin-input::placeholder{ color: var(--parchment-dim); opacity: 0.6; }
+.fin-input-desc{ flex: 2; min-width: 140px; }
+.fin-input-amount{ width: 130px; font-family: var(--mono); }
+.fin-input-cat{ width: 140px; font-size: 12px; font-family: var(--mono); }
+.fin-submit{
+  background: var(--parchment);
+  color: var(--ink);
+  border: none;
+  padding: 9px 16px;
+  border-radius: 3px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+}
+.fin-submit:hover{ background: var(--brass); }
+
+.fin-summary{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.fin-kpi{
+  background: var(--ink-light);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 14px 16px;
+}
+.fin-kpi-label{
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--parchment-dim);
+  margin-bottom: 6px;
+}
+.fin-kpi-value{
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+.fin-kpi-value.ingreso{ color: #7BBF9A; }
+.fin-kpi-value.gasto{ color: #C47676; }
+.fin-kpi-value.balance.pos{ color: #7BBF9A; }
+.fin-kpi-value.balance.neg{ color: #C47676; }
+.fin-kpi-value.balance.zero{ color: var(--parchment-dim); }
+
+.fin-bar-wrap{
+  background: var(--ink-light);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+}
+.fin-bar-label{
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--parchment-dim);
+  margin-bottom: 10px;
+}
+.fin-bar-track{
+  height: 8px;
+  background: rgba(243,239,230,0.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.fin-bar-fill{
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+.fin-bar-fill.ingreso{ background: #7BBF9A; }
+.fin-bar-fill.gasto{ background: #C47676; }
+.fin-bar-legend{
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--parchment-dim);
+  margin-top: 6px;
+}
+
+.fin-list{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.fin-item{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ink-light);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 10px 12px;
+}
+.fin-item-dot{
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.fin-item-dot.ingreso{ background: #7BBF9A; }
+.fin-item-dot.gasto{ background: #C47676; }
+.fin-item-desc{
+  flex: 1;
+  font-size: 14px;
+  color: var(--parchment);
+  font-family: var(--sans);
+}
+.fin-item-cat{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--parchment-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 2px 7px;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+}
+.fin-item-amount{
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 500;
+  min-width: 90px;
+  text-align: right;
+}
+.fin-item-amount.ingreso{ color: #7BBF9A; }
+.fin-item-amount.gasto{ color: #C47676; }
+.fin-item-date{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--parchment-dim);
+  white-space: nowrap;
+}
+.fin-item-del{
+  background: none;
+  border: none;
+  color: rgba(243,239,230,0.25);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 2px 4px;
+}
+.fin-item-del:hover{ color: #C47676; }
+
+.fin-cat-breakdown{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.fin-cat-item{
+  background: var(--ink-light);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 10px 12px;
+}
+.fin-cat-name{
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--parchment-dim);
+  margin-bottom: 4px;
+}
+.fin-cat-val{
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 600;
+  color: #C47676;
+}
+
+.fin-filter-row{
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.fin-filter-btn{
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  color: var(--parchment-dim);
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.fin-filter-btn.active{ background: var(--brass); color: var(--ink); border-color: var(--brass); }
+
+.fin-hoy-mini{
+  background: var(--ink-light);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 12px 14px;
+  margin-bottom: 18px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.fin-hoy-mini-label{
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--parchment-dim);
+  margin-bottom: 2px;
+}
+.fin-hoy-mini-val{
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+@media (max-width: 640px){
+  .fin-summary{ grid-template-columns: 1fr 1fr; }
+  .fin-summary .fin-kpi:last-child{ grid-column: span 2; }
+  .fin-input-desc{ min-width: 120px; }
+  .fin-input-amount{ width: 110px; }
+}
+
+/* ---------- Programados ---------- */
+.fin-tabs{
+  display: flex;
+  gap: 2px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.fin-tab{
+  background: transparent;
+  border: none;
+  color: var(--parchment-dim);
+  padding: 8px 14px;
+  font-size: 12px;
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+.fin-tab.active{ color: var(--parchment); border-bottom-color: var(--brass); }
+
+.prog-item{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ink-light);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 10px 12px;
+  flex-wrap: wrap;
+}
+.prog-item-dot{
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.prog-item-dot.ingreso{ background: #7BBF9A; }
+.prog-item-dot.gasto{ background: #C47676; }
+.prog-item-desc{
+  flex: 1;
+  min-width: 100px;
+  font-size: 14px;
+  color: var(--parchment);
+}
+.prog-item-freq{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--parchment-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 2px 8px;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+}
+.prog-item-next{
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--brass);
+}
+.prog-item-amount{
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 500;
+  min-width: 90px;
+  text-align: right;
+}
+.prog-item-amount.ingreso{ color: #7BBF9A; }
+.prog-item-amount.gasto{ color: #C47676; }
+.prog-item-del{
+  background: none;
+  border: none;
+  color: rgba(243,239,230,0.25);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 2px 4px;
+}
+.prog-item-del:hover{ color: #C47676; }
+.prog-badge{
+  display: inline-block;
+  background: var(--brick);
+  color: var(--parchment);
+  font-family: var(--mono);
+  font-size: 9px;
+  padding: 1px 5px;
+  border-radius: 8px;
+  vertical-align: middle;
+  margin-left: 4px;
+  letter-spacing: 0.3px;
+}
+.prog-upcoming{
+  background: var(--ink-light);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--brass);
+  border-radius: 3px;
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.prog-upcoming-label{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--brass);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 2px;
+}
+.prog-upcoming-desc{
+  font-size: 13px;
+  color: var(--parchment);
+  flex: 1;
+}
+.prog-upcoming-amount{
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+}
+.prog-upcoming-amount.ingreso{ color: #7BBF9A; }
+.prog-upcoming-amount.gasto{ color: #C47676; }
+
+/* ---------- Budget ---------- */
+.budget-week-nav{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.budget-week-label{
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--parchment);
+  flex: 1;
+  text-align: center;
+}
+.budget-nav-btn{
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  color: var(--parchment-dim);
+  font-family: var(--mono);
+  font-size: 13px;
+  padding: 5px 12px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.budget-nav-btn:hover{ color: var(--parchment); border-color: var(--parchment-dim); }
+.budget-nav-btn:disabled{ opacity: 0.3; cursor: default; }
+
+.budget-spending-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.budget-cat-row{
+  background: var(--ink-light);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 12px 14px;
+}
+.budget-cat-name{
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--parchment-dim);
+  margin-bottom: 6px;
+}
+.budget-cat-amount{
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 600;
+  color: #C47676;
+  margin-bottom: 4px;
+}
+.budget-cat-count{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--parchment-dim);
+}
+.budget-cat-bar{
+  height: 3px;
+  background: rgba(243,239,230,0.08);
+  border-radius: 2px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+.budget-cat-bar-fill{
+  height: 100%;
+  background: #C47676;
+  border-radius: 2px;
+}
+
+.budget-ai-trigger{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ink-lighter);
+  border: 1px solid var(--azure);
+  color: var(--parchment);
+  padding: 13px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 14px;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 14px;
+  transition: background 0.15s;
+}
+.budget-ai-trigger:hover{ background: var(--ink-light); }
+.budget-ai-trigger.loading{ opacity: 0.65; cursor: default; }
+.budget-ai-trigger .icon{ font-size: 18px; }
+.budget-ai-trigger .sub{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--parchment-dim);
+  display: block;
+  margin-top: 2px;
+}
+
+.budget-result{
+  margin-bottom: 18px;
+}
+.budget-block{
+  background: var(--parchment);
+  color: var(--ink);
+  border-radius: 3px;
+  padding: 18px 16px 14px 22px;
+  position: relative;
+  margin-bottom: 10px;
+  box-shadow: 0 10px 22px -16px rgba(0,0,0,0.5);
+}
+.budget-block .tabstrip{
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  border-radius: 3px 0 0 3px;
+}
+.budget-block.analysis .tabstrip{ background: var(--azure); }
+.budget-block.budget-plan .tabstrip{ background: var(--sage); }
+.budget-block.cuts .tabstrip{ background: var(--brick); }
+.budget-block-label{
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: rgba(27,34,48,0.45);
+  margin-bottom: 10px;
+}
+.budget-block-body{
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink);
+  white-space: pre-wrap;
+}
+.budget-block-body.budget-table{
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.8;
+}
+.budget-regen{
+  background: transparent;
+  border: 1px solid rgba(27,34,48,0.22);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 5px 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+.budget-regen:hover{ border-color: var(--azure); color: var(--azure); }
+.budget-empty-week{
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--parchment-dim);
+  border: 1px dashed var(--line-strong);
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+}
+.budget-week-stats{
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  background: var(--ink-light);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+.budget-week-stat{
+  flex: 1;
+  min-width: 90px;
+}
+.budget-week-stat-label{
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--parchment-dim);
+  margin-bottom: 3px;
+}
+.budget-week-stat-val{
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* ---------- Footer ---------- */
+.footer{
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--ink-light);
+  border-top: 1px solid var(--line);
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  padding: 10px 16px;
+  flex-wrap: wrap;
+}
+.footer button, .footer .import-label{
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  color: var(--parchment-dim);
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 6px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.footer button:hover, .footer .import-label:hover{ color: var(--parchment); border-color: var(--parchment-dim); }
+.footer-note{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--parchment-dim);
+  opacity: 0.6;
+  margin-left: auto;
+}
+
+#toast{
+  position: fixed;
+  bottom: 56px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: var(--brass);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 8px 14px;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 50;
+}
+#toast.show{ opacity: 1; transform: translateX(-50%) translateY(0); }
+
+@media (max-width: 640px){
+  .masthead{ flex-direction: column; gap: 4px; }
+  .footer{ font-size: 10px; }
+  .footer-note{ margin-left: 0; width: 100%; order: 10; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="masthead">
+    <h1>Segundo Cerebro</h1>
+    <span class="sub" id="dateToday"></span>
+  </header>
+
+  <div class="capture">
+    <div class="type-toggle" id="typeToggle">
+      <button type="button" class="type-btn active" data-type="nota">Nota</button>
+      <button type="button" class="type-btn" data-type="tarea">Tarea</button>
+      <button type="button" class="type-btn" data-type="recordatorio">Recordatorio</button>
+    </div>
+    <form id="captureForm">
+      <input type="text" id="captureInput" placeholder="¿Qué tienes en mente?" autocomplete="off">
+      <button type="submit">Agregar</button>
+    </form>
+  </div>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-view="hoy">Hoy</button>
+    <button class="tab" data-view="notas">Notas</button>
+    <button class="tab" data-view="tareas">Tareas</button>
+    <button class="tab" data-view="recordatorios">Recordatorios</button>
+    <button class="tab" data-view="finanzas">Finanzas</button>
+  </nav>
+
+  <div class="searchwrap hidden" id="searchwrap">
+    <input type="text" id="searchInput" placeholder="Buscar por título, contenido o etiqueta…">
+  </div>
+  <div id="tagcloud"></div>
+
+  <main id="content">
+    <p class="muted">Cargando tu archivo…</p>
+  </main>
+</div>
+
+<footer class="footer">
+  <button type="button" id="notifBtn">🔔 Activar avisos</button>
+  <button type="button" id="exportBtn">Exportar</button>
+  <label class="import-label">Importar<input type="file" id="importInput" accept="application/json" hidden></label>
+  <span class="footer-note">Tus datos se guardan en tu cuenta de Claude.</span>
+</footer>
+
+<div id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  var entries = [];
+  var view = 'hoy';
+  var captureType = 'nota';
+  var search = '';
+  var activeTag = null;
+  var lastAddedId = null;
+  var showCompleted = false;
+  var aiAnalysis = null;
+  var aiLoading = false;
+  var aiError = null;
+  var aiTimestamp = null;
+
+  // --- Finanzas ---
+  var movimientos = [];
+  var finType = 'gasto';
+  var finFilter = 'todo'; // 'todo' | 'ingreso' | 'gasto'
+  var finSubview = 'movimientos'; // 'movimientos' | 'programados' | 'budget'
+  var programados = []; // recurring fin templates
+  var progType = 'gasto';
+  var entradasProg = []; // recurring entries (tareas/notas/recordatorios)
+  var epType = 'tarea'; // type for new entrada programada
+  // Budget AI state
+  var budgetResult = null;      // { analysis, budget, cuts, timestamp }
+  var budgetLoading = false;
+  var budgetError = null;
+  var budgetWeekOffset = 0;    // 0 = current week, -1 = last week, etc.
+
+  var content = document.getElementById('content');
+  var searchwrap = document.getElementById('searchwrap');
+  var tagcloudEl = document.getElementById('tagcloud');
+  var toastEl = document.getElementById('toast');
+
+  // ---------- utils ----------
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+
+  function escapeHtml(str){
+    if(str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  var MONTHS = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
+
+  function fmtDate(iso){
+    if(!iso) return '';
+    var d = new Date(iso);
+    if(isNaN(d.getTime())) return '';
+    return pad2(d.getDate()) + '.' + MONTHS[d.getMonth()] + '.' + String(d.getFullYear()).slice(2);
+  }
+
+  function fmtDateTime(iso){
+    if(!iso) return '';
+    var d = new Date(iso);
+    if(isNaN(d.getTime())) return '';
+    return pad2(d.getDate()) + '.' + MONTHS[d.getMonth()] + ' ' + pad2(d.getHours()) + ':' + pad2(d.getMinutes());
+  }
+
+  function pad2(n){ return String(n).padStart(2, '0'); }
+
+  function todayStr(){
+    var d = new Date();
+    return d.getFullYear() + '-' + pad2(d.getMonth()+1) + '-' + pad2(d.getDate());
+  }
+
+  // datetime-local inputs store LOCAL wall-clock time with no timezone,
+  // so comparisons must use local time strings too (not toISOString, which is UTC).
+  function nowLocalStr(){
+    var d = new Date();
+    return d.getFullYear() + '-' + pad2(d.getMonth()+1) + '-' + pad2(d.getDate()) + 'T' + pad2(d.getHours()) + ':' + pad2(d.getMinutes());
+  }
+
+  function dateOnly(dueAt){
+    // dueAt stored as yyyy-mm-dd from <input type="date">
+    return dueAt || '';
+  }
+
+  function isOverdueTask(e){
+    if(e.type !== 'tarea' || e.done || !e.dueAt) return false;
+    return e.dueAt < todayStr();
+  }
+
+  function isDueToday(e){
+    if(e.type !== 'tarea' || !e.dueAt) return false;
+    return e.dueAt === todayStr();
+  }
+
+  function isReminderToday(e){
+    if(e.type !== 'recordatorio' || !e.remindAt) return false;
+    return e.remindAt.slice(0,10) === todayStr();
+  }
+
+  function showToast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    setTimeout(function(){ toastEl.classList.remove('show'); }, 2600);
+  }
+
+  // ---------- storage ----------
+  async function loadEntries(){
+    try{
+      var res = await window.storage.get('entries');
+      entries = (res && res.value) ? JSON.parse(res.value) : [];
+    }catch(err){
+      entries = [];
+    }
+    try{
+      var res2 = await window.storage.get('movimientos');
+      movimientos = (res2 && res2.value) ? JSON.parse(res2.value) : [];
+    }catch(err){
+      movimientos = [];
+    }
+    try{
+      var res3 = await window.storage.get('programados');
+      programados = (res3 && res3.value) ? JSON.parse(res3.value) : [];
+    }catch(err){
+      programados = [];
+    }
+    try{
+      var res4 = await window.storage.get('entradasProg');
+      entradasProg = (res4 && res4.value) ? JSON.parse(res4.value) : [];
+    }catch(err){
+      entradasProg = [];
+    }
+    applyProgramados();
+    applyEntradasProg();
+    render();
+  }
+
+  var saveTimer = null;
+  function persist(){
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(async function(){
+      try{
+        await window.storage.set('entries', JSON.stringify(entries));
+      }catch(err){
+        console.error('No se pudo guardar', err);
+        showToast('No se pudo guardar. Intenta de nuevo.');
+      }
+    }, 250);
+  }
+
+  var saveFinTimer = null;
+  function persistFin(){
+    clearTimeout(saveFinTimer);
+    saveFinTimer = setTimeout(async function(){
+      try{
+        await window.storage.set('movimientos', JSON.stringify(movimientos));
+      }catch(err){
+        console.error('No se pudo guardar finanzas', err);
+        showToast('No se pudo guardar. Intenta de nuevo.');
+      }
+    }, 250);
+  }
+
+  var saveProgTimer = null;
+  function persistProg(){
+    clearTimeout(saveProgTimer);
+    saveProgTimer = setTimeout(async function(){
+      try{
+        await window.storage.set('programados', JSON.stringify(programados));
+      }catch(err){
+        console.error('No se pudo guardar programados', err);
+      }
+    }, 250);
+  }
+
+  var saveEPTimer = null;
+  function persistEP(){
+    clearTimeout(saveEPTimer);
+    saveEPTimer = setTimeout(async function(){
+      try{
+        await window.storage.set('entradasProg', JSON.stringify(entradasProg));
+      }catch(err){
+        console.error('No se pudo guardar entradas programadas', err);
+      }
+    }, 250);
+  }
+
+  // ---------- data ops ----------
+  function addEntry(type, title){
+    var now = new Date().toISOString();
+    var base = { id: uid(), type: type, title: title || '(sin título)', body: '', tags: [], createdAt: now };
+    if(type === 'tarea'){ base.done = false; base.dueAt = null; base.priority = 'media'; }
+    if(type === 'recordatorio'){ base.remindAt = null; base.notified = false; }
+    entries.unshift(base);
+    lastAddedId = base.id;
+    persist();
+    view = type === 'nota' ? 'notas' : (type === 'tarea' ? 'tareas' : 'recordatorios');
+    syncTabsUI();
+    render();
+    setTimeout(function(){ lastAddedId = null; }, 1800);
+  }
+
+  function findEntry(id){
+    for(var i=0;i<entries.length;i++){ if(entries[i].id === id) return entries[i]; }
+    return null;
+  }
+
+  function deleteEntry(id){
+    entries = entries.filter(function(e){ return e.id !== id; });
+    persist();
+    render();
+  }
+
+  // ---------- entradas programadas ----------
+  function applyEntradasProg(){
+    var today = todayStr();
+    var changed = false;
+    entradasProg.forEach(function(ep){
+      var safety = 0;
+      while(ep.nextDue <= today && safety < 60){
+        safety++;
+        var now = new Date(ep.nextDue + 'T08:00:00').toISOString();
+        var base = { id: uid(), type: ep.type, title: ep.title, body: ep.body || '', tags: ep.tags || [], createdAt: now, epId: ep.id };
+        if(ep.type === 'tarea'){ base.done = false; base.dueAt = ep.nextDue; base.priority = ep.priority || 'media'; }
+        if(ep.type === 'recordatorio'){ base.remindAt = ep.nextDue + 'T08:00'; base.notified = false; }
+        entries.push(base);
+        ep.lastApplied = ep.nextDue;
+        ep.nextDue = nextDueDate(ep.nextDue, ep.freq);
+        changed = true;
+      }
+    });
+    if(changed){
+      entries.sort(function(a,b){ return b.createdAt > a.createdAt ? 1 : -1; });
+      persist();
+      persistEP();
+    }
+  }
+
+  function addEntradaProg(type, title, body, freq, startDate, priority){
+    var ep = {
+      id: uid(),
+      type: type,
+      title: title,
+      body: body || '',
+      tags: [],
+      freq: freq,
+      priority: priority || 'media',
+      nextDue: startDate || todayStr(),
+      lastApplied: null,
+      createdAt: new Date().toISOString()
+    };
+    entradasProg.push(ep);
+    persistEP();
+    applyEntradasProg();
+    render();
+  }
+
+  function deleteEntradaProg(id){
+    entradasProg = entradasProg.filter(function(ep){ return ep.id !== id; });
+    persistEP();
+    render();
+  }
+
+  function renderEntradasProgPanel(){
+    var FREQ_TYPE_LABELS = { diario:'Diaria', semanal:'Semanal', quincenal:'Quincenal', mensual:'Mensual', bimestral:'Bimestral', trimestral:'Trimestral', anual:'Anual' };
+    var html = '';
+
+    // Form
+    html += '<div class="fin-capture" style="margin-bottom:18px">';
+    html += '<div style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.6px;color:var(--parchment-dim);margin-bottom:10px">Nueva entrada programada</div>';
+    html += '<div class="fin-type-toggle" id="epTypeToggle">';
+    ['tarea','nota','recordatorio'].forEach(function(t){
+      var labels = {tarea:'Tarea', nota:'Nota', recordatorio:'Recordatorio'};
+      var colors = {tarea:'sage', nota:'brass', recordatorio:'brick'};
+      var isActive = epType === t;
+      html += '<button type="button" class="fin-type-btn' + (isActive ? ' active" style="background:var(--' + colors[t] + ');color:var(--ink);border-color:var(--' + colors[t] + ')"' : '"') + ' data-eptype="' + t + '">' + labels[t] + '</button>';
+    });
+    html += '</div>';
+    html += '<div class="fin-row">';
+    html += '<input class="fin-input fin-input-desc" id="epTitle" type="text" placeholder="Título…" autocomplete="off">';
+    html += '<input class="fin-input" id="epBody" type="text" placeholder="Descripción (opcional)…" style="flex:1;min-width:120px">';
+    html += '</div>';
+    html += '<div class="fin-row" style="margin-top:8px">';
+    html += '<select class="fin-input" id="epFreq" style="width:140px;font-size:12px;font-family:var(--mono)">';
+    Object.keys(FREQ_TYPE_LABELS).forEach(function(f){ html += '<option value="' + f + '">' + FREQ_TYPE_LABELS[f] + '</option>'; });
+    html += '</select>';
+    if(epType === 'tarea'){
+      html += '<select class="fin-input" id="epPriority" style="width:100px;font-size:12px;font-family:var(--mono)">';
+      html += '<option value="baja">Baja</option><option value="media" selected>Media</option><option value="alta">Alta</option>';
+      html += '</select>';
+    }
+    html += '<input class="fin-input" id="epStart" type="date" value="' + todayStr() + '" style="width:148px;font-family:var(--mono);font-size:12px">';
+    html += '<button type="button" class="fin-submit" id="epSubmit">Programar</button>';
+    html += '</div></div>';
+
+    // List
+    html += '<div class="section-label">Entradas programadas activas</div>';
+    if(!entradasProg.length){
+      html += emptyState('Aún no tienes entradas programadas. Agrega una arriba para que se creen automáticamente.');
+    } else {
+      html += '<div class="fin-list">';
+      var typeColors = { tarea: '#5C7A6E', nota: '#C9A227', recordatorio: '#8B3A3A' };
+      entradasProg.forEach(function(ep){
+        html += '<div class="prog-item">';
+        html += '<div class="prog-item-dot" style="background:' + (typeColors[ep.type]||'#888') + '"></div>';
+        html += '<div class="prog-item-desc">' + escapeHtml(ep.title) + '</div>';
+        html += '<span class="fin-item-cat">' + ep.type + '</span>';
+        html += '<span class="prog-item-freq">' + (FREQ_TYPE_LABELS[ep.freq]||ep.freq) + '</span>';
+        html += '<div class="prog-item-next">Próx: ' + ep.nextDue + '</div>';
+        html += '<button class="prog-item-del" data-epdel="' + ep.id + '" title="Eliminar">✕</button>';
+        html += '</div>';
+      });
+      html += '</div>';
+    }
+    return html;
+  }
+
+  var entrySubview = 'lista'; // 'lista' | 'programadas'
+
+  function renderEntrySubTabs(){
+    return '<div class="fin-tabs" style="margin-bottom:16px">' +
+      '<button type="button" class="fin-tab' + (entrySubview==='lista'?' active':'') + '" data-entrysubview="lista">Lista</button>' +
+      '<button type="button" class="fin-tab' + (entrySubview==='programadas'?' active':'') + '" data-entrysubview="programadas">Programadas' + (entradasProg.length ? '<span class="prog-badge">' + entradasProg.length + '</span>' : '') + '</button>' +
+      '</div>';
+  }
+  function uniqueTags(){
+    var set = {};
+    entries.forEach(function(e){ (e.tags||[]).forEach(function(t){ set[t] = true; }); });
+    return Object.keys(set).sort();
+  }
+
+  function matchesSearch(e){
+    if(!search) return true;
+    var q = search.toLowerCase();
+    var hay = (e.title||'') + ' ' + (e.body||'') + ' ' + (e.tags||[]).join(' ');
+    return hay.toLowerCase().indexOf(q) !== -1;
+  }
+
+  function matchesTag(e){
+    if(!activeTag) return true;
+    return (e.tags||[]).indexOf(activeTag) !== -1;
+  }
+
+  function cardOpen(e){
+    var stamp = e.type === 'recordatorio' ? '' : fmtDate(e.createdAt);
+    var justAdded = e.id === lastAddedId ? ' just-added' : '';
+    return '<div class="card type-' + e.type + justAdded + '" data-card="' + e.id + '">' +
+      '<div class="tabstrip"></div>' +
+      '<div class="card-top">' +
+        '<input class="card-title' + (e.done ? ' done' : '') + '" data-id="' + e.id + '" data-field="title" value="' + escapeHtml(e.title) + '">' +
+        '<span class="card-stamp">' + stamp + '</span>' +
+      '</div>';
+  }
+
+  function cardClose(e){
+    return '<div class="card-row">' +
+        '<input class="card-tags" data-id="' + e.id + '" data-field="tags" value="' + escapeHtml((e.tags||[]).join(', ')) + '" placeholder="etiquetas…">' +
+        '<button class="card-del" data-del="' + e.id + '" title="Eliminar">✕</button>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function renderNotaCard(e){
+    return cardOpen(e) +
+      '<textarea class="card-body" data-id="' + e.id + '" data-field="body" placeholder="Escribe aquí…">' + escapeHtml(e.body) + '</textarea>' +
+      cardClose(e);
+  }
+
+  function renderTareaCard(e){
+    var overdue = isOverdueTask(e);
+    var flag = overdue ? '<span class="overdue-flag">Vencida</span>' : '';
+    return cardOpen(e).replace('<div class="card-top">',
+        '<div class="card-top"><input type="checkbox" class="card-check" data-id="' + e.id + '" data-field="done"' + (e.done?' checked':'') + '>') +
+      '<textarea class="card-body" data-id="' + e.id + '" data-field="body" placeholder="Notas…">' + escapeHtml(e.body) + '</textarea>' +
+      '<div class="card-row">' +
+        '<input type="date" class="card-date" data-id="' + e.id + '" data-field="dueAt" value="' + (e.dueAt || '') + '">' +
+        '<select class="card-priority" data-id="' + e.id + '" data-field="priority">' +
+          '<option value="baja"' + (e.priority==='baja'?' selected':'') + '>baja</option>' +
+          '<option value="media"' + (e.priority==='media'?' selected':'') + '>media</option>' +
+          '<option value="alta"' + (e.priority==='alta'?' selected':'') + '>alta</option>' +
+        '</select>' +
+        flag +
+      '</div>' +
+      cardClose(e);
+  }
+
+  function renderRecordatorioCard(e){
+    return cardOpen(e) +
+      '<div class="card-row">' +
+        '<input type="datetime-local" class="card-date" data-id="' + e.id + '" data-field="remindAt" value="' + (e.remindAt || '') + '" style="flex:1">' +
+      '</div>' +
+      cardClose(e);
+  }
+
+  function renderCard(e){
+    if(e.type === 'nota') return renderNotaCard(e);
+    if(e.type === 'tarea') return renderTareaCard(e);
+    return renderRecordatorioCard(e);
+  }
+
+  function emptyState(msg){
+    return '<div class="empty">' + msg + '</div>';
+  }
+
+  // ---------- AI analysis ----------
+  function buildDigest(){
+    var pend = entries.filter(function(e){ return e.type === 'tarea' && !e.done; });
+    var overdue = pend.filter(isOverdueTask);
+    var today = pend.filter(function(e){ return isDueToday(e) && !isOverdueTask(e); });
+    var upcoming = pend.filter(function(e){ return e.dueAt && e.dueAt > todayStr(); })
+      .sort(function(a,b){ return a.dueAt < b.dueAt ? -1 : 1; }).slice(0,8);
+    var sinFecha = pend.filter(function(e){ return !e.dueAt; });
+    var remHoy = entries.filter(isReminderToday);
+    var remProx = entries.filter(function(e){ return e.type === 'recordatorio' && e.remindAt && e.remindAt.slice(0,10) > todayStr(); })
+      .sort(function(a,b){ return a.remindAt < b.remindAt ? -1 : 1; }).slice(0,5);
+
+    function fmtTask(e){ return '- ' + e.title + (e.dueAt ? ' (vence ' + e.dueAt + ')' : '') + ' [prioridad ' + e.priority + ']'; }
+    function fmtRem(e){ return '- ' + e.title + (e.remindAt ? ' (' + e.remindAt.replace('T',' ') + ')' : ''); }
+
+    var lines = [];
+    lines.push('Fecha de hoy: ' + todayStr());
+    lines.push('');
+    lines.push('== TAREAS ==');
+    lines.push('Vencidas (' + overdue.length + '): ' + (overdue.length ? '\n' + overdue.map(fmtTask).join('\n') : 'ninguna'));
+    lines.push('Para hoy (' + today.length + '): ' + (today.length ? '\n' + today.map(fmtTask).join('\n') : 'ninguna'));
+    lines.push('Próximas (' + upcoming.length + '): ' + (upcoming.length ? '\n' + upcoming.map(fmtTask).join('\n') : 'ninguna'));
+    lines.push('Sin fecha (' + sinFecha.length + '): ' + (sinFecha.length ? sinFecha.map(function(e){ return e.title; }).join(', ') : 'ninguna'));
+    lines.push('');
+    lines.push('== RECORDATORIOS ==');
+    lines.push('Hoy: ' + (remHoy.length ? remHoy.map(fmtRem).join('\n') : 'ninguno'));
+    lines.push('Próximos: ' + (remProx.length ? remProx.map(fmtRem).join('\n') : 'ninguno'));
+    lines.push('');
+
+    // Finance digest
+    var t = finTotals();
+    var cats = finCatBreakdown();
+    var catStr = Object.keys(cats).sort(function(a,b){ return cats[b]-cats[a]; }).slice(0,5)
+      .map(function(k){ return k + ': $' + cats[k].toLocaleString('es-CO', {maximumFractionDigits:0}); }).join(', ');
+    var progUpcoming = upcomingProgramados();
+    lines.push('== FINANZAS ==');
+    lines.push('Ingresos totales: $' + t.ingresos.toLocaleString('es-CO', {maximumFractionDigits:0}));
+    lines.push('Gastos totales: $' + t.gastos.toLocaleString('es-CO', {maximumFractionDigits:0}));
+    lines.push('Balance: $' + t.balance.toLocaleString('es-CO', {maximumFractionDigits:0}) + (t.balance >= 0 ? ' (positivo)' : ' (negativo)'));
+    lines.push('Gastos por categoría: ' + (catStr || 'sin datos'));
+    lines.push('Movimientos programados próximos 7 días: ' + (progUpcoming.length ? progUpcoming.map(function(p){ return p.desc + ' ' + (p.type==='ingreso'?'+':'-') + '$' + p.amount.toLocaleString('es-CO',{maximumFractionDigits:0}); }).join(', ') : 'ninguno'));
+    lines.push('Total movimientos registrados: ' + movimientos.length);
+
+    return lines.join('\n');
+  }
+
+  async function runAnalysis(){
+    if(aiLoading) return;
+    aiLoading = true;
+    aiError = null;
+    render();
+    try{
+      var digest = buildDigest();
+      var resp = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-6',
+          max_tokens: 1000,
+          system:
+            'Eres un coach de productividad y finanzas personales con mentalidad Kaizen: crees en la mejora continua, en que los pequeños cambios sostenidos vencen a los grandes esfuerzos aislados, y en que la disciplina se construye con sistemas, no con fuerza de voluntad. ' +
+            'Tu voz es directa, sin rodeos, honesta pero respetuosa. No das palmas innecesarias. Si algo está mal, lo dices con claridad y propones el siguiente paso concreto. ' +
+            'Cuando hay problemas de productividad, identifies el patrón de fondo (no solo el síntoma). ' +
+            'Cuando hay problemas financieros, lees los números sin juicio pero con precisión: balance negativo, categorías que se disparan, gastos sin control. ' +
+            'Tu objetivo siempre es que la persona salga del análisis con UNA acción clara para mejorar 1% hoy. ' +
+            'Responde en español. Sin markdown. Sin encabezados. Prosa directa, máximo 220 palabras.',
+          messages: [
+            { role: 'user', content:
+              'Analiza mi situación actual de productividad y finanzas. Identifica lo más urgente, lo que me está costando más (en tiempo o dinero), y dime cuál es el paso Kaizen de hoy — la mejora más pequeña y concreta que puedo hacer ahora mismo.\n\n' + digest
+            }
+          ]
+        })
+      });
+      if(!resp.ok) throw new Error('HTTP ' + resp.status);
+      var data = await resp.json();
+      var text = (data.content || []).map(function(b){ return b.type === 'text' ? b.text : ''; }).filter(Boolean).join('\n');
+      aiAnalysis = text || 'No se recibió respuesta.';
+      aiTimestamp = new Date();
+    }catch(err){
+      aiError = 'No se pudo generar el análisis. Intenta de nuevo en un momento.';
+    }finally{
+      aiLoading = false;
+      render();
+    }
+  }
+
+  function renderAIBlock(){
+    var html = '';
+    if(aiLoading){
+      html += '<button type="button" class="ai-trigger loading" disabled><span class="icon">⚡</span> Analizando con mentalidad Kaizen…</button>';
+    } else {
+      html += '<button type="button" class="ai-trigger" data-action="analyze"><span class="icon">⚡</span> Análisis Kaizen — productividad + finanzas</button>';
+    }
+    if(aiError){
+      html += '<div class="ai-error">' + escapeHtml(aiError) + '</div>';
+    }
+    if(aiAnalysis && !aiLoading){
+      html += '<div class="ai-result">' +
+        '<div class="tabstrip"></div>' +
+        '<div class="ai-result-label">Kaizen · ' + fmtDateTime(aiTimestamp.toISOString()) + '</div>' +
+        '<div class="ai-result-body">' + escapeHtml(aiAnalysis) + '</div>' +
+        '<div class="ai-result-actions"><button type="button" data-action="analyze">Regenerar</button></div>' +
+      '</div>';
+    }
+    return html;
+  }
+
+  // ---------- views ----------
+  function renderHoy(){
+    var tareasPend = entries.filter(function(e){ return e.type==='tarea' && !e.done; });
+    var overdue = tareasPend.filter(isOverdueTask);
+    var dueToday = tareasPend.filter(function(e){ return isDueToday(e) && !isOverdueTask(e); });
+    var remToday = entries.filter(isReminderToday);
+    var recentNotas = entries.filter(function(e){ return e.type==='nota'; }).slice(0,5);
+
+    var nNotas = entries.filter(function(e){ return e.type==='nota'; }).length;
+    var nRem = entries.filter(function(e){ return e.type==='recordatorio' && e.remindAt && e.remindAt.slice(0,10) >= todayStr(); }).length;
+
+    var html = '<div class="stats">' + tareasPend.length + ' tareas pendientes · ' + nRem + ' recordatorios próximos · ' + nNotas + ' notas</div>';
+
+    html += renderAIBlock();
+    html += renderFinHoyMini();
+
+    html += '<div class="section-label">Vencidas</div>';
+    html += overdue.length ? '<div class="list">' + overdue.map(renderCard).join('') + '</div>' : emptyState('Sin tareas vencidas. Buen trabajo.');
+
+    html += '<div class="section-label">Para hoy</div>';
+    var hoyItems = dueToday.concat(remToday);
+    html += hoyItems.length ? '<div class="list">' + hoyItems.map(renderCard).join('') + '</div>' : emptyState('Nada urgente para hoy.');
+
+    html += '<div class="section-label">Notas recientes</div>';
+    html += recentNotas.length ? '<div class="grid">' + recentNotas.map(renderCard).join('') + '</div>' : emptyState('Aún no hay notas. Escribe algo arriba para empezar tu archivo.');
+
+    return html;
+  }
+
+  function renderNotas(){
+    var tabs = renderEntrySubTabs();
+    if(entrySubview === 'programadas') return tabs + renderEntradasProgPanel();
+    var notas = entries.filter(function(e){ return e.type==='nota'; }).filter(matchesSearch).filter(matchesTag);
+    if(!entries.some(function(e){ return e.type==='nota'; })){
+      return tabs + emptyState('Tu archivo de notas está vacío. Escribe algo arriba y elige "Nota".');
+    }
+    if(!notas.length) return tabs + emptyState('Nada coincide con tu búsqueda o etiqueta.');
+    return tabs + '<div class="grid">' + notas.map(renderCard).join('') + '</div>';
+  }
+
+  function renderTareas(){
+    var tabs = renderEntrySubTabs();
+    if(entrySubview === 'programadas') return tabs + renderEntradasProgPanel();
+    var all = entries.filter(function(e){ return e.type==='tarea'; }).filter(matchesSearch);
+    if(!all.length) return tabs + emptyState('No tienes tareas. Agrega una arriba y elige "Tarea".');
+
+    var pendientes = all.filter(function(e){ return !e.done; });
+    var completadas = all.filter(function(e){ return e.done; });
+
+    pendientes.sort(function(a,b){
+      var av = a.dueAt || '9999';
+      var bv = b.dueAt || '9999';
+      return av < bv ? -1 : av > bv ? 1 : 0;
+    });
+
+    var html = '';
+    html += tabs;
+    html += pendientes.length ? '<div class="list">' + pendientes.map(renderCard).join('') + '</div>' : emptyState('No hay tareas pendientes.');
+
+    if(completadas.length){
+      html += '<button class="collapse-toggle" id="toggleCompleted">' + (showCompleted ? 'Ocultar' : 'Mostrar') + ' completadas (' + completadas.length + ')</button>';
+      if(showCompleted){
+        html += '<div class="list" style="margin-top:10px">' + completadas.map(renderCard).join('') + '</div>';
+      }
+    }
+    return html;
+  }
+
+  function renderRecordatorios(){
+    var tabs = renderEntrySubTabs();
+    if(entrySubview === 'programadas') return tabs + renderEntradasProgPanel();
+    var all = entries.filter(function(e){ return e.type==='recordatorio'; }).filter(matchesSearch);
+    if(!all.length) return tabs + emptyState('No tienes recordatorios. Agrega uno arriba y elige "Recordatorio".');
+
+    var now = nowLocalStr();
+    var proximos = all.filter(function(e){ return !e.remindAt || e.remindAt >= now; });
+    var pasados = all.filter(function(e){ return e.remindAt && e.remindAt < now; });
+
+    proximos.sort(function(a,b){
+      var av = a.remindAt || '9999';
+      var bv = b.remindAt || '9999';
+      return av < bv ? -1 : av > bv ? 1 : 0;
+    });
+    pasados.sort(function(a,b){ return (b.remindAt||'') < (a.remindAt||'') ? -1 : 1; });
+
+    var html = tabs + '<div class="section-label">Próximos</div>';
+    html += proximos.length ? '<div class="list">' + proximos.map(renderCard).join('') + '</div>' : emptyState('No hay recordatorios próximos.');
+    if(pasados.length){
+      html += '<div class="section-label">Pasados</div>';
+      html += '<div class="list">' + pasados.map(renderCard).join('') + '</div>';
+    }
+    return html;
+  }
+
+  // ---------- finanzas ----------
+  var FIN_CATS = ['Nómina','Materiales','Equipos','Transporte','Servicios','Clientes','Subcontratos','Oficina','Otro'];
+  var FREQ_LABELS = { diario:'Diario', semanal:'Semanal', quincenal:'Quincenal', mensual:'Mensual', bimestral:'Bimestral', trimestral:'Trimestral', anual:'Anual' };
+
+  function fmtCOP(n){
+    return '$' + Math.abs(n).toLocaleString('es-CO', { maximumFractionDigits: 0 });
+  }
+
+  // Returns next due date string (yyyy-mm-dd) after reference date
+  function nextDueDate(lastStr, freq){
+    var d = lastStr ? new Date(lastStr + 'T12:00:00') : new Date();
+    switch(freq){
+      case 'diario':     d.setDate(d.getDate() + 1); break;
+      case 'semanal':    d.setDate(d.getDate() + 7); break;
+      case 'quincenal':  d.setDate(d.getDate() + 15); break;
+      case 'mensual':    d.setMonth(d.getMonth() + 1); break;
+      case 'bimestral':  d.setMonth(d.getMonth() + 2); break;
+      case 'trimestral': d.setMonth(d.getMonth() + 3); break;
+      case 'anual':      d.setFullYear(d.getFullYear() + 1); break;
+    }
+    return d.getFullYear() + '-' + pad2(d.getMonth()+1) + '-' + pad2(d.getDate());
+  }
+
+  // Auto-register due programados as real movimientos
+  function applyProgramados(){
+    var today = todayStr();
+    var changed = false;
+    programados.forEach(function(p){
+      // keep applying while next due <= today
+      var safety = 0;
+      while(p.nextDue <= today && safety < 60){
+        safety++;
+        var m = {
+          id: uid(),
+          type: p.type,
+          desc: p.desc + ' (automático)',
+          amount: p.amount,
+          cat: p.cat,
+          progId: p.id,
+          createdAt: new Date(p.nextDue + 'T08:00:00').toISOString()
+        };
+        movimientos.push(m);
+        p.lastApplied = p.nextDue;
+        p.nextDue = nextDueDate(p.nextDue, p.freq);
+        changed = true;
+      }
+    });
+    if(changed){
+      // sort movimientos newest first
+      movimientos.sort(function(a,b){ return b.createdAt > a.createdAt ? 1 : -1; });
+      persistFin();
+      persistProg();
+    }
+  }
+
+  // Returns programados due within the next 7 days
+  function upcomingProgramados(){
+    var today = todayStr();
+    var in7 = new Date(); in7.setDate(in7.getDate() + 7);
+    var in7str = in7.getFullYear() + '-' + pad2(in7.getMonth()+1) + '-' + pad2(in7.getDate());
+    return programados.filter(function(p){ return p.nextDue >= today && p.nextDue <= in7str; })
+      .sort(function(a,b){ return a.nextDue < b.nextDue ? -1 : 1; });
+  }
+
+  function addProgramado(type, desc, amount, cat, freq, startDate){
+    var p = {
+      id: uid(),
+      type: type,
+      desc: desc,
+      amount: Math.abs(amount),
+      cat: cat || 'Otro',
+      freq: freq,
+      nextDue: startDate || todayStr(),
+      lastApplied: null,
+      createdAt: new Date().toISOString()
+    };
+    programados.push(p);
+    persistProg();
+    applyProgramados();
+    render();
+  }
+
+  function deleteProgramado(id){
+    programados = programados.filter(function(p){ return p.id !== id; });
+    persistProg();
+    render();
+  }
+
+  function addMovimiento(type, desc, amount, cat){
+    var m = {
+      id: uid(),
+      type: type,
+      desc: desc,
+      amount: Math.abs(amount),
+      cat: cat || 'Otro',
+      createdAt: new Date().toISOString()
+    };
+    movimientos.unshift(m);
+    persistFin();
+    render();
+  }
+
+  function deleteMovimiento(id){
+    movimientos = movimientos.filter(function(m){ return m.id !== id; });
+    persistFin();
+    render();
+  }
+
+  function finTotals(){
+    var ingresos = 0, gastos = 0;
+    movimientos.forEach(function(m){
+      if(m.type === 'ingreso') ingresos += m.amount;
+      else gastos += m.amount;
+    });
+    return { ingresos: ingresos, gastos: gastos, balance: ingresos - gastos };
+  }
+
+  function finCatBreakdown(){
+    var cats = {};
+    movimientos.filter(function(m){ return m.type === 'gasto'; }).forEach(function(m){
+      cats[m.cat] = (cats[m.cat] || 0) + m.amount;
+    });
+    return cats;
+  }
+
+  function renderProgramadosSubview(){
+    var html = '';
+    var freqOpts = Object.keys(FREQ_LABELS);
+
+    // Upcoming alert
+    var upcoming = upcomingProgramados();
+    if(upcoming.length){
+      html += '<div class="section-label">Próximos 7 días</div>';
+      upcoming.forEach(function(p){
+        html += '<div class="prog-upcoming">';
+        html += '<div class="fin-item-dot ' + p.type + '" style="flex-shrink:0"></div>';
+        html += '<div><div class="prog-upcoming-label">' + p.nextDue + ' · ' + FREQ_LABELS[p.freq] + '</div>';
+        html += '<div class="prog-upcoming-desc">' + escapeHtml(p.desc) + '</div></div>';
+        html += '<div class="prog-upcoming-amount ' + p.type + '">' + (p.type==='ingreso'?'+':'-') + fmtCOP(p.amount) + '</div>';
+        html += '</div>';
+      });
+    }
+
+    // Add form
+    html += '<div class="fin-capture" style="margin-bottom:18px">';
+    html += '<div style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.6px;color:var(--parchment-dim);margin-bottom:10px">Nuevo programado</div>';
+    html += '<div class="fin-type-toggle" id="progTypeToggle">';
+    html += '<button type="button" class="fin-type-btn' + (progType==='ingreso'?' active':'') + '" data-progtype="ingreso">Ingreso</button>';
+    html += '<button type="button" class="fin-type-btn' + (progType==='gasto'?' active':'') + '" data-progtype="gasto">Gasto</button>';
+    html += '</div>';
+    html += '<div class="fin-row">';
+    html += '<input class="fin-input fin-input-desc" id="progDesc" type="text" placeholder="Ej. Nómina, Teléfono…" autocomplete="off">';
+    html += '<input class="fin-input fin-input-amount" id="progAmount" type="number" min="0" step="1000" placeholder="Monto COP">';
+    html += '</div>';
+    html += '<div class="fin-row" style="margin-top:8px">';
+    html += '<select class="fin-input fin-input-cat" id="progCat">';
+    FIN_CATS.forEach(function(c){ html += '<option value="' + c + '">' + c + '</option>'; });
+    html += '</select>';
+    html += '<select class="fin-input" id="progFreq" style="width:140px;font-size:12px;font-family:var(--mono)">';
+    freqOpts.forEach(function(f){ html += '<option value="' + f + '">' + FREQ_LABELS[f] + '</option>'; });
+    html += '</select>';
+    html += '<input class="fin-input" id="progStart" type="date" value="' + todayStr() + '" style="width:148px;font-family:var(--mono);font-size:12px">';
+    html += '<button type="button" class="fin-submit" id="progSubmit">Agregar</button>';
+    html += '</div></div>';
+
+    // List
+    html += '<div class="section-label">Programados activos</div>';
+    if(!programados.length){
+      html += emptyState('Aún no tienes movimientos programados. Agrega uno arriba para que se registren automáticamente.');
+    } else {
+      html += '<div class="fin-list">';
+      programados.forEach(function(p){
+        html += '<div class="prog-item">';
+        html += '<div class="prog-item-dot ' + p.type + '"></div>';
+        html += '<div class="prog-item-desc">' + escapeHtml(p.desc) + '</div>';
+        html += '<span class="prog-item-freq">' + FREQ_LABELS[p.freq] + '</span>';
+        html += '<span class="fin-item-cat">' + escapeHtml(p.cat) + '</span>';
+        html += '<div class="prog-item-next">Próx: ' + p.nextDue + '</div>';
+        html += '<div class="prog-item-amount ' + p.type + '">' + (p.type==='ingreso'?'+':'-') + fmtCOP(p.amount) + '</div>';
+        html += '<button class="prog-item-del" data-progdel="' + p.id + '" title="Eliminar">✕</button>';
+        html += '</div>';
+      });
+      html += '</div>';
+    }
+    return html;
+  }
+
+  function renderFinanzas(){
+    var t = finTotals();
+    var filtered = finFilter === 'todo' ? movimientos :
+      movimientos.filter(function(m){ return m.type === finFilter; });
+
+    var balClass = t.balance > 0 ? 'pos' : (t.balance < 0 ? 'neg' : 'zero');
+    var max = Math.max(t.ingresos, t.gastos) || 1;
+
+    // Count programados due this week for badge
+    var upcomingCount = upcomingProgramados().length;
+
+    var html = '';
+
+    // Sub-tabs
+    html += '<div class="fin-tabs">';
+    html += '<button type="button" class="fin-tab' + (finSubview==='movimientos'?' active':'') + '" data-finsubview="movimientos">Movimientos</button>';
+    html += '<button type="button" class="fin-tab' + (finSubview==='programados'?' active':'') + '" data-finsubview="programados">Programados' + (upcomingCount ? '<span class="prog-badge">' + upcomingCount + '</span>' : '') + '</button>';
+    html += '</div>';
+
+    if(finSubview === 'programados') return html + renderProgramadosSubview();
+
+    // Capture form
+    html += '<div class="fin-capture">';
+    html += '<div class="fin-type-toggle" id="finTypeToggle">';
+    html += '<button type="button" class="fin-type-btn' + (finType==='ingreso' ? ' active' : '') + '" data-fintype="ingreso">Ingreso</button>';
+    html += '<button type="button" class="fin-type-btn' + (finType==='gasto' ? ' active' : '') + '" data-fintype="gasto">Gasto</button>';
+    html += '</div>';
+    html += '<div class="fin-row" id="finForm">';
+    html += '<input class="fin-input fin-input-desc" id="finDesc" type="text" placeholder="Descripción…" autocomplete="off">';
+    html += '<input class="fin-input fin-input-amount" id="finAmount" type="number" min="0" step="1000" placeholder="Monto COP">';
+    html += '<select class="fin-input fin-input-cat" id="finCat">';
+    FIN_CATS.forEach(function(c){ html += '<option value="' + c + '">' + c + '</option>'; });
+    html += '</select>';
+    html += '<button type="button" class="fin-submit" id="finSubmit">Registrar</button>';
+    html += '</div></div>';
+
+    // KPIs
+    html += '<div class="fin-summary">';
+    html += '<div class="fin-kpi"><div class="fin-kpi-label">Ingresos</div><div class="fin-kpi-value ingreso">' + fmtCOP(t.ingresos) + '</div></div>';
+    html += '<div class="fin-kpi"><div class="fin-kpi-label">Gastos</div><div class="fin-kpi-value gasto">' + fmtCOP(t.gastos) + '</div></div>';
+    html += '<div class="fin-kpi"><div class="fin-kpi-label">Balance</div><div class="fin-kpi-value balance ' + balClass + '">' + (t.balance >= 0 ? '+' : '-') + fmtCOP(t.balance) + '</div></div>';
+    html += '</div>';
+
+    // Bar
+    if(movimientos.length){
+      html += '<div class="fin-bar-wrap">';
+      html += '<div class="fin-bar-label">Proporción ingresos / gastos</div>';
+      html += '<div style="margin-bottom:6px"><div style="font-family:var(--mono);font-size:10px;color:var(--parchment-dim);margin-bottom:3px">Ingresos</div>';
+      html += '<div class="fin-bar-track"><div class="fin-bar-fill ingreso" style="width:' + (t.ingresos/max*100).toFixed(1) + '%"></div></div></div>';
+      html += '<div><div style="font-family:var(--mono);font-size:10px;color:var(--parchment-dim);margin-bottom:3px">Gastos</div>';
+      html += '<div class="fin-bar-track"><div class="fin-bar-fill gasto" style="width:' + (t.gastos/max*100).toFixed(1) + '%"></div></div></div>';
+      html += '</div>';
+
+      // Category breakdown for gastos
+      var cats = finCatBreakdown();
+      var catKeys = Object.keys(cats).sort(function(a,b){ return cats[b]-cats[a]; });
+      if(catKeys.length){
+        html += '<div class="section-label">Gastos por categoría</div>';
+        html += '<div class="fin-cat-breakdown">';
+        catKeys.forEach(function(k){
+          html += '<div class="fin-cat-item"><div class="fin-cat-name">' + escapeHtml(k) + '</div><div class="fin-cat-val">' + fmtCOP(cats[k]) + '</div></div>';
+        });
+        html += '</div>';
+      }
+    }
+
+    // Filter
+    html += '<div class="fin-filter-row">';
+    ['todo','ingreso','gasto'].forEach(function(f){
+      var label = f === 'todo' ? 'Todos' : (f === 'ingreso' ? 'Ingresos' : 'Gastos');
+      html += '<button type="button" class="fin-filter-btn' + (finFilter===f ? ' active' : '') + '" data-finfilter="' + f + '">' + label + '</button>';
+    });
+    html += '</div>';
+
+    // List
+    if(!filtered.length){
+      html += emptyState(movimientos.length ? 'No hay movimientos de este tipo.' : 'Aún no hay movimientos. Registra tu primer ingreso o gasto arriba.');
+    } else {
+      html += '<div class="fin-list">';
+      filtered.forEach(function(m){
+        html += '<div class="fin-item">';
+        html += '<div class="fin-item-dot ' + m.type + '"></div>';
+        html += '<div class="fin-item-desc">' + escapeHtml(m.desc) + (m.progId ? ' <span style="font-family:var(--mono);font-size:10px;color:var(--parchment-dim);opacity:0.7">↻</span>' : '') + '</div>';
+        html += '<span class="fin-item-cat">' + escapeHtml(m.cat) + '</span>';
+        html += '<div class="fin-item-date">' + fmtDate(m.createdAt) + '</div>';
+        html += '<div class="fin-item-amount ' + m.type + '">' + (m.type === 'ingreso' ? '+' : '-') + fmtCOP(m.amount) + '</div>';
+        html += '<button class="fin-item-del" data-fndel="' + m.id + '" title="Eliminar">✕</button>';
+        html += '</div>';
+      });
+      html += '</div>';
+    }
+
+    return html;
+  }
+
+  function renderFinHoyMini(){
+    if(!movimientos.length) return '';
+    var t = finTotals();
+    var balClass = t.balance > 0 ? 'pos' : (t.balance < 0 ? 'neg' : 'zero');
+    var html = '<div class="fin-hoy-mini">';
+    html += '<div><div class="fin-hoy-mini-label">Ingresos</div><div class="fin-hoy-mini-val" style="color:#7BBF9A">' + fmtCOP(t.ingresos) + '</div></div>';
+    html += '<div><div class="fin-hoy-mini-label">Gastos</div><div class="fin-hoy-mini-val" style="color:#C47676">' + fmtCOP(t.gastos) + '</div></div>';
+    html += '<div><div class="fin-hoy-mini-label">Balance</div><div class="fin-hoy-mini-val fin-kpi-value balance ' + balClass + '">' + (t.balance >= 0 ? '+' : '-') + fmtCOP(t.balance) + '</div></div>';
+    html += '<button type="button" class="tab" style="margin-left:auto;border-bottom:none;opacity:0.7" data-view="finanzas">Ver finanzas →</button>';
+    html += '</div>';
+    return html;
+  }
+
+  // ---------- render dispatcher ----------
+  function renderTagCloud(){
+    if(view !== 'notas'){ tagcloudEl.innerHTML = ''; return; }
+    var tags = uniqueTags();
+    if(!tags.length){ tagcloudEl.innerHTML = ''; return; }
+    tagcloudEl.innerHTML = '<div class="tagcloud">' + tags.map(function(t){
+      return '<button type="button" class="tagchip' + (activeTag===t ? ' active' : '') + '" data-tag="' + escapeHtml(t) + '">' + escapeHtml(t) + '</button>';
+    }).join('') + '</div>';
+  }
+
+  function render(){
+    searchwrap.classList.toggle('hidden', view === 'hoy' || view === 'finanzas');
+    renderTagCloud();
+    var html;
+    if(view === 'hoy') html = renderHoy();
+    else if(view === 'notas') html = renderNotas();
+    else if(view === 'tareas') html = renderTareas();
+    else if(view === 'finanzas') html = renderFinanzas();
+    else html = renderRecordatorios();
+    content.innerHTML = html;
+  }
+
+  function syncTabsUI(){
+    document.querySelectorAll('.tab').forEach(function(b){
+      b.classList.toggle('active', b.dataset.view === view);
+    });
+  }
+
+  // ---------- event wiring ----------
+  document.getElementById('dateToday').textContent = fmtDate(new Date().toISOString());
+
+  document.getElementById('typeToggle').addEventListener('click', function(e){
+    var btn = e.target.closest('.type-btn');
+    if(!btn) return;
+    captureType = btn.dataset.type;
+    document.querySelectorAll('.type-btn').forEach(function(b){ b.classList.toggle('active', b === btn); });
+  });
+
+  document.getElementById('captureForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var input = document.getElementById('captureInput');
+    var text = input.value.trim();
+    if(!text) return;
+    addEntry(captureType, text);
+    input.value = '';
+    input.focus();
+  });
+
+  document.getElementById('tabs').addEventListener('click', function(e){
+    var btn = e.target.closest('.tab');
+    if(!btn) return;
+    view = btn.dataset.view;
+    activeTag = null;
+    syncTabsUI();
+    render();
+  });
+
+  document.getElementById('searchInput').addEventListener('input', function(e){
+    search = e.target.value;
+    render();
+  });
+
+  tagcloudEl.addEventListener('click', function(e){
+    var chip = e.target.closest('.tagchip');
+    if(!chip) return;
+    var t = chip.dataset.tag;
+    activeTag = (activeTag === t) ? null : t;
+    render();
+  });
+
+  content.addEventListener('click', function(e){
+    var del = e.target.closest('[data-del]');
+    if(del){ deleteEntry(del.dataset.del); return; }
+    var toggle = e.target.closest('#toggleCompleted');
+    if(toggle){ showCompleted = !showCompleted; render(); return; }
+    var analyze = e.target.closest('[data-action="analyze"]');
+    if(analyze){ runAnalysis(); return; }
+    // finanzas
+    var fndel = e.target.closest('[data-fndel]');
+    if(fndel){ deleteMovimiento(fndel.dataset.fndel); return; }
+    var finFilterBtn = e.target.closest('[data-finfilter]');
+    if(finFilterBtn){ finFilter = finFilterBtn.dataset.finfilter; render(); return; }
+    var finTypeBtn = e.target.closest('[data-fintype]');
+    if(finTypeBtn){ finType = finTypeBtn.dataset.fintype; render(); return; }
+    var finSubmit = e.target.closest('#finSubmit');
+    if(finSubmit){
+      var desc = document.getElementById('finDesc');
+      var amount = document.getElementById('finAmount');
+      var cat = document.getElementById('finCat');
+      if(!desc || !amount) return;
+      var d = desc.value.trim();
+      var a = parseFloat(amount.value);
+      if(!d || isNaN(a) || a <= 0){ showToast('Completa la descripción y el monto.'); return; }
+      addMovimiento(finType, d, a, cat ? cat.value : 'Otro');
+      desc.value = '';
+      amount.value = '';
+      return;
+    }
+    // programados
+    var finSubBtn = e.target.closest('[data-finsubview]');
+    if(finSubBtn){ finSubview = finSubBtn.dataset.finsubview; render(); return; }
+    var progTypeBtn = e.target.closest('[data-progtype]');
+    if(progTypeBtn){ progType = progTypeBtn.dataset.progtype; render(); return; }
+    var progDel = e.target.closest('[data-progdel]');
+    if(progDel){ deleteProgramado(progDel.dataset.progdel); return; }
+    var progSubmit = e.target.closest('#progSubmit');
+    if(progSubmit){
+      var pdesc = document.getElementById('progDesc');
+      var pamount = document.getElementById('progAmount');
+      var pcat = document.getElementById('progCat');
+      var pfreq = document.getElementById('progFreq');
+      var pstart = document.getElementById('progStart');
+      if(!pdesc || !pamount) return;
+      var pd = pdesc.value.trim();
+      var pa = parseFloat(pamount.value);
+      if(!pd || isNaN(pa) || pa <= 0){ showToast('Completa la descripción y el monto.'); return; }
+      addProgramado(progType, pd, pa, pcat ? pcat.value : 'Otro', pfreq ? pfreq.value : 'mensual', pstart ? pstart.value : todayStr());
+      pdesc.value = '';
+      pamount.value = '';
+      return;
+    }
+    // entradas programadas
+    var entrySubBtn = e.target.closest('[data-entrysubview]');
+    if(entrySubBtn){ entrySubview = entrySubBtn.dataset.entrysubview; render(); return; }
+    var epTypeBtn = e.target.closest('[data-eptype]');
+    if(epTypeBtn){ epType = epTypeBtn.dataset.eptype; render(); return; }
+    var epDel = e.target.closest('[data-epdel]');
+    if(epDel){ deleteEntradaProg(epDel.dataset.epdel); return; }
+    var epSubmit = e.target.closest('#epSubmit');
+    if(epSubmit){
+      var epTitle = document.getElementById('epTitle');
+      var epBody = document.getElementById('epBody');
+      var epFreq = document.getElementById('epFreq');
+      var epStart = document.getElementById('epStart');
+      var epPriority = document.getElementById('epPriority');
+      if(!epTitle) return;
+      var et = epTitle.value.trim();
+      if(!et){ showToast('Escribe un título.'); return; }
+      addEntradaProg(epType, et, epBody ? epBody.value.trim() : '', epFreq ? epFreq.value : 'mensual', epStart ? epStart.value : todayStr(), epPriority ? epPriority.value : 'media');
+      epTitle.value = '';
+      if(epBody) epBody.value = '';
+      return;
+    }
+    // navigate to finanzas from hoy mini
+    var navFin = e.target.closest('[data-view="finanzas"]');
+    if(navFin){ view = 'finanzas'; syncTabsUI(); render(); return; }
+  });
+
+  content.addEventListener('input', function(e){
+    var id = e.target.dataset.id;
+    var field = e.target.dataset.field;
+    if(!id || !field) return;
+    var entry = findEntry(id);
+    if(!entry) return;
+    if(field === 'title') entry.title = e.target.value;
+    if(field === 'body') entry.body = e.target.value;
+  });
+
+  content.addEventListener('change', function(e){
+    var id = e.target.dataset.id;
+    var field = e.target.dataset.field;
+    if(!id || !field) return;
+    var entry = findEntry(id);
+    if(!entry) return;
+
+    if(field === 'title'){ entry.title = e.target.value || '(sin título)'; persist(); return; }
+    if(field === 'body'){ entry.body = e.target.value; persist(); return; }
+    if(field === 'tags'){ entry.tags = e.target.value.split(',').map(function(t){ return t.trim(); }).filter(Boolean); persist(); renderTagCloud(); return; }
+    if(field === 'done'){
+      entry.done = e.target.checked;
+      entry.completedAt = entry.done ? new Date().toISOString() : null;
+      persist();
+      render();
+      return;
+    }
+    if(field === 'priority'){ entry.priority = e.target.value; persist(); return; }
+    if(field === 'dueAt'){ entry.dueAt = e.target.value || null; persist(); render(); return; }
+    if(field === 'remindAt'){ entry.remindAt = e.target.value || null; entry.notified = false; persist(); render(); return; }
+  });
+
+  // ---------- reminders ----------
+  function checkReminders(){
+    var now = nowLocalStr();
+    var changed = false;
+    entries.forEach(function(e){
+      if(e.type === 'recordatorio' && e.remindAt && !e.notified && e.remindAt <= now){
+        e.notified = true;
+        changed = true;
+        notify(e.title);
+      }
+    });
+    if(changed){
+      persist();
+      if(view === 'recordatorios' || view === 'hoy') render();
+    }
+  }
+
+  function notify(title){
+    var fired = false;
+    if('Notification' in window && Notification.permission === 'granted'){
+      try{ new Notification('Recordatorio', { body: title }); fired = true; }catch(err){ fired = false; }
+    }
+    if(!fired) showToast('⏰ ' + title);
+  }
+
+  document.getElementById('notifBtn').addEventListener('click', function(){
+    if(!('Notification' in window)){
+      showToast('Tu navegador no soporta notificaciones. Usarás avisos en pantalla.');
+      return;
+    }
+    Notification.requestPermission().then(function(perm){
+      showToast(perm === 'granted' ? 'Avisos activados' : 'Avisos no activados. Verás un mensaje en pantalla en su lugar.');
+    }).catch(function(){
+      showToast('No se pudo activar. Verás un mensaje en pantalla en su lugar.');
+    });
+  });
+
+  setInterval(checkReminders, 30000);
+
+  // ---------- export / import ----------
+  document.getElementById('exportBtn').addEventListener('click', function(){
+    var blob = new Blob([JSON.stringify({ entries: entries, movimientos: movimientos, programados: programados, entradasProg: entradasProg }, null, 2)], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'segundo-cerebro-' + todayStr() + '.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    showToast('Archivo exportado');
+  });
+
+  document.getElementById('importInput').addEventListener('change', function(e){
+    var file = e.target.files[0];
+    if(!file) return;
+    var reader = new FileReader();
+    reader.onload = function(){
+      try{
+        var data = JSON.parse(reader.result);
+        // support both old format (array) and new format (object with entries+movimientos)
+        if(Array.isArray(data)){
+          entries = data;
+          persist();
+        } else if(data && Array.isArray(data.entries)){
+          entries = data.entries;
+          movimientos = Array.isArray(data.movimientos) ? data.movimientos : movimientos;
+          programados = Array.isArray(data.programados) ? data.programados : programados;
+          entradasProg = Array.isArray(data.entradasProg) ? data.entradasProg : entradasProg;
+          persist();
+          persistFin();
+          persistProg();
+          persistEP();
+        } else {
+          showToast('El archivo no tiene el formato esperado');
+          return;
+        }
+        applyEntradasProg();
+        render();
+        showToast('Importado correctamente');
+      }catch(err){
+        showToast('No se pudo leer el archivo');
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  });
+
+  // ---------- init ----------
+  loadEntries();
+  setTimeout(checkReminders, 1000);
+})();
+</script>
+</body>
+</html>
