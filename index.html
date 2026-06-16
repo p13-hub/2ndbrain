@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1B2230">
+<title>Segundo Cerebro Pro</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root{
+  --ink: #1B2230;
+  --ink-light: #242C3D;
+  --ink-lighter: #2E3850;
+  --parchment: #F3EFE6;
+  --parchment-dim: #DCD6C6;
+  --brass: #C9A227;
+  --sage: #5C7A6E;
+  --brick: #8B3A3A;
+  --azure: #3F6B8C;
+  --line: rgba(243,239,230,0.12);
+  --line-strong: rgba(243,239,230,0.22);
+  --serif: 'Fraunces', serif;
+  --sans: 'Inter', sans-serif;
+  --mono: 'IBM Plex Mono', monospace;
+}
+
+*{ box-sizing: border-box; }
+html,body{ margin:0; padding:0; }
+body{
+  background: var(--ink);
+  color: var(--parchment);
+  font-family: var(--sans);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+button, input, select, textarea{ font-family: inherit; }
+::selection{ background: var(--brass); color: var(--ink); }
+
+#app{
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 28px 20px 90px;
+}
+
+/* ---------- Header ---------- */
+.masthead{
+  display:flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--line-strong);
+  padding-bottom: 14px;
+}
+.masthead h1{
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 26px;
+  letter-spacing: 0.2px;
+  margin: 0;
+}
+.masthead .sub{
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--parchment-dim);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.capture{
+  background: var(--ink-light);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 12px;
+  margin-bottom: 18px;
+}
+.type-toggle{
+  display:flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.type-btn{
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  color: var(--parchment-dim);
+  padding: 5px 12px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-family: var(--mono);
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+.type-btn.active[data-type="nota"]{ background: var(--brass); color: var(--ink); border-color: var(--brass); }
+.type-btn.active[data-type="tarea"]{ background: var(--sage); color: var(--ink); border-color: var(--sage); }
+.type-btn.active[data-type="recordatorio"]{ background: var(--brick); color: var(--parchment); border-color: var(--brick); }
+
+.capture form{
+  display:flex;
+  gap: 8px;
+}
+.capture input[type="text"]{
+  flex: 1;
+  background: var(--ink);
+  border: 1px solid var(--line-strong);
+  color: var(--parchment);
+  padding: 10px 12px;
+  border-radius: 3px;
+  font-size: 15px;
+}
+.capture button[type="submit"]{
+  background: var(--parchment);
+  color: var(--ink);
+  border: none;
+  padding: 10px 16px;
+  border-radius: 3px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+}
+.capture button[type="submit"]:hover{ background: var(--brass); }
+
+/* ---------- Tabs ---------- */
+.tabs{
+  display:flex;
+  gap: 2px;
+  overflow-x: auto;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+.tab{
+  background: transparent;
+  border: none;
+  color: var(--parchment-dim);
+  padding: 9px 14px;
+  font-size: 13px;
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+}
+.tab.active{ color: var(--parchment); border-bottom-color: var(--brass); }
+
+/* ---------- Dashboard ---------- */
+.dash-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.dash-card {
+  background: var(--ink-light);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 16px;
+}
+.dash-card h3 {
+  font-family: var(--serif);
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 6px;
+}
+.dash-stat-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+/* ---------- Finanzas & Presupuestos ---------- */
+.fin-capture{
+  background: var(--ink-light);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 14px;
+  margin-bottom: 18px;
+}
+.fin-row{
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.fin-input{
+  background: var(--ink);
+  border: 1px solid var(--line-strong);
+  color: var(--parchment);
+  padding: 9px 10px;
+  border-radius: 3px;
+  font-size: 14px;
+}
+.fin-input-desc{ flex: 2; min-width: 140px; }
+.fin-input-amount{ width: 130px; font-family: var(--mono); }
+.fin-input-cat{ width: 140px; font-size: 12px; font-family: var(--mono); }
+
+.fin-tabs{
+  display: flex;
+  gap: 2px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.fin-tab{
+  background: transparent;
+  border: none;
+  color: var(--parchment-dim);
+  padding: 8px 14px;
+  font-size: 12px;
+  font-family: var(--mono);
+  text-transform: uppercase;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+.fin-tab.active{ color: var(--parchment); border-bottom-color: var(--brass); }
+
+.budget-config-panel {
+  background: var(--ink-light);
+  border: 1px solid var(--line-strong);
+  padding: 16px;
+  border-radius: 4px;
+  margin-bottom: 18px;
+}
+
+.budget-progress-container {
+  margin-top: 14px;
+}
+.budget-progress-bar {
+  background: rgba(243,239,230,0.1);
+  height: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+.budget-progress-fill {
+  height: 100%;
+  background: var(--sage);
+  width: 0%;
+  transition: width 0.3s;
+}
+.budget-progress-fill.over {
+  background: var(--brick);
+}
+
+.grid{ display:grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+.list{ display:flex; flex-direction: column; gap: 10px; }
+
+.card{
+  background: var(--parchment);
+  color: var(--ink);
+  border-radius: 3px;
+  padding: 16px 14px 12px 20px;
+  position: relative;
+}
+.card .tabstrip{ position:absolute; left:0; top:0; bottom:0; width: 4px; border-radius: 3px 0 0 3px; }
+.card.type-nota .tabstrip{ background: var(--brass); }
+.card.type-tarea .tabstrip{ background: var(--sage); }
+.card.type-recordatorio .tabstrip{ background: var(--brick); }
+
+.card-title{ font-family: var(--serif); font-size: 16px; font-weight: 600; width: 100%; border:none; background:transparent;}
+.card-body{ width: 100%; background: transparent; border: none; border-top: 1px dashed rgba(27,34,48,0.18); font-size: 13px; padding-top: 8px; margin-top: 4px;}
+.card-del { background:none; border:none; color:var(--brick); cursor:pointer; float:right; }
+
+.footer{ position: fixed; bottom: 0; left: 0; right: 0; background: var(--ink-light); border-top: 1px solid var(--line); display:flex; align-items:center; gap: 10px; padding: 10px 16px; }
+.footer button { background:transparent; color:var(--parchment-dim); border:1px solid var(--line-strong); padding:5px 10px; cursor:pointer; }
+#toast{ position: fixed; bottom: 56px; left: 50%; transform: translateX(-50%); background: var(--brass); color: var(--ink); padding: 8px 14px; border-radius: 4px; display:none; z-index: 50; }
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="masthead">
+    <h1>Segundo Cerebro</h1>
+    <span class="sub" id="dateToday"></span>
+  </header>
+
+  <div class="capture" id="quickCaptureSection">
+    <div class="type-toggle" id="typeToggle">
+      <button type="button" class="type-btn active" data-type="nota">Nota</button>
+      <button type="button" class="type-btn" data-type="tarea">Tarea</button>
+      <button type="button" class="type-btn" data-type="recordatorio">Recordatorio</button>
+    </div>
+    <form id="captureForm">
+      <input type="text" id="captureInput" placeholder="¿Qué tienes en mente?" autocomplete="off" required>
+      <button type="submit">Agregar</button>
+    </form>
+  </div>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-view="dashboard">Dashboard</button>
+    <button class="tab" data-view="hoy">Hoy</button>
+    <button class="tab" data-view="notas">Notas</button>
+    <button class="tab" data-view="tareas">Tareas</button>
+    <button class="tab" data-view="recordatorios">Recordatorios</button>
+    <button class="tab" data-view="finanzas">Finanzas</button>
+  </nav>
+
+  <main id="content">
+    </main>
+</div>
+
+<footer class="footer">
+  <button type="button" id="exportBtn">Exportar Datos</button>
+  <span style="margin-left:auto; font-size:11px; font-family:var(--mono);" id="dbStatus">Modo Local (LocalStorage)</span>
+</footer>
+<div id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  // --- ESTADOS GENERALES DE LA APP ---
+  var entries = [];
+  var movimientos = [];
+  var view = 'dashboard'; 
+  var captureType = 'nota';
+
+  // --- ESTADOS DE PRESUPUESTO ACTUALIZADO ---
+  var budgetConfig = {
+    periodo: 'semanal', // 'semanal' o 'mensual'
+    limite: 0,
+    gastado: 0
+  };
+
+  var content = document.getElementById('content');
+  var toastEl = document.getElementById('toast');
+
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+  
+  function showToast(msg){
+    toastEl.textContent = msg; toastEl.style.display = 'block';
+    setTimeout(function(){ toastEl.style.display = 'none'; }, 2500);
+  }
+
+  // --- NAVEGACIÓN Y LOGICA INTERNA ---
+  document.getElementById('tabs').addEventListener('click', function(e){
+    if(!e.target.classList.contains('tab')) return;
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    e.target.classList.add('active');
+    view = e.target.getAttribute('data-view');
+    
+    // Ocultar capturador rápido en dashboard o finanzas para limpiar UI
+    var qCS = document.getElementById('quickCaptureSection');
+    if(view === 'dashboard' || view === 'finanzas') {
+      qCS.style.display = 'none';
+    } else {
+      qCS.style.display = 'block';
+    }
+    render();
+  });
+
+  document.getElementById('typeToggle').addEventListener('click', function(e){
+    if(!e.target.classList.contains('type-btn')) return;
+    document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+    e.target.classList.add('active');
+    captureType = e.target.getAttribute('data-type');
+  });
+
+  document.getElementById('captureForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var inp = document.getElementById('captureInput');
+    var title = inp.value.trim();
+    if(!title) return;
+
+    var newEntry = {
+      id: uid(),
+      type: captureType,
+      title: title,
+      body: 'Creado desde captura rápida.',
+      createdAt: new Date().toISOString(),
+      done: false
+    };
+    entries.unshift(newEntry);
+    localStorage.setItem('entries', JSON.stringify(entries));
+    inp.value = '';
+    showToast(captureType.toUpperCase() + ' añadida correctamente.');
+    render();
+  });
+
+  // --- LOGICA DE PRESUPUESTOS Y GASTOS ---
+  function calcularGastosPeriodo() {
+    var total = 0;
+    var ahora = new Date();
+    var haceXDias = new Date();
+    
+    if(budgetConfig.periodo === 'semanal') {
+      haceXDias.setDate(ahora.getDate() - 7);
+    } else {
+      haceXDias.setMonth(ahora.getMonth() - 1);
+    }
+
+    movimientos.forEach(function(m){
+      if(m.type === 'gasto') {
+        var mDate = new Date(m.date || m.createdAt);
+        if(mDate >= haceXDias && mDate <= ahora) {
+          total += parseFloat(m.amount);
+        }
+      }
+    });
+    return total;
+  }
+
+  // --- RENDERIZADO GENERAL ---
+  function render(){
+    content.innerHTML = '';
+    document.getElementById('dateToday').textContent = new Date().toLocaleDateString();
+
+    // 1. VISTA DASHBOARD (PANEL PRINCIPAL UNIFICADO)
+    if(view === 'dashboard') {
+      var notasCount = entries.filter(e => e.type === 'nota').length;
+      var tareasPendientes = entries.filter(e => e.type === 'tarea' && !e.done).length;
+      var recordatoriosCount = entries.filter(e => e.type === 'recordatorio').length;
+      
+      var totalIngresos = movimientos.filter(m => m.type === 'ingreso').reduce((acc, m) => acc + parseFloat(m.amount), 0);
+      var totalGastos = movimientos.filter(m => m.type === 'gasto').reduce((acc, m) => acc + parseFloat(m.amount), 0);
+      
+      var currentSpending = calcularGastosPeriodo();
+      var estadoPresupuesto = budgetConfig.limite > 0 
+        ? `Presupuesto (${budgetConfig.periodo}): $${currentSpending} / $${budgetConfig.limite}`
+        : "Presupuesto: No configurado";
+
+      content.innerHTML = `
+        <h2 style="font-family:var(--serif);">Panel de Control (Dashboard)</h2>
+        <p class="sub" style="color:var(--parchment-dim);">Resumen en tiempo real de tus módulos</p>
+        
+        <div class="dash-grid">
+          <div class="dash-card" style="border-left: 4px solid var(--brass);">
+            <h3>Módulo Notas</h3>
+            <div class="dash-stat-row"><span>Total Notas:</span><span>${notasCount}</span></div>
+            <p style="font-size:12px; opacity:0.7;">Organiza ideas, enlaces y lecturas diarias rápidamente.</p>
+          </div>
+          
+          <div class="dash-card" style="border-left: 4px solid var(--sage);">
+            <h3>Módulo Tareas</h3>
+            <div class="dash-stat-row"><span>Pendientes:</span><span>${tareasPendientes}</span></div>
+            <p style="font-size:12px; opacity:0.7;">Gestiona tus quehaceres cotidianos pendientes.</p>
+          </div>
+
+          <div class="dash-card" style="border-left: 4px solid var(--brick);">
+            <h3>Recordatorios</h3>
+            <div class="dash-stat-row"><span>Programados:</span><span>${recordatoriosCount}</span></div>
+          </div>
+
+          <div class="dash-card" style="border-left: 4px solid var(--azure);">
+            <h3>Finanzas Globales</h3>
+            <div class="dash-stat-row"><span>Ingresos:</span><span style="color:#7BBF9A;">+$${totalIngresos.toFixed(2)}</span></div>
+            <div class="dash-stat-row"><span>Gastos:</span><span style="color:#C47676;">-$${totalGastos.toFixed(2)}</span></div>
+            <div class="dash-stat-row"><span>Balance Total:</span><span>$${(totalIngresos - totalGastos).toFixed(2)}</span></div>
+          </div>
+        </div>
+
+        <div class="dash-card" style="background:var(--ink-lighter); border:1px solid var(--brass);">
+          <h3 style="color:var(--brass);">Estado del Presupuesto Actual</h3>
+          <p style="font-size:13px;">${estadoPresupuesto}</p>
+          ${budgetConfig.limite > 0 ? `
+            <div class="budget-progress-bar">
+              <div class="budget-progress-fill ${currentSpending > budgetConfig.limite ? 'over' : ''}" style="width: ${Math.min((currentSpending / budgetConfig.limite) * 100, 100)}%"></div>
+            </div>
+          ` : ''}
+        </div>
+      `;
+      return;
+    }
+
+    // 2. VISTA FINANZAS Y CONTROL DE PRESUPUESTOS
+    if(view === 'finanzas') {
+      var currentSpending = calcularGastosPeriodo();
+      var pct = budgetConfig.limite > 0 ? (currentSpending / budgetConfig.limite) * 100 : 0;
+
+      content.innerHTML = `
+        <h2 style="font-family:var(--serif);">Control de Finanzas & Presupuestos</h2>
+        
+        <div class="budget-config-panel">
+          <h4 style="margin:0 0 10px 0; font-family:var(--mono); text-transform:uppercase; color:var(--brass);">Configurar Objetivo de Presupuesto</h4>
+          <div class="fin-row">
+            <select id="budgetPeriod" class="fin-input">
+              <option value="semanal" ${budgetConfig.periodo === 'semanal' ? 'selected' : ''}>Semanal (Últimos 7 días)</option>
+              <option value="mensual" ${budgetConfig.periodo === 'mensual' ? 'selected' : ''}>Mensual (Último mes)</option>
+            </select>
+            <input type="number" id="budgetLimit" class="fin-input fin-input-amount" placeholder="Límite Máx $" value="${budgetConfig.limite}">
+            <button id="saveBudgetBtn" class="fin-submit">Guardar Base Presupuesto</button>
+          </div>
+          
+          <div class="budget-progress-container">
+            <div class="dash-stat-row">
+              <span>Gastos del periodo evaluado: <strong>$${currentSpending.toFixed(2)}</strong></span>
+              <span>Límite establecido: <strong>$${budgetConfig.limite.toFixed(2)}</strong></span>
+            </div>
+            <div class="budget-progress-bar">
+              <div class="budget-progress-fill ${currentSpending > budgetConfig.limite ? 'over' : ''}" style="width: ${Math.min(pct, 100)}%;"></div>
+            </div>
+            <p style="font-size:11px; color:var(--parchment-dim); margin-top:5px;">
+              ${currentSpending > budgetConfig.limite ? '⚠️ ¡Has excedido el presupuesto fijado para este ciclo!' : '🟢 Te mantienes dentro de los márgenes previstos.'}
+            </p>
+          </div>
+        </div>
+
+        <div class="fin-capture">
+          <h4 style="margin:0 0 10px 0; font-family:var(--mono);">Añadir Ingreso o Gasto Manual</h4>
+          <form id="finForm" class="fin-row">
+            <select id="finType" class="fin-input">
+              <option value="gasto">Gasto (-)</option>
+              <option value="ingreso">Ingreso (+)</option>
+            </select>
+            <input type="text" id="finDesc" class="fin-input fin-input-desc" placeholder="Concepto (ej. Alquiler, Súper)" required>
+            <input type="number" step="0.01" id="finAmount" class="fin-input fin-input-amount" placeholder="Monto $" required>
+            <input type="text" id="finCat" class="fin-input fin-input-cat" placeholder="Categoría (ej. Comida)">
+            <button type="submit" class="fin-submit">+ Registrar</button>
+          </form>
+        </div>
+
+        <h3 style="font-family:var(--serif);">Historial Reciente</h3>
+        <div class="list" id="finListItems"></div>
+      `;
+
+      // Evento: Guardar Ajustes Presupuestarios
+      document.getElementById('saveBudgetBtn').addEventListener('click', function(){
+        budgetConfig.periodo = document.getElementById('budgetPeriod').value;
+        budgetConfig.limite = parseFloat(document.getElementById('budgetLimit').value) || 0;
+        localStorage.setItem('budgetConfig', JSON.stringify(budgetConfig));
+        showToast("Presupuesto base actualizado con éxito.");
+        render();
+      });
+
+      // Evento: Registrar movimiento de capital
+      document.getElementById('finForm').addEventListener('submit', function(e){
+        e.preventDefault();
+        var nMov = {
+          id: uid(),
+          type: document.getElementById('finType').value,
+          desc: document.getElementById('finDesc').value,
+          amount: parseFloat(document.getElementById('finAmount').value) || 0,
+          cat: document.getElementById('finCat').value || 'Varios',
+          createdAt: new Date().toISOString()
+        };
+        movimientos.unshift(nMov);
+        localStorage.setItem('movimientos', JSON.stringify(movimientos));
+        showToast("Transacción añadida.");
+        render();
+      });
+
+      // Renderizar la lista interna de finanzas
+      var flItems = document.getElementById('finListItems');
+      if(movimientos.length === 0){
+        flItems.innerHTML = '<p class="empty">No hay transacciones registradas todavía.</p>';
+      } else {
+        movimientos.forEach(function(m){
+          var item = document.createElement('div');
+          item.className = 'card';
+          item.style.color = 'var(--ink)';
+          item.innerHTML = `
+            <button class="card-del" data-id="${m.id}">Eliminar</button>
+            <strong style="color:${m.type==='ingreso'?'var(--sage)':'var(--brick)'}">[${m.type.toUpperCase()}]</strong> 
+            <strong>${m.desc}</strong> - $${m.amount.toFixed(2)} 
+            <br><span style="font-size:11px; opacity:0.6;">Categoría: ${m.cat} | ${new Date(m.createdAt).toLocaleDateString()}</span>
+          `;
+          flItems.appendChild(item);
+        });
+
+        flItems.addEventListener('click', function(e){
+          if(!e.target.classList.contains('card-del')) return;
+          var mid = e.target.getAttribute('data-id');
+          movimientos = movimientos.filter(m => m.id !== mid);
+          localStorage.setItem('movimientos', JSON.stringify(movimientos));
+          render();
+        });
+      }
+      return;
+    }
+
+    // 3. VISTAS TRADICIONALES (HOY, NOTAS, TAREAS, RECORDATORIOS)
+    var filtered = entries.filter(function(e){
+      if(view === 'hoy') {
+        return e.type === 'tarea' || e.type === 'recordatorio';
+      }
+      return e.type === view.slice(0, -1); // remover 's' final (notas -> nota)
+    });
+
+    if(filtered.length === 0){
+      content.innerHTML = `<p class="empty">No hay elementos en esta sección.</p>`;
+      return;
+    }
+
+    var container = document.createElement('div');
+    container.className = 'grid';
+
+    filtered.forEach(function(e){
+      var card = document.createElement('div');
+      card.className = `card type-${e.type}`;
+      card.innerHTML = `
+        <div class="tabstrip"></div>
+        <button class="card-del" data-id="${e.id}">✖</button>
+        <input type="text" class="card-title ${e.done?'done':''}" value="${escapeHtml(e.title)}" data-id="${e.id}">
+        <textarea class="card-body" data-id="${e.id}">${escapeHtml(e.body || '')}</textarea>
+        ${e.type === 'tarea' ? `
+          <label style="font-size:12px; cursor:pointer;">
+            <input type="checkbox" class="task-chk" data-id="${e.id}" ${e.done?'checked':''}> Marcar como completada
+          </label>
+        ` : ''}
+      `;
+      container.appendChild(card);
+    });
+
+    content.appendChild(container);
+
+    // Eventos de guardado en caliente (inline editing)
+    container.addEventListener('change', function(evt){
+      var id = evt.target.getAttribute('data-id');
+      var entry = entries.find(e => e.id === id);
+      if(!entry) return;
+
+      if(evt.target.classList.contains('card-title')) entry.title = evt.target.value;
+      if(evt.target.classList.contains('card-body')) entry.body = evt.target.value;
+      if(evt.target.classList.contains('task-chk')) entry.done = evt.target.checked;
+
+      localStorage.setItem('entries', JSON.stringify(entries));
+      if(evt.target.classList.contains('task-chk')) render();
+    });
+
+    container.addEventListener('click', function(evt){
+      if(!evt.target.classList.contains('card-del')) return;
+      var id = evt.target.getAttribute('data-id');
+      entries = entries.filter(e => e.id !== id);
+      localStorage.setItem('entries', JSON.stringify(entries));
+      render();
+    });
+  }
+
+  // --- EXPORTACIÓN ---
+  document.getElementById('exportBtn').addEventListener('click', function(){
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({entries, movimientos, budgetConfig}));
+    var downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", "segundo_cerebro_datos.json");
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+  });
+
+  // --- INICIALIZADOR DE ARRANQUE ---
+  function init(){
+    try {
+      entries = JSON.parse(localStorage.getItem('entries')) || [];
+      movimientos = JSON.parse(localStorage.getItem('movimientos')) || [];
+      budgetConfig = JSON.parse(localStorage.getItem('budgetConfig')) || { periodo: 'semanal', limite: 0, gastado: 0 };
+    } catch(e) {
+      console.error("Error al leer LocalStorage", e);
+    }
+    render();
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
