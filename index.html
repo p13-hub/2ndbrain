@@ -187,100 +187,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 .tagchip.active{ background: var(--brass); color: var(--ink); border-color: var(--brass); }
 
-/* ---------- Dashboard Estilos ---------- */
-.dash-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-.dash-grid-metrics {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 12px;
-}
-.dash-metric-card {
-  background: var(--ink-light);
-  border: 1px solid var(--line);
-  border-radius: 4px;
-  padding: 14px 16px;
-  cursor: pointer;
-  transition: transform 0.15s ease, border-color 0.15s ease;
-}
-.dash-metric-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--line-strong);
-}
-.dash-metric-lbl {
-  font-family: var(--mono);
-  font-size: 10px;
-  text-transform: uppercase;
-  color: var(--parchment-dim);
-  margin-bottom: 6px;
-  letter-spacing: 0.5px;
-}
-.dash-metric-val {
-  font-family: var(--serif);
-  font-size: 24px;
-  font-weight: 600;
-}
-.dash-charts-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
-}
-.dash-chart-box {
-  background: var(--ink-light);
-  border: 1px solid var(--line);
-  border-radius: 4px;
-  padding: 18px;
-}
-.dash-chart-head {
-  font-family: var(--mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  color: var(--parchment);
-  margin-bottom: 14px;
-  letter-spacing: 0.5px;
-}
-.dash-bar-visual {
-  height: 20px;
-  background: rgba(243,239,230,0.06);
-  border-radius: 3px;
-  overflow: hidden;
-  display: flex;
-  margin-bottom: 8px;
-}
-.dash-bar-segment {
-  height: 100%;
-  font-family: var(--mono);
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--ink);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.dash-list-row {
-  display: flex;
-  justify-content: space-between;
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--parchment-dim);
-  margin-bottom: 5px;
-}
-.dash-list-bar-track {
-  height: 6px;
-  background: rgba(243,239,230,0.06);
-  border-radius: 3px;
-  overflow: hidden;
-  margin-bottom: 12px;
-}
-.dash-list-bar-fill {
-  height: 100%;
-  background: var(--brick);
-  border-radius: 3px;
-}
-
 /* ---------- Cards ---------- */
 .stats{
   font-family: var(--mono);
@@ -418,6 +324,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   cursor: pointer;
   flex-shrink: 0;
 }
+.priority-dot{
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink:0;
+}
+.priority-dot.baja{ background: var(--sage); }
+.priority-dot.media{ background: var(--brass); }
+.priority-dot.alta{ background: var(--brick); }
 .card-del{
   background: none;
   border: none;
@@ -446,6 +361,76 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   text-align: center;
   line-height: 1.6;
 }
+
+.ai-trigger{
+  display:flex;
+  align-items:center;
+  gap: 8px;
+  background: var(--ink-light);
+  border: 1px solid var(--azure);
+  color: var(--parchment);
+  padding: 11px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 13.5px;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 12px;
+}
+.ai-trigger:hover{ background: var(--ink-lighter); }
+.ai-trigger.loading{ opacity: 0.65; cursor: default; }
+.ai-trigger .icon{ font-size: 16px; }
+
+.ai-error{
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--brick);
+  margin-bottom: 14px;
+}
+
+.ai-result{
+  background: var(--parchment);
+  color: var(--ink);
+  border-radius: 3px;
+  padding: 16px 14px 14px 20px;
+  position: relative;
+  margin-bottom: 18px;
+  box-shadow: 0 10px 22px -16px rgba(0,0,0,0.6);
+}
+.ai-result .tabstrip{
+  position:absolute;
+  left:0; top:0; bottom:0;
+  width: 4px;
+  border-radius: 3px 0 0 3px;
+  background: var(--azure);
+}
+.ai-result-label{
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(27,34,48,0.5);
+  margin-bottom: 8px;
+}
+.ai-result-body{
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+.ai-result-actions{ margin-top: 10px; }
+.ai-result-actions button{
+  background: transparent;
+  border: 1px solid rgba(27,34,48,0.25);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.ai-result-actions button:hover{ border-color: var(--azure); color: var(--azure); }
 
 .muted{ color: var(--parchment-dim); font-family: var(--mono); font-size: 13px; }
 
@@ -579,6 +564,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 .fin-bar-fill.ingreso{ background: #7BBF9A; }
 .fin-bar-fill.gasto{ background: #C47676; }
+.fin-bar-legend{
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--parchment-dim);
+  margin-top: 6px;
+}
 
 .fin-list{
   display: flex;
@@ -843,21 +836,194 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .prog-upcoming-amount.ingreso{ color: #7BBF9A; }
 .prog-upcoming-amount.gasto{ color: #C47676; }
 
-/* ---------- Configuración de Presupuestos Manuales ---------- */
-.budget-setup-box {
-  background: var(--ink-light);
-  border: 1px solid var(--line);
-  padding: 14px;
-  border-radius: 4px;
+/* ---------- Budget ---------- */
+.budget-week-nav{
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin-bottom: 18px;
 }
-.budget-setup-title {
+.budget-week-label{
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--parchment);
+  flex: 1;
+  text-align: center;
+}
+.budget-nav-btn{
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  color: var(--parchment-dim);
+  font-family: var(--mono);
+  font-size: 13px;
+  padding: 5px 12px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.budget-nav-btn:hover{ color: var(--parchment); border-color: var(--parchment-dim); }
+.budget-nav-btn:disabled{ opacity: 0.3; cursor: default; }
+
+.budget-spending-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.budget-cat-row{
+  background: var(--ink-light);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 12px 14px;
+}
+.budget-cat-name{
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--parchment-dim);
+  margin-bottom: 6px;
+}
+.budget-cat-amount{
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 600;
+  color: #C47676;
+  margin-bottom: 4px;
+}
+.budget-cat-count{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--parchment-dim);
+}
+.budget-cat-bar{
+  height: 3px;
+  background: rgba(243,239,230,0.08);
+  border-radius: 2px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+.budget-cat-bar-fill{
+  height: 100%;
+  background: #C47676;
+  border-radius: 2px;
+}
+
+.budget-ai-trigger{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ink-lighter);
+  border: 1px solid var(--azure);
+  color: var(--parchment);
+  padding: 13px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 14px;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 14px;
+  transition: background 0.15s;
+}
+.budget-ai-trigger:hover{ background: var(--ink-light); }
+.budget-ai-trigger.loading{ opacity: 0.65; cursor: default; }
+.budget-ai-trigger .icon{ font-size: 18px; }
+.budget-ai-trigger .sub{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--parchment-dim);
+  display: block;
+  margin-top: 2px;
+}
+
+.budget-result{
+  margin-bottom: 18px;
+}
+.budget-block{
+  background: var(--parchment);
+  color: var(--ink);
+  border-radius: 3px;
+  padding: 18px 16px 14px 22px;
+  position: relative;
+  margin-bottom: 10px;
+  box-shadow: 0 10px 22px -16px rgba(0,0,0,0.5);
+}
+.budget-block .tabstrip{
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  border-radius: 3px 0 0 3px;
+}
+.budget-block.analysis .tabstrip{ background: var(--azure); }
+.budget-block.budget-plan .tabstrip{ background: var(--sage); }
+.budget-block.cuts .tabstrip{ background: var(--brick); }
+.budget-block-label{
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: rgba(27,34,48,0.45);
+  margin-bottom: 10px;
+}
+.budget-block-body{
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink);
+  white-space: pre-wrap;
+}
+.budget-block-body.budget-table{
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.8;
+}
+.budget-regen{
+  background: transparent;
+  border: 1px solid rgba(27,34,48,0.22);
+  color: var(--ink);
   font-family: var(--mono);
   font-size: 11px;
+  padding: 5px 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+.budget-regen:hover{ border-color: var(--azure); color: var(--azure); }
+.budget-empty-week{
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--parchment-dim);
+  border: 1px dashed var(--line-strong);
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+}
+.budget-week-stats{
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  background: var(--ink-light);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+.budget-week-stat{
+  flex: 1;
+  min-width: 90px;
+}
+.budget-week-stat-label{
+  font-family: var(--mono);
+  font-size: 10px;
   text-transform: uppercase;
-  color: var(--brass);
-  margin-bottom: 10px;
   letter-spacing: 0.5px;
+  color: var(--parchment-dim);
+  margin-bottom: 3px;
+}
+.budget-week-stat-val{
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 600;
 }
 
 /* ---------- Footer ---------- */
@@ -909,7 +1075,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   transition: opacity 0.2s ease, transform 0.2s ease;
   z-index: 50;
 }
-#toast.show{ opacity: 1; transform: translateX(-50%) translateY(0); }
+#toast.show{
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
 
 @media (max-width: 640px){
   .masthead{ flex-direction: column; gap: 4px; }
@@ -925,7 +1094,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
     <span class="sub" id="dateToday"></span>
   </header>
 
-  <div class="capture" id="captureContainer">
+  <div class="capture">
     <div class="type-toggle" id="typeToggle">
       <button type="button" class="type-btn active" data-type="nota">Nota</button>
       <button type="button" class="type-btn" data-type="tarea">Tarea</button>
@@ -938,8 +1107,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   </div>
 
   <nav class="tabs" id="tabs">
-    <button class="tab active" data-view="dashboard">Dashboard</button>
-    <button class="tab" data-view="hoy">Hoy</button>
+    <button class="tab active" data-view="hoy">Hoy</button>
     <button class="tab" data-view="notas">Notas</button>
     <button class="tab" data-view="tareas">Tareas</button>
     <button class="tab" data-view="recordatorios">Recordatorios</button>
@@ -952,7 +1120,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   <div id="tagcloud"></div>
 
   <main id="content">
-    <p class="muted">Cargando tu archivo…</p>
+    <p class="muted">Cargando tu cerebro…</p>
   </main>
 </div>
 
@@ -960,7 +1128,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   <button type="button" id="notifBtn">🔔 Activar avisos</button>
   <button type="button" id="exportBtn">Exportar</button>
   <label class="import-label">Importar<input type="file" id="importInput" accept="application/json" hidden></label>
-  <span class="footer-note">Tus datos se guardan de forma segura localmente.</span>
+  <span class="footer-note">Tus datos se guardan de forma persistente.</span>
 </footer>
 
 <div id="toast"></div>
@@ -970,26 +1138,32 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   "use strict";
 
   var entries = [];
-  var view = 'dashboard';
+  var view = 'hoy';
   var captureType = 'nota';
   var search = '';
   var activeTag = null;
   var lastAddedId = null;
   var showCompleted = false;
+  var aiAnalysis = null;
+  var aiLoading = false;
+  var aiError = null;
+  var aiTimestamp = null;
 
   // --- Finanzas ---
   var movimientos = [];
   var finType = 'gasto';
-  var finFilter = 'todo'; 
-  var finSubview = 'movimientos'; 
+  var finFilter = 'todo'; // 'todo' | 'ingreso' | 'gasto'
+  var finSubview = 'movimientos'; // 'movimientos' | 'programados' | 'budget'
   var programados = []; 
   var progType = 'gasto';
   var entradasProg = []; 
   var epType = 'tarea'; 
 
-  // Límites de presupuesto ingresados manualmente
-  var budgetPeriodo = 'semanal'; 
-  var budgetMontoMaximo = 0;     
+  // Budget AI State
+  var budgetResult = null; 
+  var budgetLoading = false;
+  var budgetError = null;
+  var budgetWeekOffset = 0; 
 
   var content = document.getElementById('content');
   var searchwrap = document.getElementById('searchwrap');
@@ -998,7 +1172,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 
   // ---------- utils ----------
   function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
-
+  
   function escapeHtml(str){
     if(str === null || str === undefined) return '';
     return String(str)
@@ -1010,16 +1184,23 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   }
 
   var MONTHS = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
-
+  
   function fmtDate(iso){
     if(!iso) return '';
-    var d = new Date(iso);
+    var d = new Date(iso + 'T00:00:00');
     if(isNaN(d.getTime())) return '';
     return pad2(d.getDate()) + '.' + MONTHS[d.getMonth()] + '.' + String(d.getFullYear()).slice(2);
   }
 
-  function pad2(n){ return String(n).padStart(2, '0'); }
+  function fmtDateTime(iso){
+    if(!iso) return '';
+    var d = new Date(iso);
+    if(isNaN(d.getTime())) return '';
+    return pad2(d.getDate()) + '.' + MONTHS[d.getMonth()] + ' ' + pad2(d.getHours()) + ':' + pad2(d.getMinutes());
+  }
 
+  function pad2(n){ return String(n).padStart(2, '0'); }
+  
   function todayStr(){
     var d = new Date();
     return d.getFullYear() + '-' + pad2(d.getMonth()+1) + '-' + pad2(d.getDate());
@@ -1033,20 +1214,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   function isOverdueTask(e){
     if(e.type !== 'tarea' || e.done || !e.dueAt) return false;
     return e.dueAt < todayStr();
-  }
-
-  function isInCurrentBudgetRange(mDateStr) {
-    var mDate = new Date(mDateStr + 'T12:00:00');
-    var ahora = new Date();
-    if (budgetPeriodo === 'semanal') {
-      var unSemanaAtras = new Date();
-      unSemanaAtras.setDate(ahora.getDate() - 7);
-      return mDate >= unSemanaAtras && mDate <= ahora;
-    } else {
-      var unMesAtras = new Date();
-      unMesAtras.setMonth(ahora.getMonth() - 1);
-      return mDate >= unMesAtras && mDate <= ahora;
-    }
   }
 
   function isDueToday(e){
@@ -1067,30 +1234,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 
   // ---------- storage ----------
   async function loadEntries(){
-    try{
-      var res = await window.storage.get('entries');
-      entries = (res && res.value) ? JSON.parse(res.value) : [];
-    }catch(err){ entries = []; }
-    try{
-      var res2 = await window.storage.get('movimientos');
-      movimientos = (res2 && res2.value) ? JSON.parse(res2.value) : [];
-    }catch(err){ movimientos = []; }
-    try{
-      var res3 = await window.storage.get('programados');
-      programados = (res3 && res3.value) ? JSON.parse(res3.value) : [];
-    }catch(err){ programados = []; }
-    try{
-      var res4 = await window.storage.get('entradasProg');
-      entradasProg = (res4 && res4.value) ? JSON.parse(res4.value) : [];
-    }catch(err){ entradasProg = []; }
-    try{
-      var res5 = await window.storage.get('budgetPeriodo');
-      if (res5 && res5.value) budgetPeriodo = res5.value;
-    }catch(err){}
-    try{
-      var res6 = await window.storage.get('budgetMontoMaximo');
-      if (res6 && res6.value) budgetMontoMaximo = parseFloat(res6.value);
-    }catch(err){}
+    try{ var res = await window.storage.get('entries'); entries = (res && res.value) ? JSON.parse(res.value) : []; }catch(err){ entries = []; }
+    try{ var res2 = await window.storage.get('movimientos'); movimientos = (res2 && res2.value) ? JSON.parse(res2.value) : []; }catch(err){ movimientos = []; }
+    try{ var res3 = await window.storage.get('programados'); programados = (res3 && res3.value) ? JSON.parse(res3.value) : []; }catch(err){ programados = []; }
+    try{ var res4 = await window.storage.get('entradasProg'); entradasProg = (res4 && res4.value) ? JSON.parse(res4.value) : []; }catch(err){ entradasProg = []; }
+    
     applyProgramados();
     applyEntradasProg();
     render();
@@ -1099,724 +1247,1047 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   var saveTimer = null;
   function persist(){
     clearTimeout(saveTimer);
-    saveTimer = setTimeout(async function(){
-      try{ await window.storage.set('entries', JSON.stringify(entries)); }catch(err){ console.error(err); }
-    }, 250);
+    saveTimer = setTimeout(function(){ window.storage.set('entries', JSON.stringify(entries)); }, 300);
   }
 
   function persistFin(){ window.storage.set('movimientos', JSON.stringify(movimientos)); }
   function persistProg(){ window.storage.set('programados', JSON.stringify(programados)); }
   function persistEP(){ window.storage.set('entradasProg', JSON.stringify(entradasProg)); }
-  function persistBudgetConfig(){
-    window.storage.set('budgetPeriodo', budgetPeriodo);
-    window.storage.set('budgetMontoMaximo', budgetMontoMaximo.toString());
-  }
 
-  // ---------- data ops ----------
-  function addEntry(type, title){
-    var now = new Date().toISOString();
-    var base = { id: uid(), type: type, title: title || '(sin título)', body: '', tags: [], createdAt: now };
-    if(type === 'tarea'){ base.done = false; base.dueAt = null; base.priority = 'media'; }
-    if(type === 'recordatorio'){ base.remindAt = null; base.notified = false; }
-    entries.unshift(base);
-    lastAddedId = base.id;
-    persist();
-
-    // Integración Automática Segura con iOS de Apple (Abre la app Recordatorios nativa)
-    if(type === 'nota' && /iPhone|iPad|iPod/i.test(navigator.userAgent)){
-      setTimeout(function(){
-        window.location.href = "shortcuts://run-shortcut?name=CrearRecordatorio&input=" + encodeURIComponent(title);
-        // Si no tienes el atajo, este fallback limpio abrirá la aplicación nativa directamente:
-        setTimeout(function(){
-          window.location.href = "x-apple-reminder://";
-        }, 400);
-      }, 300);
-    }
-
-    view = type === 'nota' ? 'notas' : (type === 'tarea' ? 'tareas' : 'recordatorios');
-    syncTabsUI();
-    render();
-    setTimeout(function(){ lastAddedId = null; }, 1800);
-  }
-
-  function findEntry(id){
-    for(var i=0;i<entries.length;i++){ if(entries[i].id === id) return entries[i]; }
-    return null;
-  }
-
-  function deleteEntry(id){
-    entries = entries.filter(function(e){ return e.id !== id; });
-    persist();
-    render();
-  }
-
-  // ---------- entradas programadas ----------
-  function applyEntradasProg(){
-    var today = todayStr();
-    var changed = false;
-    entradasProg.forEach(function(ep){
-      var safety = 0;
-      while(ep.nextDue <= today && safety < 60){
-        safety++;
-        var now = new Date(ep.nextDue + 'T08:00:00').toISOString();
-        var base = { id: uid(), type: ep.type, title: ep.title, body: ep.body || '', tags: ep.tags || [], createdAt: now, epId: ep.id };
-        if(ep.type === 'tarea'){ base.done = false; base.dueAt = ep.nextDue; base.priority = ep.priority || 'media'; }
-        if(ep.type === 'recordatorio'){ base.remindAt = ep.nextDue + 'T08:00'; base.notified = false; }
-        entries.push(base);
-        ep.lastApplied = ep.nextDue;
-        ep.nextDue = nextDueDate(ep.nextDue, ep.freq);
-        changed = true;
-      }
-    });
-    if(changed){
-      entries.sort(function(a,b){ return b.createdAt > a.createdAt ? 1 : -1; });
-      persist();
-      persistEP();
-    }
-  }
-
-  function addEntradaProg(type, title, body, freq, startDate, priority){
-    var ep = {
-      id: uid(),
-      type: type,
-      title: title,
-      body: body || '',
-      tags: [],
-      freq: freq,
-      priority: priority || 'media',
-      nextDue: startDate || todayStr(),
-      lastApplied: null,
-      createdAt: new Date().toISOString()
-    };
-    entradasProg.push(ep);
-    persistEP();
-    applyEntradasProg();
-    render();
-  }
-
-  function deleteEntradaProg(id){
-    entradasProg = entradasProg.filter(function(ep){ return ep.id !== id; });
-    persistEP();
-    render();
-  }
-
-  function renderEntradasProgPanel(){
-    var FREQ_TYPE_LABELS = { diario:'Diaria', semanal:'Semanal', quincenal:'Quincenal', mensual:'Mensual', bimestral:'Bimestral', trimestral:'Trimestral', anual:'Anual' };
-    var html = '';
-
-    html += '<div class="fin-capture" style="margin-bottom:18px">';
-    html += '<div style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.6px;color:var(--parchment-dim);margin-bottom:10px">Nueva entrada programada</div>';
-    html += '<div class="fin-type-toggle" id="epTypeToggle">';
-    ['tarea','nota','recordatorio'].forEach(function(t){
-      var labels = {tarea:'Tarea', nota:'Nota', recordatorio:'Recordatorio'};
-      var colors = {tarea:'sage', nota:'brass', recordatorio:'brick'};
-      var isActive = epType === t;
-      html += '<button type="button" class="fin-type-btn' + (isActive ? ' active" style="background:var(--' + colors[t] + ');color:var(--ink);border-color:var(--' + colors[t] + ')"' : '"') + ' data-eptype="' + t + '">' + labels[t] + '</button>';
-    });
-    html += '</div>';
-    html += '<div class="fin-row">';
-    html += '<input class="fin-input fin-input-desc" id="epTitle" type="text" placeholder="Título…" autocomplete="off">';
-    html += '<input class="fin-input" id="epBody" type="text" placeholder="Descripción (opcional)…" style="flex:1;min-width:120px">';
-    html += '</div>';
-    html += '<div class="fin-row" style="margin-top:8px">';
-    html += '<select class="fin-input" id="epFreq" style="width:140px;font-size:12px;font-family:var(--mono)">';
-    Object.keys(FREQ_TYPE_LABELS).forEach(function(f){ html += '<option value="' + f + '">' + FREQ_TYPE_LABELS[f] + '</option>'; });
-    html += '</select>';
-    if(epType === 'tarea'){
-      html += '<select class="fin-input" id="epPriority" style="width:100px;font-size:12px;font-family:var(--mono)">';
-      html += '<option value="baja">Baja</option><option value="media" selected>Media</option><option value="alta">Alta</option>';
-      html += '</select>';
-    }
-    html += '<input class="fin-input" id="epStart" type="date" value="' + todayStr() + '" style="width:148px;font-family:var(--mono);font-size:12px">';
-    html += '<button type="button" class="fin-submit" id="epSubmit">Programar</button>';
-    html += '</div></div>';
-
-    html += '<div class="section-label">Entradas programadas activas</div>';
-    if(!entradasProg.length){
-      html += emptyState('Aún no tienes entradas programadas.');
-    } else {
-      html += '<div class="fin-list">';
-      var typeColors = { tarea: '#5C7A6E', nota: '#C9A227', recordatorio: '#8B3A3A' };
-      entradasProg.forEach(function(ep){
-        html += '<div class="prog-item">';
-        html += '<div class="prog-item-dot" style="background:' + (typeColors[ep.type] || '#888') + '"></div>';
-        html += '<div class="prog-item-desc">' + escapeHtml(ep.title) + '</div>';
-        html += '<span class="fin-item-cat">' + ep.type + '</span>';
-        html += '<span class="prog-item-freq">' + (FREQ_TYPE_LABELS[ep.freq]||ep.freq) + '</span>';
-        html += '<div class="prog-item-next">Próx: ' + ep.nextDue + '</div>';
-        html += '<button class="prog-item-del" data-epdel="' + ep.id + '" title="Eliminar">✕</button>';
-        html += '</div>';
-      });
-      html += '</div>';
-    }
-    return html;
-  }
-
-  var entrySubview = 'lista'; 
-
-  function renderEntrySubTabs(){
-    return '<div class="fin-tabs" style="margin-bottom:16px">' +
-      '<button type="button" class="fin-tab' + (entrySubview==='lista'?' active':'') + '" data-entrysubview="lista">Lista</button>' +
-      '<button type="button" class="fin-tab' + (entrySubview==='programadas'?' active':'') + '" data-entrysubview="programadas">Programadas' + (entradasProg.length ? '<span class="prog-badge">' + entradasProg.length + '</span>' : '') + '</button>' +
-      '</div>';
-  }
-  function uniqueTags(){
-    var set = {};
-    entries.forEach(function(e){ (e.tags||[]).forEach(function(t){ set[t] = true; }); });
-    return Object.keys(set).sort();
-  }
-
-  function matchesSearch(e){
-    if(!search) return true;
-    var q = search.toLowerCase();
-    var hay = (e.title||'') + ' ' + (e.body||'') + ' ' + (e.tags||[]).join(' ');
-    return hay.toLowerCase().indexOf(q) !== -1;
-  }
-
-  function matchesTag(e){
-    if(!activeTag) return true;
-    return (e.tags||[]).indexOf(activeTag) !== -1;
-  }
-
-  function cardOpen(e){
-    var stamp = e.type === 'recordatorio' ? '' : fmtDate(e.createdAt);
-    var justAdded = e.id === lastAddedId ? ' just-added' : '';
-    return '<div class="card type-' + e.type + justAdded + '" data-card="' + e.id + '">' +
-      '<div class="tabstrip"></div>' +
-      '<div class="card-top">' +
-        '<input class="card-title' + (e.done ? ' done' : '') + '" data-id="' + e.id + '" data-field="title" value="' + escapeHtml(e.title) + '">' +
-        '<span class="card-stamp">' + stamp + '</span>' +
-      '</div>';
-  }
-
-  function cardClose(e){
-    return '<div class="card-row">' +
-        '<input class="card-tags" data-id="' + e.id + '" data-field="tags" value="' + escapeHtml((e.tags||[]).join(', ')) + '" placeholder="etiquetas…">' +
-        '<button class="card-del" data-del="' + e.id + '" title="Eliminar">✕</button>' +
-      '</div>' +
-    '</div>';
-  }
-
-  function renderCard(e){
-    if(e.type === 'nota') {
-      return cardOpen(e) + '<textarea class="card-body" data-id="' + e.id + '" data-field="body" placeholder="Escribe aquí…">' + escapeHtml(e.body) + '</textarea>' + cardClose(e);
-    }
-    if(e.type === 'tarea') {
-      var flag = isOverdueTask(e) ? '<span class="overdue-flag">Vencida</span>' : '';
-      return cardOpen(e).replace('<div class="card-top">', '<div class="card-top"><input type="checkbox" class="card-check" data-id="' + e.id + '" data-field="done"' + (e.done?' checked':'') + '>') +
-        '<textarea class="card-body" data-id="' + e.id + '" data-field="body" placeholder="Notas…">' + escapeHtml(e.body) + '</textarea>' +
-        '<div class="card-row"><input type="date" class="card-date" data-id="' + e.id + '" data-field="dueAt" value="' + (e.dueAt || '') + '"><select class="card-priority" data-id="' + e.id + '" data-field="priority"><option value="baja"' + (e.priority==='baja'?' selected':'') + '>baja</option><option value="media"' + (e.priority==='media'?' selected':'') + '>media</option><option value="alta"' + (e.priority==='alta'?' selected':'') + '>alta</option></select>' + flag + '</div>' + cardClose(e);
-    }
-    return cardOpen(e) + '<div class="card-row"><input type="datetime-local" class="card-date" data-id="' + e.id + '" data-field="remindAt" value="' + (e.remindAt || '') + '" style="flex:1"></div>' + cardClose(e);
-  }
-
-  function emptyState(msg){ return '<div class="empty">' + msg + '</div>'; }
-
-  // ---------- Vista Dashboard Principal ----------
-  function renderDashboardView() {
-    var totalNotas = entries.filter(e => e.type === 'nota').length;
-    var tareasPendientes = entries.filter(e => e.type === 'tarea' && !e.done).length;
-    var recordatoriosProximos = entries.filter(e => e.type === 'recordatorio' && (!e.remindAt || e.remindAt >= nowLocalStr())).length;
-
-    var ingresosCiclo = 0;
-    var gastosCiclo = 0;
-    var categoriasGasto = {};
-
-    movimientos.forEach(function(m){
-      if(isInCurrentBudgetRange(m.date || m.createdAt.slice(0,10))) {
-        if(m.type === 'ingreso') ingresosCiclo += m.amount;
-        else {
-          gastosCiclo += m.amount;
-          categoriasGasto[m.cat] = (categoriasGasto[m.cat] || 0) + m.amount;
-        }
-      }
-    });
-
-    var balanceCiclo = ingresosCiclo - gastosCiclo;
-    var pctConsumido = budgetMontoMaximo > 0 ? (gastosCiclo / budgetMontoMaximo) * 100 : 0;
-
-    var html = '<div class="dash-container">';
-    html += '<div class="section-label">Resumen Ejecutivo General</div>';
-    html += '<div class="dash-grid-metrics">';
-    html += '  <div class="dash-metric-card" data-gotoview="notas"><div class="dash-metric-lbl">Notas</div><div class="dash-metric-val" style="color:var(--brass)">' + totalNotas + '</div></div>';
-    html += '  <div class="dash-metric-card" data-gotoview="tareas"><div class="dash-metric-lbl">Tareas Pendientes</div><div class="dash-metric-val" style="color:var(--sage)">' + tareasPendientes + '</div></div>';
-    html += '  <div class="dash-metric-card" data-gotoview="recordatorios"><div class="dash-metric-lbl">Recordatorios</div><div class="dash-metric-val" style="color:var(--brick)">' + recordatoriosProximos + '</div></div>';
-    html += '</div>';
-
-    html += '<div class="section-label">Estado Financiero Integrado (Ciclo ' + budgetPeriodo.toUpperCase() + ')</div>';
-    html += '<div class="dash-grid-metrics">';
-    html += '  <div class="dash-metric-card" data-gotoview="finanzas"><div class="dash-metric-lbl">Ingresos Ciclo</div><div class="dash-metric-val" style="color:#7BBF9A">+$' + ingresosCiclo.toFixed(0) + '</div></div>';
-    html += '  <div class="dash-metric-card" data-gotoview="finanzas"><div class="dash-metric-lbl">Gastos Ciclo</div><div class="dash-metric-val" style="color:#C47676">-$' + gastosCiclo.toFixed(0) + '</div></div>';
-    html += '  <div class="dash-metric-card" data-gotoview="finanzas"><div class="dash-metric-lbl">Balance Ciclo</div><div class="dash-metric-val ' + (balanceCiclo>=0?'pos':'neg') + '">$' + balanceCiclo.toFixed(0) + '</div></div>';
-    html += '</div>';
-
-    html += '<div class="dash-charts-row">';
-    html += '  <div class="dash-chart-box">';
-    html += '    <div class="dash-chart-head">📊 Uso del Presupuesto (' + budgetPeriodo + ')</div>';
-    if(budgetMontoMaximo > 0) {
-      html += '    <div class="dash-list-row"><span>Ejecución del límite fijado ($' + budgetMontoMaximo + '):</span><span>' + pctConsumido.toFixed(1) + '%</span></div>';
-      html += '    <div class="dash-bar-visual">';
-      html += '      <div class="dash-bar-segment" style="width:' + Math.min(pctConsumido, 100) + '%; background:' + (pctConsumido > 100 ? 'var(--brick)' : 'var(--brass)') + ';"></div>';
-      html += '    </div>';
-      html += '    <div class="dash-list-row"><span style="font-size:10px;' + (pctConsumido > 100 ? 'color:var(--brick); font-weight:bold;' : '') + '">' + (pctConsumido > 100 ? '⚠️ Límite Excedido' : 'Margen controlado') + '</span></div>';
-    } else {
-      html += '    <p class="muted" style="font-size:11px; text-align:center;">Asigna una base presupuestaria en Finanzas para activar el gráfico.</p>';
-    }
-    html += '  </div>';
-
-    html += '  <div class="dash-chart-box">';
-    html += '    <div class="dash-chart-head">🏷️ Gastos por Categoría</div>';
-    var sortedCats = Object.keys(categoriasGasto).sort((a,b) => categoriasGasto[b] - categoriasGasto[a]);
-    if(sortedCats.length === 0) {
-      html += '    <p class="muted" style="font-size:11px; text-align:center;">Sin gastos registrados en el periodo.</p>';
-    } else {
-      var maxGastoValue = categoriasGasto[sortedCats[0]] || 1;
-      sortedCats.slice(0, 3).forEach(function(cat) {
-        var totalC = categoriasGasto[cat];
-        var pctC = (totalC / maxGastoValue) * 100;
-        html += '    <div class="dash-progress-row">';
-        html += '      <div class="dash-list-row"><span>' + escapeHtml(cat.toUpperCase()) + '</span><span>$' + totalC.toFixed(0) + '</span></div>';
-        html += '      <div class="dash-list-bar-track"><div class="dash-list-bar-fill" style="width:' + pctC + '%;"></div></div>';
-        html += '    </div>';
-      });
-    }
-    html += '  </div>';
-    html += '</div>'; 
-    html += '</div>'; 
-
-    return html;
-  }
-
-  // ---------- views ----------
-  function renderHoy(){
-    var tareasPend = entries.filter(function(e){ return e.type==='tarea' && !e.done; });
-    var overdue = tareasPend.filter(isOverdueTask);
-    var dueToday = tareasPend.filter(function(e){ return isDueToday(e) && !isOverdueTask(e); });
-    var remToday = entries.filter(isReminderToday);
-    var recentNotas = entries.filter(function(e){ return e.type==='nota'; }).slice(0,5);
-
-    var nNotas = entries.filter(function(e){ return e.type==='nota'; }).length;
-    var nRem = entries.filter(function(e){ return e.type==='recordatorio' && e.remindAt && e.remindAt.slice(0,10) >= todayStr(); }).length;
-
-    var html = '<div class="stats">' + tareasPend.length + ' pendientes · ' + nRem + ' recordatorios · ' + nNotas + ' notas</div>';
-    html += renderFinHoyMini();
-
-    html += '<div class="section-label">Vencidas</div>';
-    html += overdue.length ? '<div class="list">' + overdue.map(renderCard).join('') + '</div>' : emptyState('Sin tareas vencidas.');
-
-    html += '<div class="section-label">Para hoy</div>';
-    var hoyItems = dueToday.concat(remToday);
-    html += hoyItems.length ? '<div class="list">' + hoyItems.map(renderCard).join('') + '</div>' : emptyState('Nada urgente.');
-
-    html += '<div class="section-label">Notas recientes</div>';
-    html += recentNotas.length ? '<div class="grid">' + recentNotas.map(renderCard).join('') + '</div>' : emptyState('Sin notas.');
-
-    return html;
-  }
-
-  function renderNotas(){
-    var tabs = renderEntrySubTabs();
-    if(entrySubview === 'programadas') return tabs + renderEntradasProgPanel();
-    var notas = entries.filter(function(e){ return e.type==='nota'; }).filter(matchesSearch).filter(matchesTag);
-    if(!notas.length) return tabs + emptyState('No hay notas.');
-    return tabs + '<div class="grid">' + notas.map(renderCard).join('') + '</div>';
-  }
-
-  function renderTareas(){
-    var tabs = renderEntrySubTabs();
-    if(entrySubview === 'programadas') return tabs + renderEntradasProgPanel();
-    var all = entries.filter(function(e){ return e.type==='tarea'; }).filter(matchesSearch);
-    if(!all.length) return tabs + emptyState('No hay tareas.');
-
-    var pendientes = all.filter(function(e){ return !e.done; });
-    var completadas = all.filter(function(e){ return e.done; });
-
-    pendientes.sort(function(a,b){
-      var av = a.dueAt || '9999'; var bv = b.dueAt || '9999';
-      return av < bv ? -1 : av > bv ? 1 : 0;
-    });
-
-    var html = tabs;
-    html += pendientes.length ? '<div class="list">' + pendientes.map(renderCard).join('') + '</div>' : emptyState('No hay pendientes.');
-
-    if(completadas.length){
-      html += '<button class="collapse-toggle" id="toggleCompleted">' + (showCompleted ? 'Ocultar' : 'Mostrar') + ' completadas (' + completadas.length + ')</button>';
-      if(showCompleted){ html += '<div class="list" style="margin-top:10px">' + completadas.map(renderCard).join('') + '</div>'; }
-    }
-    return html;
-  }
-
-  function renderRecordatorios(){
-    var tabs = renderEntrySubTabs();
-    if(entrySubview === 'programadas') return tabs + renderEntradasProgPanel();
-    var all = entries.filter(function(e){ return e.type==='recordatorio'; }).filter(matchesSearch);
-    if(!all.length) return tabs + emptyState('No hay recordatorios.');
-
-    var now = nowLocalStr();
-    var proximos = all.filter(function(e){ return !e.remindAt || e.remindAt >= now; });
-    var pasados = all.filter(function(e){ return e.remindAt && e.remindAt < now; });
-
-    proximos.sort(function(a,b){
-      var av = a.remindAt || '9999'; var bv = b.remindAt || '9999';
-      return av < bv ? -1 : av > bv ? 1 : 0;
-    });
-
-    var html = tabs + '<div class="section-label">Próximos</div>';
-    html += proximos.length ? '<div class="list">' + proximos.map(renderCard).join('') + '</div>' : emptyState('No hay próximos.');
-    if(pasados.length){
-      html += '<div class="section-label">Pasados</div>'; html += '<div class="list">' + pasados.map(renderCard).join('') + '</div>';
-    }
-    return html;
-  }
-
-  // ---------- finanzas ----------
-  var FIN_CATS = ['Nómina','Materiales','Equipos','Transporte','Servicios','Clientes','Subcontratos','Oficina','Otro'];
-  var FREQ_LABELS = { diario:'Diario', semanal:'Semanal', quincenal:'Quincenal', mensual:'Mensual', bimestral:'Bimestral', trimestral:'Trimestral', anual:'Anual' };
-
-  function fmtCOP(n){ return '$' + Math.abs(n).toLocaleString('es-CO', { maximumFractionDigits: 0 }); }
-
-  function nextDueDate(lastStr, freq){
-    var d = lastStr ? new Date(lastStr + 'T12:00:00') : new Date();
-    switch(freq){
-      case 'diario': d.setDate(d.getDate() + 1); break;
-      case 'semanal': d.setDate(d.getDate() + 7); break;
-      case 'quincenal': d.setDate(d.getDate() + 15); break;
-      case 'mensual': d.setMonth(d.getMonth() + 1); break;
-      case 'anual': d.setFullYear(d.getFullYear() + 1); break;
-    }
+  // ---------- recurring systems ----------
+  function getNextDateForFreq(baseDate, freq){
+    var d = new Date(baseDate + 'T00:00:00');
+    if(freq === 'diario') d.setDate(d.getDate() + 1);
+    else if(freq === 'semanal') d.setDate(d.getDate() + 7);
+    else if(freq === 'quincenal') d.setDate(d.getDate() + 14);
+    else if(freq === 'mensual') d.setMonth(d.getMonth() + 1);
     return d.getFullYear() + '-' + pad2(d.getMonth()+1) + '-' + pad2(d.getDate());
   }
 
   function applyProgramados(){
-    var today = todayStr();
-    var changed = false;
+    var hoy = todayStr();
+    var modificado = false;
     programados.forEach(function(p){
-      var safety = 0;
-      while(p.nextDue <= today && safety < 60){
-        safety++;
-        var m = { id: uid(), type: p.type, desc: p.desc + ' (automático)', amount: p.amount, cat: p.cat, progId: p.id, createdAt: new Date(p.nextDue + 'T08:00:00').toISOString() };
-        movimientos.push(m); p.lastApplied = p.nextDue; p.nextDue = nextDueDate(p.nextDue, p.freq); changed = true;
+      if(!p.nextDate) p.nextDate = hoy;
+      while(p.nextDate <= hoy){
+        movimientos.push({
+          id: uid(),
+          type: p.type,
+          desc: p.desc + ' (Recurrente)',
+          amount: p.amount,
+          cat: p.cat || 'General',
+          date: p.nextDate
+        });
+        p.nextDate = getNextDateForFreq(p.nextDate, p.freq);
+        modificado = true;
       }
     });
-    if(changed){ movimientos.sort((a,b) => b.createdAt.localeCompare(a.createdAt)); persistFin(); persistProg(); }
+    if(modificado){ persistFin(); persistProg(); }
   }
 
-  function upcomingProgramados(){
-    var today = todayStr(); var in7 = new Date(); in7.setDate(in7.getDate() + 7);
-    var in7str = in7.getFullYear() + '-' + pad2(in7.getMonth()+1) + '-' + pad2(in7.getDate());
-    return programados.filter(p => p.nextDue >= today && p.nextDue <= in7str).sort((a,b) => a.nextDue.localeCompare(b.nextDue));
-  }
-
-  function addProgramado(type, desc, amount, cat, freq, startDate){
-    var p = { id: uid(), type: type, desc: desc, amount: Math.abs(amount), cat: cat || 'Otro', freq: freq, nextDue: startDate || todayStr(), lastApplied: null, createdAt: new Date().toISOString() };
-    programados.push(p); persistProg(); applyProgramados(); render();
-  }
-
-  function deleteProgramado(id){ programados = programados.filter(p => p.id !== id); persistProg(); render(); }
-  function addMovimiento(type, desc, amount, cat){
-    var m = { id: uid(), type: type, desc: desc, amount: Math.abs(amount), cat: cat || 'Otro', createdAt: new Date().toISOString(), date: todayStr() };
-    movimientos.unshift(m); persistFin(); render();
-  }
-  function deleteMovimiento(id){ movimientos = movimientos.filter(m => m.id !== id); persistFin(); render(); }
-
-  // Corregido aquí: Se removió la sintaxis inválida sin comillas
-  function finTotals(){
-    var ingresos = 0, gastos = 0;
-    movimientos.forEach(function(m){ if(m.type === 'ingreso') ingresos += m.amount; else gastos += m.amount; });
-    return { ingresos: ingresos, gastos: gastos, balance: ingresos - gastos };
-  }
-
-  function finCatBreakdown(){
-    var cats = {}; movimientos.filter(m => m.type === 'gasto').forEach(m => { cats[m.cat] = (cats[m.cat] || 0) + m.amount; });
-    return cats;
-  }
-
-  function renderProgramadosSubview(){
-    var html = ''; var upcoming = upcomingProgramados();
-    if(upcoming.length){
-      html += '<div class="section-label">Próximos 7 días</div>';
-      upcoming.forEach(function(p){
-        html += '<div class="prog-upcoming"><div class="fin-item-dot ' + p.type + '"></div><div><div class="prog-upcoming-label">' + p.nextDue + ' · ' + FREQ_LABELS[p.freq] + '</div><div class="prog-upcoming-desc">' + escapeHtml(p.desc) + '</div></div><div class="prog-upcoming-amount ' + p.type + '">' + (p.type==='ingreso'?'+':'-') + fmtCOP(p.amount) + '</div></div>';
-      });
-    }
-
-    html += '<div class="fin-capture" style="margin-bottom:18px"><div style="font-family:var(--mono);font-size:10px;text-transform:uppercase;color:var(--parchment-dim);margin-bottom:10px">Nuevo programado</div><div class="fin-type-toggle" id="progTypeToggle"><button type="button" class="fin-type-btn' + (progType==='ingreso'?' active':'') + '" data-progtype="ingreso">Ingreso</button><button type="button" class="fin-type-btn' + (progType==='gasto'?' active':'') + '" data-progtype="gasto">Gasto</button></div><div class="fin-row"><input class="fin-input fin-input-desc" id="progDesc" type="text" placeholder="Ej. Teléfono…"><input class="fin-input fin-input-amount" id="progAmount" type="number" placeholder="Monto"></div><div class="fin-row" style="margin-top:8px"><select class="fin-input fin-input-cat" id="progCat">';
-    FIN_CATS.forEach(function(c){ html += '<option value="' + c + '">' + c + '</option>'; });
-    html += '</select><select class="fin-input" id="progFreq">';
-    Object.keys(FREQ_LABELS).forEach(function(f){ html += '<option value="' + f + '">' + FREQ_LABELS[f] + '</option>'; });
-    html += '</select><input class="fin-input" id="progStart" type="date" value="' + todayStr() + '"><button type="button" class="fin-submit" id="progSubmit">Agregar</button></div></div>';
-
-    html += '<div class="section-label">Programados activos</div>';
-    if(!programados.length){ html += emptyState('Sin movimientos programados.'); } 
-    else {
-      html += '<div class="fin-list">';
-      programados.forEach(function(p){
-        html += '<div class="prog-item"><div class="prog-item-dot ' + p.type + '"></div><div class="prog-item-desc">' + escapeHtml(p.desc) + '</div><span class="prog-item-freq">' + FREQ_LABELS[p.freq] + '</span><span class="fin-item-cat">' + escapeHtml(p.cat) + '</span><div class="prog-item-next">Próx: ' + p.nextDue + '</div><div class="prog-item-amount ' + p.type + '">' + (p.type==='ingreso'?'+':'-') + fmtCOP(p.amount) + '</div><button class="prog-item-del" data-progdel="' + p.id + '">✕</button></div>';
-      });
-      html += '</div>';
-    }
-    return html;
-  }
-
-  function renderFinanzas(){
-    var t = finTotals();
-    var filtered = finFilter === 'todo' ? movimientos : movimientos.filter(m => m.type === finFilter);
-    var max = Math.max(t.ingresos, t.gastos) || 1;
-    var upcomingCount = upcomingProgramados().length;
-
-    var html = '<div class="fin-tabs">';
-    html += '  <button type="button" class="fin-tab' + (finSubview==='movimientos'?' active':'') + '" data-finsubview="movimientos">Movimientos</button>';
-    html += '  <button type="button" class="fin-tab' + (finSubview==='programados'?' active':'') + '" data-finsubview="programados">Programados' + (upcomingCount ? '<span class="prog-badge">' + upcomingCount + '</span>' : '') + '</button>';
-    html += '  <button type="button" class="fin-tab' + (finSubview==='budget'?' active':'') + '" data-finsubview="budget">Ajuste Presupuesto</button>';
-    html += '</div>';
-
-    if(finSubview === 'programados') return html + renderProgramadosSubview();
-    
-    if(finSubview === 'budget') {
-      html += '<div class="budget-setup-box">';
-      html += '  <div class="budget-setup-title">Configurar Base de Gastos Objetivo</div>';
-      html += '  <div class="fin-row">';
-      html += '    <select class="fin-input" id="setupBudgetPeriodo" style="width:130px;">';
-      html += '      <option value="semanal"' + (budgetPeriodo==='semanal'?' selected':'') + '>Semanal</option>';
-      html += '      <option value="mensual"' + (budgetPeriodo==='mensual'?' selected':'') + '>Mensual</option>';
-      html += '    </select>';
-      html += '    <input class="fin-input fin-input-amount" id="setupBudgetMonto" type="number" placeholder="Límite $" value="' + budgetMontoMaximo + '">';
-      html += '    <button type="button" class="fin-submit" id="saveBudgetSetupBtn">Fijar Techo</button>';
-      html += '  </div>';
-      html += '</div>';
-      return html;
-    }
-
-    html += '<div class="fin-capture"><div class="fin-type-toggle" id="finTypeToggle"><button type="button" class="fin-type-btn' + (finType==='ingreso' ? ' active' : '') + '" data-fintype="ingreso">Ingreso</button><button type="button" class="fin-type-btn' + (finType==='gasto' ? ' active' : '') + '" data-fintype="gasto">Gasto</button></div><div class="fin-row" id="finForm"><input class="fin-input fin-input-desc" id="finDesc" type="text" placeholder="Descripción…"><input class="fin-input fin-input-amount" id="finAmount" type="number" placeholder="Monto COP"><select class="fin-input fin-input-cat" id="finCat">';
-    FIN_CATS.forEach(function(c){ html += '<option value="' + c + '">' + c + '</option>'; });
-    html += '</select><button type="button" class="fin-submit" id="finSubmit">Registrar</button></div></div>';
-
-    html += '<div class="fin-summary">';
-    html += '  <div class="fin-kpi"><div class="fin-kpi-label">Ingresos</div><div class="fin-kpi-value ingreso">' + fmtCOP(t.ingresos) + '</div></div>';
-    html += '  <div class="fin-kpi"><div class="fin-kpi-label">Gastos</div><div class="fin-kpi-value gasto">' + fmtCOP(t.gastos) + '</div></div>';
-    html += '  <div class="fin-kpi"><div class="fin-kpi-label">Balance</div><div class="fin-kpi-value balance ' + (t.balance>=0?'pos':'neg') + '">' + (t.balance>=0?'+':'-') + fmtCOP(t.balance) + '</div></div>';
-    html += '</div>';
-
-    if(movimientos.length){
-      html += '<div class="fin-bar-wrap"><div class="fin-bar-label">Proporción ingresos / gastos</div><div style="margin-bottom:6px"><div style="font-size:10px;color:var(--parchment-dim);margin-bottom:3px">Ingresos</div><div class="fin-bar-track"><div class="fin-bar-fill ingreso" style="width:' + (t.ingresos/max*100).toFixed(1) + '%"></div></div></div><div><div style="font-size:10px;color:var(--parchment-dim);margin-bottom:3px">Gastos</div><div class="fin-bar-track"><div class="fin-bar-fill gasto" style="width:' + (t.gastos/max*100).toFixed(1) + '%"></div></div></div></div>';
-      var cats = finCatBreakdown(); var catKeys = Object.keys(cats).sort((a,b) => cats[b]-cats[a]);
-      if(catKeys.length){
-        html += '<div class="section-label">Gastos por categoría</div><div class="fin-cat-breakdown">';
-        catKeys.forEach(function(k){ html += '<div class="fin-cat-item"><div class="fin-cat-name">' + escapeHtml(k) + '</div><div class="fin-cat-val">' + fmtCOP(cats[k]) + '</div></div>'; });
-        html += '</div>';
+  function applyEntradasProg(){
+    var hoy = todayStr();
+    var modificado = false;
+    entradasProg.forEach(function(p){
+      if(!p.nextDate) p.nextDate = hoy;
+      while(p.nextDate <= hoy){
+        var e = {
+          id: uid(),
+          type: p.type,
+          title: p.title + ' (Recurrente)',
+          body: p.body || '',
+          tags: p.tags ? p.tags.slice() : [],
+          createdAt: new Date().toISOString()
+        };
+        if(p.type === 'tarea'){ e.dueAt = hoy; e.priority = p.priority || 'media'; e.done = false; }
+        else if(p.type === 'recordatorio'){ e.remindAt = hoy + 'T09:00'; e.dismissed = false; }
+        entries.push(e);
+        p.nextDate = getNextDateForFreq(p.nextDate, p.freq);
+        modificado = true;
       }
-    }
-
-    html += '<div class="fin-filter-row">';
-    ['todo','ingreso','gasto'].forEach(function(f){ html += '<button type="button" class="fin-filter-btn' + (finFilter===f ? ' active' : '') + '" data-finfilter="' + f + '">' + (f==='todo'?'Todos':f.toUpperCase()+'S') + '</button>'; });
-    html += '</div>';
-
-    if(!filtered.length){ html += emptyState('Sin registros.'); } 
-    else {
-      html += '<div class="fin-list">';
-      filtered.forEach(function(m){
-        html += '<div class="fin-item"><div class="fin-item-dot ' + m.type + '"></div><div class="fin-item-desc">' + escapeHtml(m.desc) + '</div><span class="fin-item-cat">' + escapeHtml(m.cat) + '</span><div class="fin-item-date">' + fmtDate(m.createdAt) + '</div><div class="fin-item-amount ' + m.type + '">' + (m.type === 'ingreso' ? '+' : '-') + fmtCOP(m.amount) + '</div><button class="fin-item-del" data-fndel="' + m.id + '">✕</button></div>';
-      });
-      html += '</div>';
-    }
-    return html;
+    });
+    if(modificado){ persist(); persistEP(); }
   }
 
-  function renderFinHoyMini(){
-    if(!movimientos.length) return '';
-    var t = finTotals();
-    return '<div class="fin-hoy-mini"><div><div class="fin-hoy-mini-label">Ingresos</div><div class="fin-hoy-mini-val" style="color:#7BBF9A">' + fmtCOP(t.ingresos) + '</div></div><div><div class="fin-hoy-mini-label">Gastos</div><div class="fin-hoy-mini-val" style="color:#C47676">' + fmtCOP(t.gastos) + '</div></div><button type="button" class="tab" style="margin-left:auto;border-bottom:none;opacity:0.7" data-view="finanzas">Ver finanzas →</button></div>';
+  // ---------- processing tags and search ----------
+  function parseContent(str){
+    var tags = [];
+    var cleaned = str.replace(/#([\wáéíóúñ🎨🛒💡💵📅🎯🏠💼🏃🌱]+)/g, function(match, tag){
+      var t = tag.toLowerCase();
+      if(!tags.includes(t)) tags.push(t);
+      return '';
+    }).replace(/\s+/g, ' ').trim();
+    return { title: cleaned || 'Sin título', tags: tags };
+  }
+
+  function getAllTags(){
+    var set = new Set();
+    entries.forEach(function(e){ if(e.tags) e.tags.forEach(t => set.add(t)); });
+    return Array.from(set).sort();
+  }
+
+  // ---------- filtering logic ----------
+  function getVisibleEntries(){
+    var q = search.toLowerCase().trim();
+    return entries.filter(function(e){
+      if(activeTag && (!e.tags || !e.tags.includes(activeTag))) return false;
+      if(q){
+        var matchQ = e.title.toLowerCase().includes(q) || (e.body && e.body.toLowerCase().includes(q));
+        if(!matchQ) return false;
+      }
+      if(view === 'hoy'){
+        if(e.type === 'tarea' && !e.done && (isDueToday(e) || isOverdueTask(e))) return true;
+        if(e.type === 'recordatorio' && !e.dismissed && isReminderToday(e)) return true;
+        return false;
+      }
+      if(view === 'notas') return e.type === 'nota';
+      if(view === 'tareas'){
+        if(e.type !== 'tarea') return false;
+        return showCompleted ? e.done : !e.done;
+      }
+      if(view === 'recordatorios') return e.type === 'recordatorio' && !e.dismissed;
+      return false;
+    }).sort(function(a,b){
+      if(view === 'hoy' || view === 'tareas'){
+        if(isOverdueTask(a) && !isOverdueTask(b)) return -1;
+        if(!isOverdueTask(a) && isOverdueTask(b)) return 1;
+        var pMap = { alta: 3, media: 2, baja: 1 };
+        var pA = pMap[a.priority] || 0;
+        var pB = pMap[b.priority] || 0;
+        if(pA !== pB) return pB - pA;
+        if(a.dueAt && b.dueAt) return a.dueAt.localeCompare(b.dueAt);
+      }
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+  }
+
+  // ---------- rendering DOM engine ----------
+  function render(){
+    document.getElementById('dateToday').textContent = fmtDate(todayStr());
+    
+    if(['notas','tareas','recordatorios'].includes(view)){
+      searchwrap.classList.remove('hidden');
+      renderTagCloud();
+    } else {
+      searchwrap.classList.add('hidden');
+      tagcloudEl.innerHTML = '';
+    }
+
+    if(view === 'finanzas') { renderFinanzas(); return; }
+
+    var visible = getVisibleEntries();
+    var html = '';
+
+    if(view === 'hoy'){
+      var tHoy = movimientos.filter(m => m.date === todayStr());
+      var ingHoy = tHoy.filter(m => m.type==='ingreso').reduce((a,c)=>a+c.amount, 0);
+      var gasHoy = tHoy.filter(m => m.type==='gasto').reduce((a,c)=>a+c.amount, 0);
+      html += '<div class="fin-hoy-mini">' +
+                '<div><div class="fin-hoy-mini-label">Ingresos de Hoy</div><div class="fin-hoy-mini-val" style="color:#7BBF9A">+$' + ingHoy.toFixed(2) + '</div></div>' +
+                '<div><div class="fin-hoy-mini-label">Gastos de Hoy</div><div class="fin-hoy-mini-val" style="color:#C47676">-$' + gasHoy.toFixed(2) + '</div></div>' +
+                '<button type="button" class="fin-filter-btn" id="goFinBtn" style="margin-left:auto; border-radius:3px; padding:6px 12px">Abrir Finanzas</button>' +
+              '</div>';
+      
+      html += '<div class="section-label">Enfoque para el día de hoy</div>';
+    }
+
+    if(view === 'tareas'){
+      html += '<div style="margin-bottom:14px; display:flex; gap:10px; align-items:center;">' +
+                '<label style="font-size:12px; font-family:var(--mono); cursor:pointer; display:flex; align-items:center; gap:6px">' +
+                  '<input type="checkbox" id="toggleCompleted" ' + (showCompleted?'checked':'') + ' style="accent-color:var(--brass)"> Mostrar completadas' +
+                '</label>' +
+              '</div>';
+    }
+
+    if(visible.length === 0){
+      html += '<div class="empty">No hay elementos que coincidan con la vista actual.</div>';
+    } else {
+      html += (view === 'notas' || view === 'hoy') ? '<div class="grid">' : '<div class="list">';
+      visible.forEach(function(e){ html += buildCardHtml(e); });
+      html += '</div>';
+    }
+
+    if(view === 'hoy' && !aiAnalysis && !aiLoading){
+      html += '<div style="margin-top:24px"><button type="button" class="ai-trigger" id="aiTriggerBtn"><span class="icon">✨</span> <span>Generar resumen del día con IA</span></button></div>';
+    }
+    if(view === 'hoy' && aiLoading){
+      html += '<div style="margin-top:24px"><div class="ai-trigger loading"><span class="icon">⏳</span> <span>Analizando tus pendientes y prioridades cotidianas…</span></div></div>';
+    }
+    if(view === 'hoy' && aiError){
+      html += '<div class="ai-error" style="margin-top:14px">Error: ' + escapeHtml(aiError) + '</div>';
+    }
+    if(view === 'hoy' && aiAnalysis){
+      html += '<div class="ai-result" style="margin-top:24px"><div class="tabstrip"></div>' +
+                '<div class="ai-result-label">Cerebro AI asistente • ' + fmtDateTime(aiTimestamp) + '</div>' +
+                '<div class="ai-result-body">' + escapeHtml(aiAnalysis) + '</div>' +
+                '<div class="ai-result-actions"><button type="button" id="aiClearBtn">Descartar análisis</button></div>' +
+              '</div>';
+    }
+
+    content.innerHTML = html;
+    bindCardEvents(visible);
+
+    if(view === 'hoy'){
+      var btn = document.getElementById('aiTriggerBtn'); if(btn) btn.addEventListener('click', runAiRoutine);
+      var clr = document.getElementById('aiClearBtn'); if(clr) clr.addEventListener('click', function(){ aiAnalysis=null; render(); });
+      var goFin = document.getElementById('goFinBtn'); if(goFin) goFin.addEventListener('click', function(){ view='finanzas'; updateTabs(); render(); });
+    }
+    if(view === 'tareas'){
+      document.getElementById('toggleCompleted').addEventListener('change', function(e){ showCompleted = e.target.checked; render(); });
+    }
   }
 
   function renderTagCloud(){
-    if(view !== 'notas'){ tagcloudEl.innerHTML = ''; return; }
-    var tags = uniqueTags(); if(!tags.length){ tagcloudEl.innerHTML = ''; return; }
-    tagcloudEl.innerHTML = '<div class="tagcloud">' + tags.map(t => '<button type="button" class="tagchip' + (activeTag===t ? ' active' : '') + '" data-tag="' + escapeHtml(t) + '">' + escapeHtml(t) + '</button>').join('') + '</div>';
-  }
-
-  function render(){
-    var capContainer = document.getElementById('captureContainer');
-    if(view === 'dashboard') {
-      capContainer.style.display = 'none';
-      searchwrap.classList.add('hidden');
-      tagcloudEl.innerHTML = '';
-      content.innerHTML = renderDashboardView();
-      attachDashboardEvents();
-      return;
-    }
-
-    capContainer.style.display = 'block';
-    searchwrap.classList.toggle('hidden', view === 'hoy' || view === 'finanzas');
-    renderTagCloud();
-
-    var html;
-    if(view === 'hoy') html = renderHoy();
-    else if(view === 'notas') html = renderNotas();
-    else if(view === 'tareas') html = renderTareas();
-    else if(view === 'finanzas') html = renderFinanzas();
-    else html = renderRecordatorios();
-    content.innerHTML = html;
-  }
-
-  function syncTabsUI(){
-    document.querySelectorAll('.tab').forEach(b => b.classList.toggle('active', b.dataset.view === view));
-  }
-
-  function attachDashboardEvents() {
-    content.querySelectorAll('.dash-metric-card').forEach(function(card) {
-      card.addEventListener('click', function() {
-        view = card.dataset.gotoview;
-        syncTabsUI();
+    var tags = getAllTags();
+    if(tags.length === 0){ tagcloudEl.innerHTML = ''; return; }
+    var html = '<button class="tagchip' + (!activeTag?' active':'') + '" data-tag="">#todos</button>';
+    tags.forEach(function(t){ html += '<button class="tagchip' + (activeTag===t?' active':'') + '" data-tag="' + escapeHtml(t) + '">#' + escapeHtml(t) + '</button>'; });
+    tagcloudEl.innerHTML = '<div class="tagcloud">' + html + '</div>';
+    
+    Array.from(tagcloudEl.querySelectorAll('.tagchip')).forEach(function(btn){
+      btn.addEventListener('click', function(){
+        activeTag = btn.getAttribute('data-tag') || null;
         render();
       });
     });
   }
 
-  // ---------- event wiring ----------
-  document.getElementById('dateToday').textContent = fmtDate(new Date().toISOString());
+  // ---------- financial rendering module ----------
+  function renderFinanzas(){
+    var html = '<div class="fin-tabs">' +
+                 '<button class="fin-tab ' + (finSubview==='movimientos'?'active':'') + '" data-sub="movimientos">Historial</button>' +
+                 '<button class="fin-tab ' + (finSubview==='programados'?'active':'') + '" data-sub="programados">Fijos / Recurrentes</button>' +
+                 '<button class="fin-tab ' + (finSubview==='budget'?'active':'') + '" data-sub="budget">Presupuesto Semanal</button>' +
+               '</div>';
 
-  document.getElementById('typeToggle').addEventListener('click', function(e){
-    var btn = e.target.closest('.type-btn'); if(!btn) return;
-    captureType = btn.dataset.type;
-    document.querySelectorAll('.type-btn').forEach(b => b.classList.toggle('active', b === btn));
+    if(finSubview === 'movimientos') html += renderFinMovimientos();
+    else if(finSubview === 'programados') html += renderFinProgramados();
+    else if(finSubview === 'budget') html += renderFinBudget();
+
+    content.innerHTML = html;
+    bindFinEvents();
+  }
+
+  function renderFinMovimientos(){
+    var ingresos = movimientos.filter(m => m.type === 'ingreso').reduce((a,c) => a + c.amount, 0);
+    var gastos = movimientos.filter(m => m.type === 'gasto').reduce((a,c) => a + c.amount, 0);
+    var bal = ingresos - gastos;
+    var balClass = bal > 0 ? 'pos' : (bal < 0 ? 'neg' : 'zero');
+    var sign = bal > 0 ? '+' : '';
+
+    var filtered = movimientos.filter(function(m){
+      if(finFilter === 'ingreso') return m.type === 'ingreso';
+      if(finFilter === 'gasto') return m.type === 'gasto';
+      return true;
+    }).sort((a,b) => b.date.localeCompare(a.date));
+
+    var totalFiltered = filtered.reduce((a,c) => a + c.amount, 0);
+
+    var cats = {};
+    movimientos.filter(m => m.type==='gasto').forEach(function(m){
+      cats[m.cat] = (cats[m.cat] || 0) + m.amount;
+    });
+    var sortedCats = Object.keys(cats).sort((a,b) => cats[b] - cats[a]);
+
+    var trackPct = 0;
+    if(ingresos > 0) trackPct = Math.min(100, (gastos / ingresos) * 100);
+    else if(gastos > 0) trackPct = 100;
+
+    var out = '<div class="fin-summary">' +
+                '<div class="fin-kpi"><div class="fin-kpi-label">Total Ingresos</div><div class="fin-kpi-value ingreso">+$' + ingresos.toFixed(2) + '</div></div>' +
+                '<div class="fin-kpi"><div class="fin-kpi-label">Total Gastos</div><div class="fin-kpi-value gasto">-$' + gastos.toFixed(2) + '</div></div>' +
+                '<div class="fin-kpi"><div class="fin-kpi-label">Balance Global</div><div class="fin-kpi-value balance ' + balClass + '">' + sign + '$' + bal.toFixed(2) + '</div></div>' +
+              '</div>';
+
+    out += '<div class="fin-bar-wrap">' +
+             '<div class="fin-bar-label">Consumo del Ingreso: ' + trackPct.toFixed(1) + '%</div>' +
+             '<div class="fin-bar-track"><div class="fin-bar-fill gasto" style="width:' + trackPct + '%"></div></div>' +
+             '<div class="fin-bar-legend"><span>$0.00</span><span>Disponible: $' + Math.max(0, ingresos-gastos).toFixed(2) + '</span></div>' +
+           '</div>';
+
+    out += '<div class="fin-capture">' +
+             '<div class="fin-type-toggle">' +
+               '<button type="button" class="fin-type-btn ' + (finType==='gasto'?'active':'') + '" data-fintype="gasto">Gasto</button>' +
+               '<button type="button" class="fin-type-btn ' + (finType==='ingreso'?'active':'') + '" data-fintype="ingreso">Ingreso</button>' +
+             '</div>' +
+             '<form id="finForm" class="fin-row">' +
+               '<input type="text" id="finDesc" class="fin-input fin-input-desc" placeholder="Descripción del movimiento..." required autocomplete="off">' +
+               '<input type="number" id="finAmount" class="fin-input fin-input-amount" placeholder="Monto ($)" step="0.01" required>' +
+               '<input type="text" id="finCat" class="fin-input fin-input-cat" placeholder="Categoría (ej: Comida)" list="finDefaultCats">' +
+               '<input type="date" id="finDate" class="fin-input" required>' +
+               '<button type="submit" class="fin-submit">Añadir</button>' +
+             '</form>' +
+             '<datalist id="finDefaultCats"><option value="Comida"><option value="Transporte"><option value="Vivienda"><option value="Servicios"><option value="Ocio"><option value="Salud"><option value="Sueldo"></datalist>' +
+           '</div>';
+
+    if(sortedCats.length > 0){
+      out += '<div class="section-label">Distribución de Gastos por Categoría</div><div class="fin-cat-breakdown">';
+      sortedCats.forEach(function(c){
+        out += '<div class="fin-cat-item"><div class="fin-cat-name">' + escapeHtml(c) + '</div><div class="fin-cat-val">$' + cats[c].toFixed(2) + '</div></div>';
+      });
+      out += '</div>';
+    }
+
+    out += '<div class="section-label">Historial de Flujo Monetario</div>';
+    out += '<div class="fin-filter-row">' +
+             '<button class="fin-filter-btn ' + (finFilter==='todo'?'active':'') + '" data-filt="todo">Todo</button>' +
+             '<button class="fin-filter-btn ' + (finFilter==='ingreso'?'active':'') + '" data-filt="ingreso">Ingresos</button>' +
+             '<button class="fin-filter-btn ' + (finFilter==='gasto'?'active':'') + '" data-filt="gasto">Gastos</button>' +
+             '<span style="margin-left:auto; font-family:var(--mono); font-size:12px; color:var(--parchment-dim); padding-top:4px">Suma: $' + totalFiltered.toFixed(2) + '</span>' +
+           '</div>';
+
+    if(filtered.length === 0){
+      out += '<div class="empty">No hay registros de transacciones comerciales en este filtro.</div>';
+    } else {
+      out += '<div class="fin-list">';
+      filtered.forEach(function(m){
+        var mSign = m.type === 'ingreso' ? '+' : '-';
+        out += '<div class="fin-item">' +
+                 '<div class="fin-item-dot ' + m.type + '"></div>' +
+                 '<div class="fin-item-desc">' + escapeHtml(m.desc) + '</div>' +
+                 '<div class="fin-item-cat">' + escapeHtml(m.cat || 'General') + '</div>' +
+                 '<div class="fin-item-date">' + fmtDate(m.date) + '</div>' +
+                 '<div class="fin-item-amount ' + m.type + '">' + mSign + '$' + m.amount.toFixed(2) + '</div>' +
+                 '<button type="button" class="fin-item-del" data-id="' + m.id + '">✕</button>' +
+               '</div>';
+      });
+      out += '</div>';
+    }
+    return out;
+  }
+
+  function renderFinProgramados(){
+    var out = '<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:18px; align-items:start">';
+    
+    // Left: Finanzas fijas
+    out += '<div class="fin-capture" style="margin-bottom:0">' +
+             '<div class="fin-block-label" style="font-family:var(--mono); font-size:11px; text-transform:uppercase; color:var(--brass); margin-bottom:10px">Transacción Periódica (Fija)</div>' +
+             '<div class="fin-type-toggle">' +
+               '<button type="button" class="fin-type-btn ' + (progType==='gasto'?'active':'') + '" id="progTypeGasto">Gasto</button>' +
+               '<button type="button" class="fin-type-btn ' + (progType==='ingreso'?'active':'') + '" id="progTypeIngreso">Ingreso</button>' +
+             '</div>' +
+             '<form id="progForm" style="display:flex; flex-direction:column; gap:8px">' +
+               '<input type="text" id="progDesc" class="fin-input" placeholder="Ej: Suscripción Netflix" required autocomplete="off">' +
+               '<input type="number" id="progAmount" class="fin-input" placeholder="Monto ($)" step="0.01" required>' +
+               '<input type="text" id="progCat" class="fin-input" placeholder="Categoría (ej: Servicios)">' +
+               '<select id="progFreq" class="fin-input" style="background:var(--ink); color:var(--parchment)">' +
+                 '<option value="diario">Diario</option>' +
+                 '<option value="semanal">Semanal</option>' +
+                 '<option value="quincenal">Quincenal</option>' +
+                 '<option value="mensual" selected>Mensual</option>' +
+               '</select>' +
+               '<input type="date" id="progDate" class="fin-input" required>' +
+               '<button type="submit" class="fin-submit" style="margin-top:4px">Agendar Fijo</button>' +
+             '</form>' +
+           '</div>';
+
+    // Right: Entradas periódicas (Tareas/Recordatorios)
+    out += '<div class="fin-capture" style="margin-bottom:0">' +
+             '<div class="fin-block-label" style="font-family:var(--mono); font-size:11px; text-transform:uppercase; color:var(--sage); margin-bottom:10px">Generador Recurrente de Acciones</div>' +
+             '<div class="fin-type-toggle">' +
+               '<button type="button" class="fin-type-btn ' + (epType==='tarea'?'active':'') + '" id="epTypeTarea">Tarea</button>' +
+               '<button type="button" class="fin-type-btn ' + (epType==='recordatorio'?'active':'') + '" id="epTypeRec">Recordatorio</button>' +
+               '<button type="button" class="fin-type-btn ' + (epType==='nota'?'active':'') + '" id="epTypeNota">Nota</button>' +
+             '</div>' +
+             '<form id="epForm" style="display:flex; flex-direction:column; gap:8px">' +
+               '<input type="text" id="epTitle" class="fin-input" placeholder="Título (ej: Revisar medidor gas, #rutina)" required autocomplete="off">' +
+               '<select id="epFreq" class="fin-input" style="background:var(--ink); color:var(--parchment)">' +
+                 '<option value="diario">Diario</option>' +
+                 '<option value="semanal" selected>Semanal</option>' +
+                 '<option value="quincenal">Quincenal</option>' +
+                 '<option value="mensual">Mensual</option>' +
+               '</select>' +
+               '<input type="date" id="epDate" class="fin-input" required>' +
+               '<button type="submit" class="fin-submit" style="margin-top:4px">Agendar Acción</button>' +
+             '</form>' +
+           '</div></div>';
+
+    out += '<div class="section-label">Flujos Monetarios Programados</div>';
+    if(programados.length === 0){
+      out += '<div class="empty" style="margin-bottom:18px">No hay automatizaciones de tesorería programadas.</div>';
+    } else {
+      out += '<div class="fin-list" style="margin-bottom:18px">';
+      programados.forEach(function(p){
+        var pSign = p.type === 'ingreso' ? '+' : '-';
+        out += '<div class="prog-item">' +
+                 '<div class="prog-item-dot ' + p.type + '"></div>' +
+                 '<div class="prog-item-desc"><b>' + escapeHtml(p.desc) + '</b></div>' +
+                 '<div class="fin-item-cat">' + escapeHtml(p.cat || 'General') + '</div>' +
+                 '<div class="prog-item-freq">' + p.freq + '</div>' +
+                 '<div class="prog-item-next">Prox: ' + fmtDate(p.nextDate) + '</div>' +
+                 '<div class="prog-item-amount ' + p.type + '">' + pSign + '$' + p.amount.toFixed(2) + '</div>' +
+                 '<button type="button" class="prog-item-del" data-id="' + p.id + '">✕</button>' +
+               '</div>';
+      });
+      out += '</div>';
+    }
+
+    out += '<div class="section-label">Acciones y Entradas de Contenido Programadas</div>';
+    if(entradasProg.length === 0){
+      out += '<div class="empty">No hay automatizaciones de tareas o notas configuradas en el sistema.</div>';
+    } else {
+      out += '<div class="fin-list">';
+      entradasProg.forEach(function(p){
+        var typeLabels = { tarea: 'Tarea', recordatorio: 'Recordatorio', nota: 'Nota' };
+        out += '<div class="prog-item" style="border-left:3px solid var(--sage)">' +
+                 '<div class="prog-item-desc"><b>' + escapeHtml(p.title) + '</b> <span style="font-size:11px; opacity:0.6">(' + typeLabels[p.type] + ')</span></div>' +
+                 '<div class="prog-item-freq">' + p.freq + '</div>' +
+                 '<div class="prog-item-next">Prox: ' + fmtDate(p.nextDate) + '</div>' +
+                 '<button type="button" class="prog-ep-del" data-id="' + p.id + '" style="background:none; border:none; color:rgba(243,239,230,0.25); cursor:pointer; font-size:12px; padding:2px 4px; margin-left:auto">✕</button>' +
+               '</div>';
+      });
+      out += '</div>';
+    }
+
+    return out;
+  }
+
+  function getWeekRangeStrings(offset) {
+    var today = new Date();
+    var currentDay = today.getDay(); 
+    var distanceToMonday = currentDay === 0 ? -6 : 1 - currentDay; 
+    
+    var monday = new Date(today);
+    monday.setDate(today.getDate() + distanceToMonday + (offset * 7));
+    
+    var sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+    
+    return {
+      start: monday.getFullYear() + '-' + pad2(monday.getMonth()+1) + '-' + pad2(monday.getDate()),
+      end: sunday.getFullYear() + '-' + pad2(sunday.getMonth()+1) + '-' + pad2(sunday.getDate())
+    };
+  }
+
+  function renderFinBudget(){
+    var range = getWeekRangeStrings(budgetWeekOffset);
+    var weekMovs = movimientos.filter(m => m.date >= range.start && m.date <= range.end);
+    var weekGastos = weekMovs.filter(m => m.type === 'gasto').reduce((a,c) => a + c.amount, 0);
+    var weekIngresos = weekMovs.filter(m => m.type === 'ingreso').reduce((a,c) => a + c.amount, 0);
+
+    var labelStr = 'Semana: ' + fmtDate(range.start) + ' al ' + fmtDate(range.end);
+    if(budgetWeekOffset === 0) labelStr += ' (Actual)';
+
+    var out = '<div class="budget-week-nav">' +
+                '<button type="button" class="budget-nav-btn" id="budgetPrevWeek">◀ Anterior</button>' +
+                '<div class="budget-week-label">' + labelStr + '</div>' +
+                '<button type="button" class="budget-nav-btn" id="budgetNextWeek" ' + (budgetWeekOffset===0?'disabled':'') + '>Siguiente ▶</button>' +
+              '</div>';
+
+    out += '<div class="budget-week-stats">' +
+             '<div class="budget-week-stat"><div class="budget-week-stat-label">Ingresos Semana</div><div class="budget-week-stat-val" style="color:#7BBF9A">+$' + weekIngresos.toFixed(2) + '</div></div>' +
+             '<div class="budget-week-stat"><div class="budget-week-stat-label">Gastos Semana</div><div class="budget-week-stat-val" style="color:#C47676">-$' + weekGastos.toFixed(2) + '</div></div>' +
+             '<div class="budget-week-stat"><div class="budget-week-stat-label">Balance Neto</div><div class="budget-week-stat-val">' + ((weekIngresos-weekGastos)>=0?'+':'') + '$' + (weekIngresos-weekGastos).toFixed(2) + '</div></div>' +
+           '</div>';
+
+    var cats = {};
+    weekMovs.filter(m => m.type==='gasto').forEach(function(m){
+      cats[m.cat] = cats[m.cat] || { total: 0, count: 0 };
+      cats[m.cat].total += m.amount;
+      cats[m.cat].count++;
+    });
+    var sortedCats = Object.keys(cats).sort((a,b) => cats[b].total - cats[a].total);
+
+    if(sortedCats.length === 0){
+      out += '<div class="budget-empty-week">No hay egresos registrados en este periodo semanal.</div>';
+    } else {
+      out += '<div class="section-label">Desglose por Categoría (Esta Semana)</div><div class="budget-spending-grid">';
+      var maxGasto = Math.max(...Object.keys(cats).map(k => cats[k].total));
+      sortedCats.forEach(function(c){
+        var pct = maxGasto > 0 ? (cats[c].total / maxGasto) * 100 : 0;
+        out += '<div class="budget-cat-row">' +
+                 '<div class="budget-cat-name">' + escapeHtml(c) + '</div>' +
+                 '<div class="budget-cat-amount">$' + cats[c].total.toFixed(2) + '</div>' +
+                 '<div class="budget-cat-count">' + cats[c].count + ' trans.</div>' +
+                 '<div class="budget-cat-bar"><div class="budget-cat-bar-fill" style="width:' + pct + '%"></div></div>' +
+               '</div>';
+      });
+      out += '</div>';
+    }
+
+    if(!budgetResult && !budgetLoading){
+      out += '<div style="margin-top:20px">' +
+               '<button type="button" class="budget-ai-trigger" id="budgetAiBtn">' +
+                 '<span class="icon">📊</span>' +
+                 '<div>' +
+                   '<span>Auditoría de Presupuesto y Plan de Ahorro con IA</span>' +
+                   '<span class="sub">Analiza el patrón de consumo actual para trazar metas y recortes</span>' +
+                 '</div>' +
+               '</button>' +
+             '</div>';
+    }
+    if(budgetLoading){
+      out += '<div style="margin-top:20px"><div class="budget-ai-trigger loading"><span class="icon">⏳</span> <span>Computando matrices financieras y optimizando plan de ahorro…</span></div></div>';
+    }
+    if(budgetError){
+      out += '<div class="ai-error" style="margin-top:14px">Error: ' + escapeHtml(budgetError) + '</div>';
+    }
+    if(budgetResult){
+      out += '<div class="budget-result" style="margin-top:24px">' +
+               '<div style="font-family:var(--mono); font-size:11px; margin-bottom:10px; color:var(--parchment-dim); display:flex; justify-content:space-between">' +
+                 '<span>AUDITORÍA INTELIGENTE</span><span>' + fmtDateTime(budgetResult.timestamp) + '</span>' +
+               '</div>' +
+               
+               '<div class="budget-block analysis"><div class="tabstrip"></div>' +
+                 '<div class="budget-block-label">Análisis de Patrones de Consumo</div>' +
+                 '<div class="budget-block-body">' + escapeHtml(budgetResult.analysis) + '</div>' +
+               '</div>' +
+
+               '<div class="budget-block budget-plan"><div class="tabstrip"></div>' +
+                 '<div class="budget-block-label">Estructura de Presupuesto Recomendada</div>' +
+                 '<div class="budget-block-body budget-table">' + escapeHtml(budgetResult.budget) + '</div>' +
+               '</div>' +
+
+               '<div class="budget-block cuts"><div class="tabstrip"></div>' +
+                 '<div class="budget-block-label">Estrategia de Recorte Sugerida</div>' +
+                 '<div class="budget-block-body">' + escapeHtml(budgetResult.cuts) + '</div>' +
+               '</div>' +
+               
+               '<button type="button" class="budget-regen" id="budgetClearBtn" style="color:var(--parchment); border-color:var(--line-strong)">Cerrar Auditoría</button>' +
+             '</div>';
+    }
+
+    return out;
+  }
+
+  // ---------- building HTML components ----------
+  function buildCardHtml(e){
+    var isJustAdded = e.id === lastAddedId;
+    var classes = 'card type-' + e.type + (isJustAdded ? ' just-added' : '');
+    var out = '<div class="' + classes + '" data-id="' + e.id + '"><div class="tabstrip"></div>';
+    
+    out += '<div class="card-top">';
+    if(e.type === 'tarea'){
+      out += '<input type="checkbox" class="card-check" ' + (e.done?'checked':'') + '>';
+    }
+    out += '<input type="text" class="card-title' + (e.done?' done':'') + '" value="' + escapeHtml(e.title) + '">';
+    out += '<span class="card-stamp">' + fmtDate(e.createdAt) + '</span>';
+    out += '</div>';
+
+    out += '<textarea class="card-body" placeholder="Añadir notas o apuntes descriptivos...">' + escapeHtml(e.body || '') + '</textarea>';
+
+    out += '<div class="card-row">';
+    var displayTags = e.tags && e.tags.length > 0 ? e.tags.map(t => '#' + t).join(' ') : '';
+    out += '<input type="text" class="card-tags" placeholder="#etiquetas" value="' + escapeHtml(displayTags) + '">';
+    
+    if(e.type === 'tarea'){
+      out += '<span class="priority-dot ' + (e.priority || 'media') + '"></span>';
+      out += '<select class="card-priority">' +
+               '<option value="baja" ' + (e.priority==='baja'?'selected':'') + '>Baja</option>' +
+               '<option value="media" ' + (e.priority==='media'?'selected':'') + '>Media</option>' +
+               '<option value="alta" ' + (e.priority==='alta'?'selected':'') + '>Alta</option>' +
+             '</select>';
+      out += '<input type="date" class="card-date" value="' + (e.dueAt || '') + '">';
+      if(isOverdueTask(e)){ out += '<span class="overdue-flag">Vencida</span>'; }
+    }
+    
+    if(e.type === 'recordatorio'){
+      out += '<input type="datetime-local" class="card-date" value="' + (e.remindAt || '') + '" style="font-size:10px">';
+    }
+
+    out += '<button type="button" class="card-del" title="Eliminar del sistema">✕</button>';
+    out += '</div>';
+
+    out += '</div>';
+    return out;
+  }
+
+  // ---------- event bindings for core lifecycle ----------
+  function bindCardEvents(renderedList){
+    var els = content.querySelectorAll('.card');
+    els.forEach(function(cardEl){
+      var id = cardEl.getAttribute('data-id');
+      var entry = entries.find(e => e.id === id);
+      if(!entry) return;
+
+      var titleInput = cardEl.querySelector('.card-title');
+      titleInput.addEventListener('change', function(){
+        entry.title = titleInput.value.trim() || 'Sin título';
+        persist();
+      });
+
+      var bodyText = cardEl.querySelector('.card-body');
+      bodyText.addEventListener('input', function(){
+        entry.body = bodyText.value;
+        persist();
+      });
+
+      var tagsInput = cardEl.querySelector('.card-tags');
+      tagsInput.addEventListener('change', function(){
+        var parsed = parseContent(tagsInput.value);
+        entry.tags = parsed.tags;
+        persist();
+        setTimeout(render, 1000); 
+      });
+
+      var delBtn = cardEl.querySelector('.card-del');
+      delBtn.addEventListener('click', function(){
+        entries = entries.filter(e => e.id !== id);
+        cardEl.remove();
+        persist();
+        if(entries.length === 0 || visibleEntriesCount() === 0) render();
+      });
+
+      if(entry.type === 'tarea'){
+        var chk = cardEl.querySelector('.card-check');
+        chk.addEventListener('change', function(){
+          entry.done = chk.checked;
+          if(entry.done) titleInput.classList.add('done');
+          else titleInput.classList.remove('done');
+          persist();
+          setTimeout(render, 400);
+        });
+
+        var prio = cardEl.querySelector('.card-priority');
+        prio.addEventListener('change', function(){
+          entry.priority = prio.value;
+          var dot = cardEl.querySelector('.priority-dot');
+          dot.className = 'priority-dot ' + prio.value;
+          persist();
+        });
+
+        var dt = cardEl.querySelector('.card-date');
+        dt.addEventListener('change', function(){
+          entry.dueAt = dt.value || null;
+          persist();
+          setTimeout(render, 1000);
+        });
+      }
+
+      if(entry.type === 'recordatorio'){
+        var rDt = cardEl.querySelector('.card-date');
+        rDt.addEventListener('change', function(){
+          entry.remindAt = rDt.value || null;
+          persist();
+        });
+      }
+    });
+  }
+
+  function visibleEntriesCount(){ return getVisibleEntries().length; }
+
+  function bindFinEvents(){
+    // sub tabs
+    Array.from(content.querySelectorAll('.fin-tab')).forEach(function(btn){
+      btn.addEventListener('click', function(){
+        finSubview = btn.getAttribute('data-sub');
+        renderFinanzas();
+      });
+    });
+
+    if(finSubview === 'movimientos'){
+      // toggles de tipo
+      Array.from(content.querySelectorAll('.fin-type-btn')).forEach(function(b){
+        b.addEventListener('click', function(){
+          finType = b.getAttribute('data-fintype');
+          renderFinanzas();
+        });
+      });
+      // default input date
+      var dInput = document.getElementById('finDate');
+      if(dInput && !dInput.value) dInput.value = todayStr();
+
+      // submit form
+      var f = document.getElementById('finForm');
+      if(f){
+        f.addEventListener('submit', function(e){
+          e.preventDefault();
+          var desc = document.getElementById('finDesc').value.trim();
+          var amount = parseFloat(document.getElementById('finAmount').value);
+          var cat = document.getElementById('finCat').value.trim() || 'General';
+          var date = document.getElementById('finDate').value || todayStr();
+
+          if(!desc || isNaN(amount)) return;
+
+          movimientos.push({ id: uid(), type: finType, desc: desc, amount: amount, cat: cat, date: date });
+          persistFin();
+          showToast('Movimiento registrado');
+          renderFinanzas();
+        });
+      }
+
+      // filtros hitorial
+      Array.from(content.querySelectorAll('.fin-filter-btn')).forEach(function(b){
+        b.addEventListener('click', function(){
+          finFilter = b.getAttribute('data-filt');
+          renderFinanzas();
+        });
+      });
+
+      // borrar movimiento
+      Array.from(content.querySelectorAll('.fin-item-del')).forEach(function(b){
+        b.addEventListener('click', function(){
+          var id = b.getAttribute('data-id');
+          movimientos = movimientos.filter(m => m.id !== id);
+          persistFin();
+          renderFinanzas();
+        });
+      });
+    }
+
+    if(finSubview === 'programados'){
+      // toggles fijos
+      var ptG = document.getElementById('progTypeGasto');
+      var ptI = document.getElementById('progTypeIngreso');
+      if(ptG && ptI){
+        ptG.addEventListener('click', function(){ progType='gasto'; renderFinanzas(); });
+        ptI.addEventListener('click', function(){ progType='ingreso'; renderFinanzas(); });
+      }
+      var pInputDate = document.getElementById('progDate');
+      if(pInputDate && !pInputDate.value) pInputDate.value = todayStr();
+
+      var pForm = document.getElementById('progForm');
+      if(pForm){
+        pForm.addEventListener('submit', function(e){
+          e.preventDefault();
+          var desc = document.getElementById('progDesc').value.trim();
+          var amount = parseFloat(document.getElementById('progAmount').value);
+          var cat = document.getElementById('progCat').value.trim() || 'General';
+          var freq = document.getElementById('progFreq').value;
+          var baseDate = document.getElementById('progDate').value || todayStr();
+
+          if(!desc || isNaN(amount)) return;
+          programados.push({ id: uid(), type: progType, desc: desc, amount: amount, cat: cat, freq: freq, nextDate: baseDate });
+          persistProg();
+          applyProgramados();
+          renderFinanzas();
+        });
+      }
+
+      // toggles acciones recurrentes
+      var etT = document.getElementById('epTypeTarea');
+      var etR = document.getElementById('epTypeRec');
+      var etN = document.getElementById('epTypeNota');
+      if(etT && etR && etN){
+        etT.addEventListener('click', function(){ epType='tarea'; renderFinanzas(); });
+        etR.addEventListener('click', function(){ epType='recordatorio'; renderFinanzas(); });
+        etN.addEventListener('click', function(){ epType='nota'; renderFinanzas(); });
+      }
+      var epInputDate = document.getElementById('epDate');
+      if(epInputDate && !epInputDate.value) epInputDate.value = todayStr();
+
+      var epForm = document.getElementById('epForm');
+      if(epForm){
+        epForm.addEventListener('submit', function(e){
+          e.preventDefault();
+          var fullTitle = document.getElementById('epTitle').value.trim();
+          var freq = document.getElementById('epFreq').value;
+          var baseDate = document.getElementById('epDate').value || todayStr();
+
+          if(!fullTitle) return;
+          var parsed = parseContent(fullTitle);
+          
+          entradasProg.push({
+            id: uid(),
+            type: epType,
+            title: parsed.title,
+            tags: parsed.tags,
+            freq: freq,
+            nextDate: baseDate,
+            priority: 'media'
+          });
+          persistEP();
+          applyEntradasProg();
+          renderFinanzas();
+        });
+      }
+
+      // eliminar programados
+      Array.from(content.querySelectorAll('.prog-item-del')).forEach(function(b){
+        b.addEventListener('click', function(){
+          var id = b.getAttribute('data-id');
+          programados = programados.filter(p => p.id !== id);
+          persistProg();
+          renderFinanzas();
+        });
+      });
+      Array.from(content.querySelectorAll('.prog-ep-del')).forEach(function(b){
+        b.addEventListener('click', function(){
+          var id = b.getAttribute('data-id');
+          entradasProg = entradasProg.filter(p => p.id !== id);
+          persistEP();
+          renderFinanzas();
+        });
+      });
+    }
+
+    if(finSubview === 'budget'){
+      document.getElementById('budgetPrevWeek').addEventListener('click', function(){ budgetWeekOffset--; renderFinanzas(); });
+      var nBtn = document.getElementById('budgetNextWeek');
+      if(nBtn) nBtn.addEventListener('click', function(){ if(budgetWeekOffset < 0){ budgetWeekOffset++; renderFinanzas(); } });
+      
+      var bAi = document.getElementById('budgetAiBtn');
+      if(bAi) bAi.addEventListener('click', runBudgetAiRoutine);
+
+      var bClr = document.getElementById('budgetClearBtn');
+      if(bClr) bClr.addEventListener('click', function(){ budgetResult = null; renderFinanzas(); });
+    }
+  }
+
+  // ---------- AI processing modules ----------
+  async function runAiRoutine(){
+    aiLoading = true; aiError = null; render();
+    
+    var localTasks = entries.filter(e => e.type === 'tarea' && !e.done);
+    var localReminders = entries.filter(e => e.type === 'recordatorio' && !e.dismissed);
+    var localNotes = entries.filter(e => e.type === 'nota');
+
+    var prompt = "Eres el núcleo analítico de un Segundo Cerebro. Analiza objetivamente los datos adjuntos y genera un informe estructurado, asertivo y de prosa limpia.\n" +
+                 "Hoy es " + todayStr() + ".\n\n" +
+                 "=== TAREAS PENDIENTES ===\n";
+    if(localTasks.length===0) prompt += "Ninguna.\n";
+    else localTasks.forEach(t => prompt += "- [" + (t.priority||'media') + "] " + t.title + (t.dueAt?" (Vence: "+t.dueAt+")":"") + "\n");
+
+    prompt += "\n=== RECORDATORIOS ===\n";
+    if(localReminders.length===0) prompt += "Ninguno.\n";
+    else localReminders.forEach(r => prompt += "- " + r.title + " (" + (r.remindAt||'') + ")\n");
+
+    prompt += "\n=== NOTAS RECIENTES CONSOLIDADAS ===\n";
+    var recNotes = localNotes.slice(0, 7);
+    if(recNotes.length===0) prompt += "Ninguna.\n";
+    else recNotes.forEach(n => prompt += "• " + n.title + ": " + (n.body?n.body.slice(0,60):'') + "\n");
+
+    prompt += "\nEscribe un resumen ejecutivo breve dividiéndolo en:\n" +
+              "1. DIAGNÓSTICO DEL DÍA (Evalúa la carga de tareas críticas o vencidas).\n" +
+              "2. SECUENCIA DE ACCIÓN RECOMENDADA (Orden cronológico o de impacto para ejecutar hoy).\n" +
+              "3. NEXOS SUTILES (Asociaciones o reflexiones entre tus notas recientes y las tareas vigentes).\n" +
+              "Usa un tono estoico, claro y sofisticado. Evita introducciones corporativas o cierres conversacionales.";
+
+    try {
+      var reply = await window.ai.ask(prompt);
+      aiAnalysis = reply;
+      aiTimestamp = new Date().toISOString();
+    } catch(err) {
+      aiError = err.message || String(err);
+    } finally {
+      aiLoading = false;
+      render();
+    }
+  }
+
+  async function runBudgetAiRoutine(){
+    budgetLoading = true; budgetError = null; renderFinanzas();
+
+    var range = getWeekRangeStrings(budgetWeekOffset);
+    var weekMovs = movimientos.filter(m => m.date >= range.start && m.date <= range.end);
+    var weekGastos = weekMovs.filter(m => m.type === 'gasto');
+    var weekIngresos = weekMovs.filter(m => m.type === 'ingreso').reduce((a,c) => a + c.amount, 0);
+
+    var prompt = "Actúa como un auditor de finanzas cuantitativas. Analiza el flujo de caja semanal que se te proporciona y genera un plan estructurado de optimización.\n" +
+                 "Rango analizado: " + range.start + " al " + range.end + ".\n" +
+                 "Ingresos totales declarados en la semana: $" + weekIngresos.toFixed(2) + ".\n\n" +
+                 "=== HISTORIAL DE EGRESOS SEMANALES ===\n";
+    
+    if(weekGastos.length === 0) prompt += "No se registraron egresos.\n";
+    else weekGastos.forEach(g => prompt += "- " + g.date + " | " + g.cat + " | " + g.desc + " : $" + g.amount.toFixed(2) + "\n");
+
+    prompt += "\nRequisitos de salida (Divide estrictamente en estos 3 bloques usando marcas legibles):\n" +
+              "[BLOQUE_1_ANALISIS]\nAnaliza de forma matemática dónde están las fugas o concentraciones anómalas de capital.\n" +
+              "[BLOQUE_2_PRESUPUESTO]\nGenera una tabla de distribución ideal para la siguiente semana basada en la regla 50/30/20 o la que consideres óptima según el nivel de ingresos. Formato texto monoespaciado limpio.\n" +
+              "[BLOQUE_3_RECORTES]\n3 recomendaciones quirúrgicas de reducción de gasto directo basadas explícitamente en la lista dada.\n" +
+              "Mantén un tono analítico, frío y de alta competencia. No añadas introducciones o saludos.";
+
+    try {
+      var reply = await window.ai.ask(prompt);
+      
+      var analysis = "Análisis no disponible.";
+      var budgetTable = "Tabla no disponible.";
+      var cuts = "Recomendaciones no disponibles.";
+
+      var b1 = reply.indexOf('[BLOQUE_1_ANALISIS]');
+      var b2 = reply.indexOf('[BLOQUE_2_PRESUPUESTO]');
+      var b3 = reply.indexOf('[BLOQUE_3_RECORTES]');
+
+      if(b1 !== -1 && b2 !== -1){
+        analysis = reply.slice(b1 + 19, b2).trim();
+      }
+      if(b2 !== -1 && b3 !== -1){
+        budgetTable = reply.slice(b2 + 22, b3).trim();
+      }
+      if(b3 !== -1){
+        cuts = reply.slice(b3 + 19).trim();
+      }
+
+      if(b1 === -1 && b2 === -1 && b3 === -1){
+        analysis = reply; 
+      }
+
+      budgetResult = {
+        analysis: analysis,
+        budget: budgetTable,
+        cuts: cuts,
+        timestamp: new Date().toISOString()
+      };
+    } catch(err) {
+      budgetError = err.message || String(err);
+    } finally {
+      budgetLoading = false;
+      renderFinanzas();
+    }
+  }
+
+  // ---------- top navigation and main capture events ----------
+  function updateTabs(){
+    Array.from(document.getElementById('tabs').children).forEach(function(btn){
+      if(btn.getAttribute('data-view') === view) btn.classList.add('active');
+      else btn.classList.remove('active');
+    });
+  }
+
+  document.getElementById('tabs').addEventListener('click', function(e){
+    var tgt = e.target;
+    if(!tgt.classList.contains('tab')) return;
+    view = tgt.getAttribute('data-view');
+    activeTag = null;
+    updateTabs();
+    render();
+  });
+
+  Array.from(document.getElementById('typeToggle').children).forEach(function(btn){
+    btn.addEventListener('click', function(){
+      Array.from(document.getElementById('typeToggle').children).forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      captureType = btn.getAttribute('data-type');
+      
+      var phs = { nota: '¿Qué tienes en mente? Usa #etiquetas para clasificar...', tarea: 'Nueva tarea... Pon #etiqueta o asigna prioridad abajo', recordatorio: 'Agendar recordatorio cronológico...' };
+      document.getElementById('captureInput').placeholder = phs[captureType] || '';
+    });
   });
 
   document.getElementById('captureForm').addEventListener('submit', function(e){
     e.preventDefault();
-    var input = document.getElementById('captureInput'); var text = input.value.trim();
-    if(!text) return; addEntry(captureType, text); input.value = ''; input.focus();
-  });
+    var inp = document.getElementById('captureInput');
+    var val = inp.value.trim();
+    if(!val) return;
 
-  document.getElementById('tabs').addEventListener('click', function(e){
-    var btn = e.target.closest('.tab'); if(!btn) return;
-    view = btn.dataset.view; activeTag = null; syncTabsUI(); render();
-  });
-
-  document.getElementById('searchInput').addEventListener('input', function(e){ search = e.target.value; render(); });
-
-  tagcloudEl.addEventListener('click', function(e){
-    var chip = e.target.closest('.tagchip'); if(!chip) return;
-    var t = chip.dataset.tag; activeTag = (activeTag === t) ? null : t; render();
-  });
-
-  content.addEventListener('click', function(e){
-    var del = e.target.closest('[data-del]'); if(del){ deleteEntry(del.dataset.del); return; }
-    var toggle = e.target.closest('#toggleCompleted'); if(toggle){ showCompleted = !showCompleted; render(); return; }
+    var parsed = parseContent(val);
+    var id = uid();
     
-    var fndel = e.target.closest('[data-fndel]'); if(fndel){ deleteMovimiento(fndel.dataset.fndel); return; }
-    var finFilterBtn = e.target.closest('[data-finfilter]'); if(finFilterBtn){ finFilter = finFilterBtn.dataset.finfilter; render(); return; }
-    var finTypeBtn = e.target.closest('[data-fintype]'); if(finTypeBtn){ finType = finTypeBtn.dataset.fintype; render(); return; }
-    var finSubBtn = e.target.closest('[data-finsubview]'); if(finSubBtn){ finSubview = finSubBtn.dataset.finsubview; render(); return; }
-    var progTypeBtn = e.target.closest('[data-progtype]'); if(progTypeBtn){ progType = progTypeBtn.dataset.progtype; return; }
-    var progDel = e.target.closest('[data-progdel]'); if(progDel){ deleteProgramado(progDel.dataset.progdel); return; }
+    var item = {
+      id: id,
+      type: captureType,
+      title: parsed.title,
+      body: '',
+      tags: parsed.tags,
+      createdAt: new Date().toISOString()
+    };
+
+    if(captureType === 'tarea'){ item.dueAt = todayStr(); item.priority = 'media'; item.done = false; }
+    if(captureType === 'recordatorio'){ item.remindAt = nowLocalStr(); item.dismissed = false; }
+
+    entries.unshift(item);
+    lastAddedId = id;
+    inp.value = '';
     
-    var finSubmit = e.target.closest('#finSubmit');
-    if(finSubmit){
-      var desc = document.getElementById('finDesc'); var amount = document.getElementById('finAmount'); var cat = document.getElementById('finCat');
-      var d = desc.value.trim(); var a = parseFloat(amount.value);
-      if(!d || isNaN(a) || a <= 0){ showToast('Completa los campos.'); return; }
-      addMovimiento(finType, d, a, cat ? cat.value : 'Otro'); desc.value = ''; amount.value = ''; return;
-    }
-
-    var progSubmit = e.target.closest('#progSubmit');
-    if(progSubmit){
-      var pdesc = document.getElementById('progDesc'); var pamount = document.getElementById('progAmount'); var pcat = document.getElementById('progCat'); var pfreq = document.getElementById('progFreq'); var pstart = document.getElementById('progStart');
-      var pd = pdesc.value.trim(); var pa = parseFloat(pamount.value);
-      if(!pd || isNaN(pa) || pa <= 0){ showToast('Completa los campos.'); return; }
-      addProgramado(progType, pd, pa, pcat ? pcat.value : 'Otro', pfreq ? pfreq.value : 'mensual', pstart ? pstart.value : todayStr());
-      pdesc.value = ''; pamount.value = ''; return;
-    }
-
-    var saveBudgetSetupBtn = e.target.closest('#saveBudgetSetupBtn');
-    if(saveBudgetSetupBtn) {
-      budgetPeriodo = document.getElementById('setupBudgetPeriodo').value;
-      budgetMontoMaximo = parseFloat(document.getElementById('setupBudgetMonto').value) || 0;
-      persistBudgetConfig();
-      showToast('Configuración del presupuesto guardada.');
-      render();
-      return;
-    }
-
-    var entrySubBtn = e.target.closest('[data-entrysubview]'); if(entrySubBtn){ entrySubview = entrySubBtn.dataset.entrysubview; render(); return; }
-    var epTypeBtn = e.target.closest('[data-eptype]'); if(epTypeBtn){ epType = epTypeBtn.dataset.eptype; render(); return; }
-    var epDel = e.target.closest('[data-epdel]'); if(epDel){ deleteEntradaProg(epDel.dataset.epdel); return; }
-    var epSubmit = e.target.closest('#epSubmit');
-    if(epSubmit){
-      var epTitle = document.getElementById('epTitle'); var epBody = document.getElementById('epBody'); var epFreq = document.getElementById('epFreq'); var epStart = document.getElementById('epStart'); var epPriority = document.getElementById('epPriority');
-      var et = epTitle.value.trim(); if(!et){ showToast('Escribe un título.'); return; }
-      addEntradaProg(epType, et, epBody ? epBody.value.trim() : '', epFreq ? epFreq.value : 'mensual', epStart ? epStart.value : todayStr(), epPriority ? epPriority.value : 'media');
-      epTitle.value = ''; if(epBody) epBody.value = ''; return;
-    }
-
-    var navFin = e.target.closest('[data-view="finanzas"]'); if(navFin){ view = 'finanzas'; syncTabsUI(); render(); return; }
+    persist();
+    
+    if(captureType === 'nota') view = 'notas';
+    else if(captureType === 'tarea') view = 'tareas';
+    else if(captureType === 'recordatorio') view = 'recordatorios';
+    
+    updateTabs();
+    render();
+    
+    showToast('Añadido a ' + captureType);
+    
+    setTimeout(function(){
+      lastAddedId = null;
+      var el = content.querySelector('.card[data-id="'+id+'"]');
+      if(el) el.classList.remove('just-added');
+    }, 1500);
   });
 
-  content.addEventListener('input', function(e){
-    var id = e.target.dataset.id; var field = e.target.dataset.field; if(!id || !field) return;
-    var entry = findEntry(id); if(!entry) return;
-    if(field === 'title') entry.title = e.target.value;
-    if(field === 'body') entry.body = e.target.value;
+  document.getElementById('searchInput').addEventListener('input', function(e){
+    search = e.target.value;
+    render();
   });
 
-  content.addEventListener('change', function(e){
-    var id = e.target.dataset.id; var field = e.target.dataset.field; if(!id || !field) return;
-    var entry = findEntry(id); if(!entry) return;
+  // ---------- system reminders notification engine ----------
+  var notifTimer = null;
+  function checkRemindersRoutine(){
+    clearTimeout(notifTimer);
+    var ahora = nowLocalStr(); 
+    var modificado = false;
 
-    if(field === 'title'){ entry.title = e.target.value || '(sin título)'; persist(); return; }
-    if(field === 'body'){ entry.body = e.target.value; persist(); return; }
-    if(field === 'tags'){ entry.tags = e.target.value.split(',').map(t => t.trim()).filter(Boolean); persist(); renderTagCloud(); return; }
-    if(field === 'done'){ entry.done = e.target.checked; entry.completedAt = entry.done ? new Date().toISOString() : null; persist(); render(); return; }
-    if(field === 'priority'){ entry.priority = e.target.value; persist(); return; }
-    if(field === 'dueAt'){ entry.dueAt = e.target.value || null; persist(); render(); return; }
-    if(field === 'remindAt'){ entry.remindAt = e.target.value || null; entry.notified = false; persist(); render(); return; }
-  });
-
-  // ---------- reminders ----------
-  function checkReminders(){
-    var now = nowLocalStr(); var changed = false;
     entries.forEach(function(e){
-      if(e.type === 'recordatorio' && e.remindAt && !e.notified && e.remindAt <= now){ e.notified = true; changed = true; notify(e.title); }
+      if(e.type === 'recordatorio' && !e.dismissed && e.remindAt && e.remindAt <= ahora){
+        triggerSystemNotification(e.title, e.body || 'Alerta de recordatorio agendado.');
+        e.dismissed = true;
+        modificado = true;
+      }
     });
-    if(changed){ persist(); if(view === 'recordatorios' || view === 'hoy') render(); }
+
+    if(modificado){ persist(); render(); }
+    notifTimer = setTimeout(checkRemindersRoutine, 20000); 
   }
 
-  function notify(title){
-    if('Notification' in window && Notification.permission === 'granted'){ new Notification('Recordatorio', { body: title }); } 
-    else { showToast('⏰ ' + title); }
+  function triggerSystemNotification(title, body){
+    if(Notification.permission === 'granted'){
+      new Notification(title, { body: body, icon: 'https://cdn-icons-png.flaticon.com/512/3114/3114810.png' });
+    } else {
+      showToast('🔔 RECORDATORIO: ' + title);
+    }
   }
 
   document.getElementById('notifBtn').addEventListener('click', function(){
-    if(!('Notification' in window)){ showToast('Incompatible.'); return; }
-    Notification.requestPermission().then(perm => showToast(perm === 'granted' ? 'Avisos activados' : 'Denegado.'));
+    if(!('Notification' in window)){ showToast('Tu navegador no soporta alertas del sistema'); return; }
+    Notification.requestPermission().then(function(perm){
+      if(perm === 'granted') showToast('Avisos del sistema activados correctamente');
+      else showToast('Permiso de notificaciones denegado');
+    });
   });
 
-  setInterval(checkReminders, 30000);
-
-  // ---------- export / import ----------
+  // ---------- data import/export backup systems ----------
   document.getElementById('exportBtn').addEventListener('click', function(){
-    var blob = new Blob([JSON.stringify({ entries: entries, movimientos: movimientos, programados: programados, entradasProg: entradasProg }, null, 2)], { type: 'application/json' });
-    var url = URL.createObjectURL(blob); var a = document.createElement('a'); a.href = url; a.download = 'segundo-cerebro-' + todayStr() + '.json';
-    document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url); showToast('Exportado');
+    var packet = { entries: entries, movimientos: movimientos, programados: programados, entradasProg: entradasProg };
+    var blob = new Blob([JSON.stringify(packet, null, 2)], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'segundo-cerebro-backup-' + todayStr() + '.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    showToast('Archivo de respaldo exportado');
   });
 
   document.getElementById('importInput').addEventListener('change', function(e){
-    var file = e.target.files[0]; if(!file) return;
+    var file = e.target.files[0];
+    if(!file) return;
     var reader = new FileReader();
     reader.onload = function(){
       try{
         var data = JSON.parse(reader.result);
-        if(data && Array.isArray(data.entries)){
-          entries = data.entries; movimientos = data.movimientos || []; programados = data.programados || []; entradasProg = data.entradasProg || []; persist(); persistFin(); persistProg(); persistEP();
+        if(Array.isArray(data)){
+          entries = data;
+          persist();
+        } else if(data && Array.isArray(data.entries)){
+          entries = data.entries;
+          movimientos = Array.isArray(data.movimientos) ? data.movimientos : movimientos;
+          programados = Array.isArray(data.programados) ? data.programados : programados;
+          entradasProg = Array.isArray(data.entradasProg) ? data.entradasProg : entradasProg;
+          persist(); persistFin(); persistProg(); persistEP();
+        } else {
+          showToast('El archivo no posee una firma estructural válida');
+          return;
         }
-        applyEntradasProg(); render(); showToast('Importado');
-      }catch(err){ showToast('Error'); }
+        applyProgramados();
+        applyEntradasProg();
+        render();
+        showToast('Respaldo restaurado e importado con éxito');
+      }catch(err){
+        showToast('Error crítico: No se pudo descodificar el JSON');
+      }
     };
-    reader.readAsText(file); e.target.value = '';
+    reader.readAsText(file);
+    e.target.value = '';
   });
 
   // ---------- init ----------
   loadEntries();
-  setTimeout(checkReminders, 1000);
+  setTimeout(checkRemindersRoutine, 2000);
+
 })();
 </script>
 </body>
