@@ -103,7 +103,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .type-btn.active[data-type="nota"]{ background: var(--brass); color: var(--ink); border-color: var(--brass); }
 .type-btn.active[data-type="tarea"]{ background: var(--sage); color: var(--ink); border-color: var(--sage); }
 .type-btn.active[data-type="recordatorio"]{ background: var(--brick); color: var(--parchment); border-color: var(--brick); }
-.type-btn.active[data-type="proyecto"]{ background: var(--azure); color: var(--parchment); border-color: var(--azure); }
 
 .capture form{
   display:flex;
@@ -188,35 +187,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 .tagchip.active{ background: var(--brass); color: var(--ink); border-color: var(--brass); }
 
-/* ---------- Dashboard & KPIs ---------- */
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 12px;
-  margin-bottom: 22px;
-}
-.dash-card {
-  background: var(--ink-light);
-  border: 1px solid var(--line);
-  border-radius: 4px;
-  padding: 14px;
-}
-.dash-label {
-  font-family: var(--mono);
-  font-size: 10px;
-  text-transform: uppercase;
-  color: var(--parchment-dim);
-  margin-bottom: 4px;
-  letter-spacing: 0.5px;
-}
-.dash-value {
-  font-family: var(--serif);
-  font-size: 24px;
-  font-weight: 700;
-}
-.dash-value.alert { color: #C47676; }
-.dash-value.success { color: #7BBF9A; }
-
 /* ---------- Cards ---------- */
 .stats{
   font-family: var(--mono);
@@ -281,7 +251,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .card.type-nota .tabstrip{ background: var(--brass); }
 .card.type-tarea .tabstrip{ background: var(--sage); }
 .card.type-recordatorio .tabstrip{ background: var(--brick); }
-.card.type-proyecto .tabstrip{ background: var(--azure); }
 
 .card-top{
   display:flex;
@@ -340,7 +309,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   flex: 1;
   min-width: 90px;
 }
-.card-date, .card-priority, .card-project-select{
+.card-date, .card-priority{
   background: transparent;
   border: 1px solid rgba(27,34,48,0.18);
   color: var(--ink);
@@ -348,9 +317,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   font-size: 11px;
   padding: 3px 6px;
   border-radius: 3px;
-}
-.card-project-select {
-  max-width: 140px;
 }
 .card-check{
   width: 16px; height: 16px;
@@ -394,6 +360,90 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   padding: 24px;
   text-align: center;
   line-height: 1.6;
+}
+
+.ai-trigger{
+  display:flex;
+  align-items:center;
+  gap: 8px;
+  background: var(--ink-light);
+  border: 1px solid var(--azure);
+  color: var(--parchment);
+  padding: 11px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 13.5px;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 12px;
+}
+.ai-trigger:hover{ background: var(--ink-lighter); }
+.ai-trigger.loading{ opacity: 0.65; cursor: default; }
+.ai-trigger .icon{ font-size: 16px; }
+
+.ai-error{
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--brick);
+  margin-bottom: 14px;
+}
+
+.ai-result{
+  background: var(--parchment);
+  color: var(--ink);
+  border-radius: 3px;
+  padding: 16px 14px 14px 20px;
+  position: relative;
+  margin-bottom: 18px;
+  box-shadow: 0 10px 22px -16px rgba(0,0,0,0.6);
+}
+.ai-result .tabstrip{
+  position:absolute;
+  left:0; top:0; bottom:0;
+  width: 4px;
+  border-radius: 3px 0 0 3px;
+  background: var(--azure);
+}
+.ai-result-label{
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(27,34,48,0.5);
+  margin-bottom: 8px;
+}
+.ai-result-body{
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+.ai-result-actions{ margin-top: 10px; }
+.ai-result-actions button{
+  background: transparent;
+  border: 1px solid rgba(27,34,48,0.25);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.ai-result-actions button:hover{ border-color: var(--azure); color: var(--azure); }
+
+.muted{ color: var(--parchment-dim); font-family: var(--mono); font-size: 13px; }
+
+.collapse-toggle{
+  background: none;
+  border: none;
+  color: var(--parchment-dim);
+  font-family: var(--mono);
+  font-size: 11px;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  margin-top: 6px;
 }
 
 /* ---------- Finanzas ---------- */
@@ -484,6 +534,44 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .fin-kpi-value.gasto{ color: #C47676; }
 .fin-kpi-value.balance.pos{ color: #7BBF9A; }
 .fin-kpi-value.balance.neg{ color: #C47676; }
+.fin-kpi-value.balance.zero{ color: var(--parchment-dim); }
+
+.fin-bar-wrap{
+  background: var(--ink-light);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+}
+.fin-bar-label{
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--parchment-dim);
+  margin-bottom: 10px;
+}
+.fin-bar-track{
+  height: 8px;
+  background: rgba(243,239,230,0.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.fin-bar-fill{
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+.fin-bar-fill.ingreso{ background: #7BBF9A; }
+.fin-bar-fill.gasto{ background: #C47676; }
+.fin-bar-legend{
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--parchment-dim);
+  margin-top: 6px;
+}
 
 .fin-list{
   display: flex;
@@ -499,35 +587,504 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   border-radius: 3px;
   padding: 10px 12px;
 }
-.fin-item-dot{ width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.fin-item-dot{
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
 .fin-item-dot.ingreso{ background: #7BBF9A; }
 .fin-item-dot.gasto{ background: #C47676; }
-.fin-item-desc{ flex: 1; font-size: 14px; color: var(--parchment); }
-.fin-item-amount{ font-family: var(--mono); font-size: 14px; font-weight: 500; text-align: right; }
+.fin-item-desc{
+  flex: 1;
+  font-size: 14px;
+  color: var(--parchment);
+  font-family: var(--sans);
+}
+.fin-item-cat{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--parchment-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 2px 7px;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+}
+.fin-item-amount{
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 500;
+  min-width: 90px;
+  text-align: right;
+}
 .fin-item-amount.ingreso{ color: #7BBF9A; }
 .fin-item-amount.gasto{ color: #C47676; }
-.fin-item-del{ background: none; border: none; color: rgba(243,239,230,0.25); cursor: pointer; }
+.fin-item-date{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--parchment-dim);
+  white-space: nowrap;
+}
+.fin-item-del{
+  background: none;
+  border: none;
+  color: rgba(243,239,230,0.25);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 2px 4px;
+}
 .fin-item-del:hover{ color: #C47676; }
 
-/* ---------- Footer & Toast ---------- */
+.fin-cat-breakdown{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.fin-cat-item{
+  background: var(--ink-light);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 10px 12px;
+}
+.fin-cat-name{
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--parchment-dim);
+  margin-bottom: 4px;
+}
+.fin-cat-val{
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 600;
+  color: #C47676;
+}
+
+.fin-filter-row{
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.fin-filter-btn{
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  color: var(--parchment-dim);
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.fin-filter-btn.active{ background: var(--brass); color: var(--ink); border-color: var(--brass); }
+
+.fin-hoy-mini{
+  background: var(--ink-light);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 12px 14px;
+  margin-bottom: 18px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.fin-hoy-mini-label{
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--parchment-dim);
+  margin-bottom: 2px;
+}
+.fin-hoy-mini-val{
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+@media (max-width: 640px){
+  .fin-summary{ grid-template-columns: 1fr 1fr; }
+  .fin-summary .fin-kpi:last-child{ grid-column: span 2; }
+  .fin-input-desc{ min-width: 120px; }
+  .fin-input-amount{ width: 110px; }
+}
+
+/* ---------- Programados ---------- */
+.fin-tabs{
+  display: flex;
+  gap: 2px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.fin-tab{
+  background: transparent;
+  border: none;
+  color: var(--parchment-dim);
+  padding: 8px 14px;
+  font-size: 12px;
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+.fin-tab.active{ color: var(--parchment); border-bottom-color: var(--brass); }
+
+.prog-item{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ink-light);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 10px 12px;
+  flex-wrap: wrap;
+}
+.prog-item-dot{
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.prog-item-dot.ingreso{ background: #7BBF9A; }
+.prog-item-dot.gasto{ background: #C47676; }
+.prog-item-desc{
+  flex: 1;
+  min-width: 100px;
+  font-size: 14px;
+  color: var(--parchment);
+}
+.prog-item-freq{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--parchment-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 2px 8px;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+}
+.prog-item-next{
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--brass);
+}
+.prog-item-amount{
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 500;
+  min-width: 90px;
+  text-align: right;
+}
+.prog-item-amount.ingreso{ color: #7BBF9A; }
+.prog-item-amount.gasto{ color: #C47676; }
+.prog-item-del{
+  background: none;
+  border: none;
+  color: rgba(243,239,230,0.25);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 2px 4px;
+}
+.prog-item-del:hover{ color: #C47676; }
+.prog-badge{
+  display: inline-block;
+  background: var(--brick);
+  color: var(--parchment);
+  font-family: var(--mono);
+  font-size: 9px;
+  padding: 1px 5px;
+  border-radius: 8px;
+  vertical-align: middle;
+  margin-left: 4px;
+  letter-spacing: 0.3px;
+}
+.prog-upcoming{
+  background: var(--ink-light);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--brass);
+  border-radius: 3px;
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.prog-upcoming-label{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--brass);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 2px;
+}
+.prog-upcoming-desc{
+  font-size: 13px;
+  color: var(--parchment);
+  flex: 1;
+}
+.prog-upcoming-amount{
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+}
+.prog-upcoming-amount.ingreso{ color: #7BBF9A; }
+.prog-upcoming-amount.gasto{ color: #C47676; }
+
+/* ---------- Budget ---------- */
+.budget-week-nav{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.budget-week-label{
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--parchment);
+  flex: 1;
+  text-align: center;
+}
+.budget-nav-btn{
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  color: var(--parchment-dim);
+  font-family: var(--mono);
+  font-size: 13px;
+  padding: 5px 12px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.budget-nav-btn:hover{ color: var(--parchment); border-color: var(--parchment-dim); }
+.budget-nav-btn:disabled{ opacity: 0.3; cursor: default; }
+
+.budget-spending-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.budget-cat-row{
+  background: var(--ink-light);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 12px 14px;
+}
+.budget-cat-name{
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--parchment-dim);
+  margin-bottom: 6px;
+}
+.budget-cat-amount{
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 600;
+  color: #C47676;
+  margin-bottom: 4px;
+}
+.budget-cat-count{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--parchment-dim);
+}
+.budget-cat-bar{
+  height: 3px;
+  background: rgba(243,239,230,0.08);
+  border-radius: 2px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+.budget-cat-bar-fill{
+  height: 100%;
+  background: #C47676;
+  border-radius: 2px;
+}
+
+.budget-ai-trigger{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ink-lighter);
+  border: 1px solid var(--azure);
+  color: var(--parchment);
+  padding: 13px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 14px;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 14px;
+  transition: background 0.15s;
+}
+.budget-ai-trigger:hover{ background: var(--ink-light); }
+.budget-ai-trigger.loading{ opacity: 0.65; cursor: default; }
+.budget-ai-trigger .icon{ font-size: 18px; }
+.budget-ai-trigger .sub{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--parchment-dim);
+  display: block;
+  margin-top: 2px;
+}
+
+.budget-result{
+  margin-bottom: 18px;
+}
+.budget-block{
+  background: var(--parchment);
+  color: var(--ink);
+  border-radius: 3px;
+  padding: 18px 16px 14px 22px;
+  position: relative;
+  margin-bottom: 10px;
+  box-shadow: 0 10px 22px -16px rgba(0,0,0,0.5);
+}
+.budget-block .tabstrip{
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  border-radius: 3px 0 0 3px;
+}
+.budget-block.analysis .tabstrip{ background: var(--azure); }
+.budget-block.budget-plan .tabstrip{ background: var(--sage); }
+.budget-block.cuts .tabstrip{ background: var(--brick); }
+.budget-block-label{
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: rgba(27,34,48,0.45);
+  margin-bottom: 10px;
+}
+.budget-block-body{
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink);
+  white-space: pre-wrap;
+}
+.budget-block-body.budget-table{
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.8;
+}
+.budget-regen{
+  background: transparent;
+  border: 1px solid rgba(27,34,48,0.22);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 5px 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+.budget-regen:hover{ border-color: var(--azure); color: var(--azure); }
+.budget-empty-week{
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--parchment-dim);
+  border: 1px dashed var(--line-strong);
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+}
+.budget-week-stats{
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  background: var(--ink-light);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+.budget-week-stat{
+  flex: 1;
+  min-width: 90px;
+}
+.budget-week-stat-label{
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--parchment-dim);
+  margin-bottom: 3px;
+}
+.budget-week-stat-val{
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* ---------- Footer ---------- */
 .footer{
-  position: fixed; bottom: 0; left: 0; right: 0;
-  background: var(--ink-light); border-top: 1px solid var(--line);
-  display:flex; align-items:center; gap: 10px; padding: 10px 16px; flex-wrap: wrap; z-index: 40;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--ink-light);
+  border-top: 1px solid var(--line);
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  padding: 10px 16px;
+  flex-wrap: wrap;
 }
 .footer button, .footer .import-label{
-  background: transparent; border: 1px solid var(--line-strong); color: var(--parchment-dim);
-  font-family: var(--mono); font-size: 11px; padding: 6px 10px; border-radius: 3px; cursor: pointer; text-transform: uppercase;
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  color: var(--parchment-dim);
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 6px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
 .footer button:hover, .footer .import-label:hover{ color: var(--parchment); border-color: var(--parchment-dim); }
-.footer-note{ font-family: var(--mono); font-size: 10px; color: var(--parchment-dim); opacity: 0.6; margin-left: auto; }
+.footer-note{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--parchment-dim);
+  opacity: 0.6;
+  margin-left: auto;
+}
 
 #toast{
-  position: fixed; bottom: 56px; left: 50%; transform: translateX(-50%) translateY(10px);
-  background: var(--brass); color: var(--ink); font-family: var(--mono); font-size: 12px;
-  padding: 8px 14px; border-radius: 4px; opacity: 0; pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease; z-index: 50;
+  position: fixed;
+  bottom: 56px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: var(--brass);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 8px 14px;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 50;
 }
-#toast.show{ opacity: 1; transform: translateX(-50%) translateY(0); }
+#toast.show{
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+@media (max-width: 640px){
+  .masthead{ flex-direction: column; gap: 4px; }
+  .footer{ font-size: 10px; }
+  .footer-note{ margin-left: 0; width: 100%; order: 10; }
+}
 </style>
 </head>
 <body>
@@ -542,17 +1099,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
       <button type="button" class="type-btn active" data-type="nota">Nota</button>
       <button type="button" class="type-btn" data-type="tarea">Tarea</button>
       <button type="button" class="type-btn" data-type="recordatorio">Recordatorio</button>
-      <button type="button" class="type-btn" data-type="proyecto">Proyecto</button>
     </div>
     <form id="captureForm">
-      <input type="text" id="captureInput" placeholder="¿Qué tienes en mente? Usa #etiqueta o escribe 'mañana' para autoprocesar..." autocomplete="off">
+      <input type="text" id="captureInput" placeholder="¿Qué tienes en mente?" autocomplete="off">
       <button type="submit">Agregar</button>
     </form>
   </div>
 
   <nav class="tabs" id="tabs">
-    <button class="tab active" data-view="dashboard">Dashboard</button>
-    <button class="tab" data-view="proyectos">Proyectos</button>
+    <button class="tab active" data-view="hoy">Hoy</button>
     <button class="tab" data-view="notas">Notas</button>
     <button class="tab" data-view="tareas">Tareas</button>
     <button class="tab" data-view="recordatorios">Recordatorios</button>
@@ -562,40 +1117,88 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   <div class="searchwrap hidden" id="searchwrap">
     <input type="text" id="searchInput" placeholder="Buscar por título, contenido o etiqueta…">
   </div>
-  <div id="tagcloud" class="tagcloud"></div>
+  <div id="tagcloud"></div>
 
   <main id="content">
-    <p class="muted">Cargando tu archivo…</p>
+    <p class="muted">Cargando tu cerebro…</p>
   </main>
 </div>
 
 <footer class="footer">
+  <button type="button" id="notifBtn">🔔 Activar avisos</button>
   <button type="button" id="exportBtn">Exportar</button>
   <label class="import-label">Importar<input type="file" id="importInput" accept="application/json" hidden></label>
-  <span class="footer-note">Tus datos se guardan de manera local y en tus backups.</span>
+  <span class="footer-note">Tus datos se guardan de forma persistente.</span>
 </footer>
+
 <div id="toast"></div>
 
 <script>
 (function(){
   "use strict";
 
-  // Estructuras principales de datos
-  var entries = [];       // Contiene Notas, Tareas, Recordatorios y PROYECTOS
-  var movimientos = [];   // Finanzas habituales
-  var view = 'dashboard';
+  var entries = [];
+  var view = 'hoy';
   var captureType = 'nota';
   var search = '';
   var activeTag = null;
+  var lastAddedId = null;
+  var showCompleted = false;
+  var aiAnalysis = null;
+  var aiLoading = false;
+  var aiError = null;
+  var aiTimestamp = null;
+
+  // --- Finanzas ---
+  var movimientos = [];
+  var finType = 'gasto';
+  var finFilter = 'todo'; // 'todo' | 'ingreso' | 'gasto'
+  var finSubview = 'movimientos'; // 'movimientos' | 'programados' | 'budget'
+  var programados = []; 
+  var progType = 'gasto';
+  var entradasProg = []; 
+  var epType = 'tarea'; 
+
+  // Budget AI State
+  var budgetResult = null; 
+  var budgetLoading = false;
+  var budgetError = null;
+  var budgetWeekOffset = 0; 
 
   var content = document.getElementById('content');
   var searchwrap = document.getElementById('searchwrap');
   var tagcloudEl = document.getElementById('tagcloud');
   var toastEl = document.getElementById('toast');
 
-  // Auxiliares estructurados
+  // ---------- utils ----------
   function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
-  function escapeHtml(str){ return str ? String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') : ''; }
+  
+  function escapeHtml(str){
+    if(str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  var MONTHS = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
+  
+  function fmtDate(iso){
+    if(!iso) return '';
+    var d = new Date(iso + 'T00:00:00');
+    if(isNaN(d.getTime())) return '';
+    return pad2(d.getDate()) + '.' + MONTHS[d.getMonth()] + '.' + String(d.getFullYear()).slice(2);
+  }
+
+  function fmtDateTime(iso){
+    if(!iso) return '';
+    var d = new Date(iso);
+    if(isNaN(d.getTime())) return '';
+    return pad2(d.getDate()) + '.' + MONTHS[d.getMonth()] + ' ' + pad2(d.getHours()) + ':' + pad2(d.getMinutes());
+  }
+
   function pad2(n){ return String(n).padStart(2, '0'); }
   
   function todayStr(){
@@ -603,310 +1206,1087 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
     return d.getFullYear() + '-' + pad2(d.getMonth()+1) + '-' + pad2(d.getDate());
   }
 
-  // ---------- PERSISTENCIA INTEGRADA ----------
-  function persist(){ localStorage.setItem('sc_entries', JSON.stringify(entries)); }
-  function persistFin(){ localStorage.setItem('sc_movimientos', JSON.stringify(movimientos)); }
+  function nowLocalStr(){
+    var d = new Date();
+    return d.getFullYear() + '-' + pad2(d.getMonth()+1) + '-' + pad2(d.getDate()) + 'T' + pad2(d.getHours()) + ':' + pad2(d.getMinutes());
+  }
 
-  function loadEntries(){
-    try {
-      var e = localStorage.getItem('sc_entries');
-      var m = localStorage.getItem('sc_movimientos');
-      if(e) entries = JSON.parse(e);
-      if(m) movimientos = JSON.parse(m);
-    } catch(err) { showToast('Error al cargar datos locales'); }
+  function isOverdueTask(e){
+    if(e.type !== 'tarea' || e.done || !e.dueAt) return false;
+    return e.dueAt < todayStr();
+  }
+
+  function isDueToday(e){
+    if(e.type !== 'tarea' || !e.dueAt) return false;
+    return e.dueAt === todayStr();
+  }
+
+  function isReminderToday(e){
+    if(e.type !== 'recordatorio' || !e.remindAt) return false;
+    return e.remindAt.slice(0,10) === todayStr();
   }
 
   function showToast(msg){
-    toastEl.innerText = msg;
+    toastEl.textContent = msg;
     toastEl.classList.add('show');
-    setTimeout(function(){ toastEl.classList.remove('show'); }, 2500);
+    setTimeout(function(){ toastEl.classList.remove('show'); }, 2600);
   }
 
-  // ---------- CAPTURA RÁPIDA INTELIGENTE ----------
-  document.getElementById('captureForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    var inputEl = document.getElementById('captureInput');
-    var rawText = inputEl.value.trim();
-    if(!rawText) return;
-
-    // Procesamiento inteligente de hashtags
-    var tags = [];
-    var tagRegex = /#(\w+)/g;
-    var match;
-    while((match = tagRegex.exec(rawText)) !== null){
-      tags.push(match[1]);
-    }
-    var cleanText = rawText.replace(tagRegex, '').trim();
-
-    // Detección inteligente de fecha ('mañana')
-    var due = '';
-    if(/\bmañana\b/i.test(cleanText)){
-      var tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      due = tomorrow.getFullYear() + '-' + pad2(tomorrow.getMonth()+1) + '-' + pad2(tomorrow.getDate());
-      cleanText = cleanText.replace(/\bmañana\b/i, '').trim();
-    }
-
-    // Creación de la entidad según el tipo seleccionado
-    var newEntry = {
-      id: uid(),
-      type: captureType, // 'nota', 'tarea', 'recordatorio' o 'proyecto'
-      title: cleanText,
-      body: captureType === 'nota' ? 'Contenido de la nota...' : '',
-      tags: tags,
-      createdAt: new Date().toISOString(),
-      projectId: '' // Relación con Sistema de Proyectos
-    };
-
-    if(captureType === 'tarea'){
-      newEntry.done = false;
-      newEntry.due = due || todayStr();
-      newEntry.priority = 'media';
-    } else if(captureType === 'recordatorio') {
-      newEntry.at = due ? due + 'T09:00' : todayStr() + 'T09:00';
-    } else if(captureType === 'proyecto') {
-      newEntry.status = 'activo';
-    }
-
-    entries.unshift(newEntry);
-    persist();
-    inputEl.value = '';
-    showToast('Agregado con captura inteligente');
+  // ---------- storage ----------
+  async function loadEntries(){
+    try{ var res = await window.storage.get('entries'); entries = (res && res.value) ? JSON.parse(res.value) : []; }catch(err){ entries = []; }
+    try{ var res2 = await window.storage.get('movimientos'); movimientos = (res2 && res2.value) ? JSON.parse(res2.value) : []; }catch(err){ movimientos = []; }
+    try{ var res3 = await window.storage.get('programados'); programados = (res3 && res3.value) ? JSON.parse(res3.value) : []; }catch(err){ programados = []; }
+    try{ var res4 = await window.storage.get('entradasProg'); entradasProg = (res4 && res4.value) ? JSON.parse(res4.value) : []; }catch(err){ entradasProg = []; }
+    
+    applyProgramados();
+    applyEntradasProg();
     render();
-  });
+  }
 
-  // ---------- GESTIÓN DE VISTAS Y RENDERS ----------
+  var saveTimer = null;
+  function persist(){
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(function(){ window.storage.set('entries', JSON.stringify(entries)); }, 300);
+  }
+
+  function persistFin(){ window.storage.set('movimientos', JSON.stringify(movimientos)); }
+  function persistProg(){ window.storage.set('programados', JSON.stringify(programados)); }
+  function persistEP(){ window.storage.set('entradasProg', JSON.stringify(entradasProg)); }
+
+  // ---------- recurring systems ----------
+  function getNextDateForFreq(baseDate, freq){
+    var d = new Date(baseDate + 'T00:00:00');
+    if(freq === 'diario') d.setDate(d.getDate() + 1);
+    else if(freq === 'semanal') d.setDate(d.getDate() + 7);
+    else if(freq === 'quincenal') d.setDate(d.getDate() + 14);
+    else if(freq === 'mensual') d.setMonth(d.getMonth() + 1);
+    return d.getFullYear() + '-' + pad2(d.getMonth()+1) + '-' + pad2(d.getDate());
+  }
+
+  function applyProgramados(){
+    var hoy = todayStr();
+    var modificado = false;
+    programados.forEach(function(p){
+      if(!p.nextDate) p.nextDate = hoy;
+      while(p.nextDate <= hoy){
+        movimientos.push({
+          id: uid(),
+          type: p.type,
+          desc: p.desc + ' (Recurrente)',
+          amount: p.amount,
+          cat: p.cat || 'General',
+          date: p.nextDate
+        });
+        p.nextDate = getNextDateForFreq(p.nextDate, p.freq);
+        modificado = true;
+      }
+    });
+    if(modificado){ persistFin(); persistProg(); }
+  }
+
+  function applyEntradasProg(){
+    var hoy = todayStr();
+    var modificado = false;
+    entradasProg.forEach(function(p){
+      if(!p.nextDate) p.nextDate = hoy;
+      while(p.nextDate <= hoy){
+        var e = {
+          id: uid(),
+          type: p.type,
+          title: p.title + ' (Recurrente)',
+          body: p.body || '',
+          tags: p.tags ? p.tags.slice() : [],
+          createdAt: new Date().toISOString()
+        };
+        if(p.type === 'tarea'){ e.dueAt = hoy; e.priority = p.priority || 'media'; e.done = false; }
+        else if(p.type === 'recordatorio'){ e.remindAt = hoy + 'T09:00'; e.dismissed = false; }
+        entries.push(e);
+        p.nextDate = getNextDateForFreq(p.nextDate, p.freq);
+        modificado = true;
+      }
+    });
+    if(modificado){ persist(); persistEP(); }
+  }
+
+  // ---------- processing tags and search ----------
+  function parseContent(str){
+    var tags = [];
+    var cleaned = str.replace(/#([\wáéíóúñ🎨🛒💡💵📅🎯🏠💼🏃🌱]+)/g, function(match, tag){
+      var t = tag.toLowerCase();
+      if(!tags.includes(t)) tags.push(t);
+      return '';
+    }).replace(/\s+/g, ' ').trim();
+    return { title: cleaned || 'Sin título', tags: tags };
+  }
+
+  function getAllTags(){
+    var set = new Set();
+    entries.forEach(function(e){ if(e.tags) e.tags.forEach(t => set.add(t)); });
+    return Array.from(set).sort();
+  }
+
+  // ---------- filtering logic ----------
+  function getVisibleEntries(){
+    var q = search.toLowerCase().trim();
+    return entries.filter(function(e){
+      if(activeTag && (!e.tags || !e.tags.includes(activeTag))) return false;
+      if(q){
+        var matchQ = e.title.toLowerCase().includes(q) || (e.body && e.body.toLowerCase().includes(q));
+        if(!matchQ) return false;
+      }
+      if(view === 'hoy'){
+        if(e.type === 'tarea' && !e.done && (isDueToday(e) || isOverdueTask(e))) return true;
+        if(e.type === 'recordatorio' && !e.dismissed && isReminderToday(e)) return true;
+        return false;
+      }
+      if(view === 'notas') return e.type === 'nota';
+      if(view === 'tareas'){
+        if(e.type !== 'tarea') return false;
+        return showCompleted ? e.done : !e.done;
+      }
+      if(view === 'recordatorios') return e.type === 'recordatorio' && !e.dismissed;
+      return false;
+    }).sort(function(a,b){
+      if(view === 'hoy' || view === 'tareas'){
+        if(isOverdueTask(a) && !isOverdueTask(b)) return -1;
+        if(!isOverdueTask(a) && isOverdueTask(b)) return 1;
+        var pMap = { alta: 3, media: 2, baja: 1 };
+        var pA = pMap[a.priority] || 0;
+        var pB = pMap[b.priority] || 0;
+        if(pA !== pB) return pB - pA;
+        if(a.dueAt && b.dueAt) return a.dueAt.localeCompare(b.dueAt);
+      }
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+  }
+
+  // ---------- rendering DOM engine ----------
   function render(){
-    // Gestión del input de búsqueda en vistas correspondientes
-    if(['notas','tareas','recordatorios','proyectos'].indexOf(view) !== -1){
+    document.getElementById('dateToday').textContent = fmtDate(todayStr());
+    
+    if(['notas','tareas','recordatorios'].includes(view)){
       searchwrap.classList.remove('hidden');
+      renderTagCloud();
     } else {
       searchwrap.classList.add('hidden');
+      tagcloudEl.innerHTML = '';
     }
 
-    if(view === 'dashboard') renderDashboard();
-    else if(view === 'proyectos') renderProyectos();
-    else if(view === 'notas') renderFilteredList('nota');
-    else if(view === 'tareas') renderFilteredList('tarea');
-    else if(view === 'recordatorios') renderFilteredList('recordatorio');
-    else if(view === 'finanzas') renderFinanzas();
+    if(view === 'finanzas') { renderFinanzas(); return; }
+
+    var visible = getVisibleEntries();
+    var html = '';
+
+    if(view === 'hoy'){
+      var tHoy = movimientos.filter(m => m.date === todayStr());
+      var ingHoy = tHoy.filter(m => m.type==='ingreso').reduce((a,c)=>a+c.amount, 0);
+      var gasHoy = tHoy.filter(m => m.type==='gasto').reduce((a,c)=>a+c.amount, 0);
+      html += '<div class="fin-hoy-mini">' +
+                '<div><div class="fin-hoy-mini-label">Ingresos de Hoy</div><div class="fin-hoy-mini-val" style="color:#7BBF9A">+$' + ingHoy.toFixed(2) + '</div></div>' +
+                '<div><div class="fin-hoy-mini-label">Gastos de Hoy</div><div class="fin-hoy-mini-val" style="color:#C47676">-$' + gasHoy.toFixed(2) + '</div></div>' +
+                '<button type="button" class="fin-filter-btn" id="goFinBtn" style="margin-left:auto; border-radius:3px; padding:6px 12px">Abrir Finanzas</button>' +
+              '</div>';
+      
+      html += '<div class="section-label">Enfoque para el día de hoy</div>';
+    }
+
+    if(view === 'tareas'){
+      html += '<div style="margin-bottom:14px; display:flex; gap:10px; align-items:center;">' +
+                '<label style="font-size:12px; font-family:var(--mono); cursor:pointer; display:flex; align-items:center; gap:6px">' +
+                  '<input type="checkbox" id="toggleCompleted" ' + (showCompleted?'checked':'') + ' style="accent-color:var(--brass)"> Mostrar completadas' +
+                '</label>' +
+              '</div>';
+    }
+
+    if(visible.length === 0){
+      html += '<div class="empty">No hay elementos que coincidan con la vista actual.</div>';
+    } else {
+      html += (view === 'notas' || view === 'hoy') ? '<div class="grid">' : '<div class="list">';
+      visible.forEach(function(e){ html += buildCardHtml(e); });
+      html += '</div>';
+    }
+
+    if(view === 'hoy' && !aiAnalysis && !aiLoading){
+      html += '<div style="margin-top:24px"><button type="button" class="ai-trigger" id="aiTriggerBtn"><span class="icon">✨</span> <span>Generar resumen del día con IA</span></button></div>';
+    }
+    if(view === 'hoy' && aiLoading){
+      html += '<div style="margin-top:24px"><div class="ai-trigger loading"><span class="icon">⏳</span> <span>Analizando tus pendientes y prioridades cotidianas…</span></div></div>';
+    }
+    if(view === 'hoy' && aiError){
+      html += '<div class="ai-error" style="margin-top:14px">Error: ' + escapeHtml(aiError) + '</div>';
+    }
+    if(view === 'hoy' && aiAnalysis){
+      html += '<div class="ai-result" style="margin-top:24px"><div class="tabstrip"></div>' +
+                '<div class="ai-result-label">Cerebro AI asistente • ' + fmtDateTime(aiTimestamp) + '</div>' +
+                '<div class="ai-result-body">' + escapeHtml(aiAnalysis) + '</div>' +
+                '<div class="ai-result-actions"><button type="button" id="aiClearBtn">Descartar análisis</button></div>' +
+              '</div>';
+    }
+
+    content.innerHTML = html;
+    bindCardEvents(visible);
+
+    if(view === 'hoy'){
+      var btn = document.getElementById('aiTriggerBtn'); if(btn) btn.addEventListener('click', runAiRoutine);
+      var clr = document.getElementById('aiClearBtn'); if(clr) clr.addEventListener('click', function(){ aiAnalysis=null; render(); });
+      var goFin = document.getElementById('goFinBtn'); if(goFin) goFin.addEventListener('click', function(){ view='finanzas'; updateTabs(); render(); });
+    }
+    if(view === 'tareas'){
+      document.getElementById('toggleCompleted').addEventListener('change', function(e){ showCompleted = e.target.checked; render(); });
+    }
   }
 
-  // Vista 1: Dashboard de Operación Superior
-  function renderDashboard(){
-    var hoy = todayStr();
-    var tareasPendientes = entries.filter(e => e.type === 'tarea' && !e.done).length;
-    var tareasVencidas = entries.filter(e => e.type === 'tarea' && !e.done && e.due < hoy).length;
-    var proyectosActivos = entries.filter(e => e.type === 'proyecto' && e.status === 'activo').length;
+  function renderTagCloud(){
+    var tags = getAllTags();
+    if(tags.length === 0){ tagcloudEl.innerHTML = ''; return; }
+    var html = '<button class="tagchip' + (!activeTag?' active':'') + '" data-tag="">#todos</button>';
+    tags.forEach(function(t){ html += '<button class="tagchip' + (activeTag===t?' active':'') + '" data-tag="' + escapeHtml(t) + '">#' + escapeHtml(t) + '</button>'; });
+    tagcloudEl.innerHTML = '<div class="tagcloud">' + html + '</div>';
     
-    var totalGastoMes = movimientos
-      .filter(m => m.type === 'gasto')
-      .reduce((acc, curr) => acc + parseFloat(curr.amount || 0), 0);
-
-    var html = `
-      <div class="dashboard-grid">
-        <div class="dash-card">
-          <div class="dash-label">Tareas Pendientes</div>
-          <div class="dash-value">${tareasPendientes}</div>
-        </div>
-        <div class="dash-card">
-          <div class="dash-label">Tareas Vencidas</div>
-          <div class="dash-value alert">${tareasVencidas}</div>
-        </div>
-        <div class="dash-card">
-          <div class="dash-label">Proyectos Activos</div>
-          <div class="dash-value success">${proyectosActivos}</div>
-        </div>
-        <div class="dash-card">
-          <div class="dash-label">Gasto Acumulado</div>
-          <div class="dash-value">$${totalGastoMes.toFixed(2)}</div>
-        </div>
-      </div>
-      <h3 class="section-label">Acceso Directo Operativo</h3>
-      <p class="muted">Usa las pestañas superiores para desglosar tus Proyectos o tus Finanzas Integradas.</p>
-    `;
-    content.innerHTML = html;
-  }
-
-  // Vista 2: Sistema de Proyectos Completo
-  function renderProyectos(){
-    var projs = entries.filter(e => e.type === 'proyecto');
-    if(projs.length === 0){
-      content.innerHTML = '<div class="empty">No hay proyectos creados. Usa el capturador superior seleccionando "Proyecto".</div>';
-      return;
-    }
-
-    var html = '<div class="list">';
-    projs.forEach(function(p){
-      // Filtramos dinámicamente elementos hijos asociados a este proyecto
-      var tareasHijas = entries.filter(e => e.projectId === p.id && e.type === 'tarea');
-      var notasHijas = entries.filter(e => e.projectId === p.id && e.type === 'nota');
-      
-      html += `
-        <div class="card type-proyecto" style="background: var(--parchment); color: var(--ink);">
-          <div class="tabstrip"></div>
-          <div class="card-top">
-            <span class="card-stamp">PROYECTO • ${p.status.toUpperCase()}</span>
-            <button class="card-del" onclick="window.deleteEntry('${p.id}')">✕</button>
-          </div>
-          <input type="text" class="card-title" value="${escapeHtml(p.title)}" onchange="window.updateTitle('${p.id}', this.value)">
-          
-          <div style="margin-top: 10px; font-size:12px; border-top:1px dashed rgba(0,0,0,0.15); padding-top:8px;">
-            <strong>Tareas vinculadas (${tareasHijas.length}):</strong>
-            ${tareasHijas.map(t => `<div style="padding:2px 0;">${t.done ? '✓' : '⬪'} ${escapeHtml(t.title)}</div>`).join('') || '<div class="muted">Ninguna tarea asignada</div>'}
-          </div>
-
-          <div style="margin-top: 8px; font-size:12px;">
-            <strong>Notas vinculadas (${notasHijas.length}):</strong>
-            ${notasHijas.map(n => `<div>• ${escapeHtml(n.title)}</div>`).join('') || '<div class="muted">Ninguna nota asignada</div>'}
-          </div>
-        </div>
-      `;
+    Array.from(tagcloudEl.querySelectorAll('.tagchip')).forEach(function(btn){
+      btn.addEventListener('click', function(){
+        activeTag = btn.getAttribute('data-tag') || null;
+        render();
+      });
     });
-    html += '</div>';
-    content.innerHTML = html;
   }
 
-  // Vista 3: Listados habituales de Tareas, Notas, Recordatorios con Selector de Proyecto
-  function renderFilteredList(type){
-    var list = entries.filter(e => e.type === type);
-    var proyectos = entries.filter(e => e.type === 'proyecto');
-
-    if(list.length === 0){
-      content.innerHTML = `<div class="empty">No hay elementos de tipo ${type}.</div>`;
-      return;
-    }
-
-    var html = '<div class="grid">';
-    list.forEach(function(item){
-      var isDone = item.done ? 'done' : '';
-      
-      html += `
-        <div class="card type-${type}">
-          <div class="tabstrip"></div>
-          <div class="card-top">
-            ${type === 'tarea' ? `<input type="checkbox" class="card-check" ${item.done?'checked':''} onchange="window.toggleDone('${item.id}')">` : ''}
-            <span class="card-stamp">${type.toUpperCase()}</span>
-            <button class="card-del" onclick="window.deleteEntry('${item.id}')">✕</button>
-          </div>
-          <input type="text" class="card-title ${isDone}" value="${escapeHtml(item.title)}" onchange="window.updateTitle('${item.id}', this.value)">
-          
-          <div class="card-row">
-            <select class="card-project-select" onchange="window.assignProject('${item.id}', this.value)">
-              <option value="">-- Asignar Proyecto --</option>
-              ${proyectos.map(p => `<option value="${p.id}" ${item.projectId === p.id ? 'selected' : ''}>${escapeHtml(p.title)}</option>`).join('')}
-            </select>
-          </div>
-        </div>
-      `;
-    });
-    html += '</div>';
-    content.innerHTML = html;
-  }
-
-  // Vista 4: Módulo de Finanzas Original
+  // ---------- financial rendering module ----------
   function renderFinanzas(){
-    var totalIngresos = movimientos.filter(m=>m.type==='ingreso').reduce((a,c)=>a+parseFloat(c.amount||0), 0);
-    var totalGastos = movimientos.filter(m=>m.type==='gasto').reduce((a,c)=>a+parseFloat(c.amount||0), 0);
-    var balance = totalIngresos - totalGastos;
+    var html = '<div class="fin-tabs">' +
+                 '<button class="fin-tab ' + (finSubview==='movimientos'?'active':'') + '" data-sub="movimientos">Historial</button>' +
+                 '<button class="fin-tab ' + (finSubview==='programados'?'active':'') + '" data-sub="programados">Fijos / Recurrentes</button>' +
+                 '<button class="fin-tab ' + (finSubview==='budget'?'active':'') + '" data-sub="budget">Presupuesto Semanal</button>' +
+               '</div>';
 
-    var html = `
-      <div class="fin-capture">
-        <div class="fin-type-toggle">
-          <button class="fin-type-btn ${finType==='gasto'?'active':''}" onclick="window.setFinType('gasto')">Gasto</button>
-          <button class="fin-type-btn ${finType==='ingreso'?'active':''}" onclick="window.setFinType('ingreso')">Ingreso</button>
-        </div>
-        <div class="fin-row">
-          <input type="text" id="finDesc" class="fin-input fin-input-desc" placeholder="Descripción del movimiento...">
-          <input type="number" id="finAmount" class="fin-input fin-input-amount" placeholder="Monto $">
-          <button class="fin-submit" onclick="window.addMovimiento()">Registrar</button>
-        </div>
-      </div>
+    if(finSubview === 'movimientos') html += renderFinMovimientos();
+    else if(finSubview === 'programados') html += renderFinProgramados();
+    else if(finSubview === 'budget') html += renderFinBudget();
 
-      <div class="fin-summary">
-        <div class="fin-kpi"><div class="fin-kpi-label">Ingresos</div><div class="fin-kpi-value ingreso">$${totalIngresos.toFixed(2)}</div></div>
-        <div class="fin-kpi"><div class="fin-kpi-label">Gastos</div><div class="fin-kpi-value gasto">$${totalGastos.toFixed(2)}</div></div>
-        <div class="fin-kpi"><div class="fin-kpi-label">Balance Global</div><div class="fin-kpi-value">${balance >= 0 ? '$'+balance.toFixed(2) : '-$'+Math.abs(balance).toFixed(2)}</div></div>
-      </div>
-    `;
     content.innerHTML = html;
+    bindFinEvents();
   }
 
-  // ---------- ACCIONES E INTERACCIONES EN VENTANA GLOBAL ----------
-  window.updateTitle = function(id, val){
-    var item = entries.find(e => e.id === id);
-    if(item) { item.title = val; persist(); }
-  };
+  function renderFinMovimientos(){
+    var ingresos = movimientos.filter(m => m.type === 'ingreso').reduce((a,c) => a + c.amount, 0);
+    var gastos = movimientos.filter(m => m.type === 'gasto').reduce((a,c) => a + c.amount, 0);
+    var bal = ingresos - gastos;
+    var balClass = bal > 0 ? 'pos' : (bal < 0 ? 'neg' : 'zero');
+    var sign = bal > 0 ? '+' : '';
 
-  window.deleteEntry = function(id){
-    entries = entries.filter(e => e.id !== id);
-    persist();
-    render();
-  };
+    var filtered = movimientos.filter(function(m){
+      if(finFilter === 'ingreso') return m.type === 'ingreso';
+      if(finFilter === 'gasto') return m.type === 'gasto';
+      return true;
+    }).sort((a,b) => b.date.localeCompare(a.date));
 
-  window.toggleDone = function(id){
-    var item = entries.find(e => e.id === id);
-    if(item) { item.done = !item.done; persist(); render(); }
-  };
+    var totalFiltered = filtered.reduce((a,c) => a + c.amount, 0);
 
-  window.assignProject = function(entryId, projectId){
-    var item = entries.find(e => e.id === entryId);
-    if(item) {
-      item.projectId = projectId;
-      persist();
-      showToast('Asignado a proyecto correctamente');
-    }
-  };
-
-  window.setFinType = function(type){ finType = type; render(); };
-  
-  window.addMovimiento = function(){
-    var desc = document.getElementById('finDesc').value.trim();
-    var amount = parseFloat(document.getElementById('finAmount').value);
-    if(!desc || isNaN(amount)) return;
-
-    movimientos.unshift({
-      id: uid(),
-      type: finType,
-      description: desc,
-      amount: amount,
-      date: todayStr()
+    var cats = {};
+    movimientos.filter(m => m.type==='gasto').forEach(function(m){
+      cats[m.cat] = (cats[m.cat] || 0) + m.amount;
     });
-    persistFin();
-    render();
-  };
+    var sortedCats = Object.keys(cats).sort((a,b) => cats[b] - cats[a]);
 
-  // Gestión de clicks en capturadores superiores e inferiores
-  document.getElementById('typeToggle').addEventListener('click', function(e){
-    if(!e.target.classList.contains('type-btn')) return;
-    Array.from(this.children).forEach(b => b.classList.remove('active'));
-    e.target.classList.add('active');
-    captureType = e.target.getAttribute('data-type');
-  });
+    var trackPct = 0;
+    if(ingresos > 0) trackPct = Math.min(100, (gastos / ingresos) * 100);
+    else if(gastos > 0) trackPct = 100;
+
+    var out = '<div class="fin-summary">' +
+                '<div class="fin-kpi"><div class="fin-kpi-label">Total Ingresos</div><div class="fin-kpi-value ingreso">+$' + ingresos.toFixed(2) + '</div></div>' +
+                '<div class="fin-kpi"><div class="fin-kpi-label">Total Gastos</div><div class="fin-kpi-value gasto">-$' + gastos.toFixed(2) + '</div></div>' +
+                '<div class="fin-kpi"><div class="fin-kpi-label">Balance Global</div><div class="fin-kpi-value balance ' + balClass + '">' + sign + '$' + bal.toFixed(2) + '</div></div>' +
+              '</div>';
+
+    out += '<div class="fin-bar-wrap">' +
+             '<div class="fin-bar-label">Consumo del Ingreso: ' + trackPct.toFixed(1) + '%</div>' +
+             '<div class="fin-bar-track"><div class="fin-bar-fill gasto" style="width:' + trackPct + '%"></div></div>' +
+             '<div class="fin-bar-legend"><span>$0.00</span><span>Disponible: $' + Math.max(0, ingresos-gastos).toFixed(2) + '</span></div>' +
+           '</div>';
+
+    out += '<div class="fin-capture">' +
+             '<div class="fin-type-toggle">' +
+               '<button type="button" class="fin-type-btn ' + (finType==='gasto'?'active':'') + '" data-fintype="gasto">Gasto</button>' +
+               '<button type="button" class="fin-type-btn ' + (finType==='ingreso'?'active':'') + '" data-fintype="ingreso">Ingreso</button>' +
+             '</div>' +
+             '<form id="finForm" class="fin-row">' +
+               '<input type="text" id="finDesc" class="fin-input fin-input-desc" placeholder="Descripción del movimiento..." required autocomplete="off">' +
+               '<input type="number" id="finAmount" class="fin-input fin-input-amount" placeholder="Monto ($)" step="0.01" required>' +
+               '<input type="text" id="finCat" class="fin-input fin-input-cat" placeholder="Categoría (ej: Comida)" list="finDefaultCats">' +
+               '<input type="date" id="finDate" class="fin-input" required>' +
+               '<button type="submit" class="fin-submit">Añadir</button>' +
+             '</form>' +
+             '<datalist id="finDefaultCats"><option value="Comida"><option value="Transporte"><option value="Vivienda"><option value="Servicios"><option value="Ocio"><option value="Salud"><option value="Sueldo"></datalist>' +
+           '</div>';
+
+    if(sortedCats.length > 0){
+      out += '<div class="section-label">Distribución de Gastos por Categoría</div><div class="fin-cat-breakdown">';
+      sortedCats.forEach(function(c){
+        out += '<div class="fin-cat-item"><div class="fin-cat-name">' + escapeHtml(c) + '</div><div class="fin-cat-val">$' + cats[c].toFixed(2) + '</div></div>';
+      });
+      out += '</div>';
+    }
+
+    out += '<div class="section-label">Historial de Flujo Monetario</div>';
+    out += '<div class="fin-filter-row">' +
+             '<button class="fin-filter-btn ' + (finFilter==='todo'?'active':'') + '" data-filt="todo">Todo</button>' +
+             '<button class="fin-filter-btn ' + (finFilter==='ingreso'?'active':'') + '" data-filt="ingreso">Ingresos</button>' +
+             '<button class="fin-filter-btn ' + (finFilter==='gasto'?'active':'') + '" data-filt="gasto">Gastos</button>' +
+             '<span style="margin-left:auto; font-family:var(--mono); font-size:12px; color:var(--parchment-dim); padding-top:4px">Suma: $' + totalFiltered.toFixed(2) + '</span>' +
+           '</div>';
+
+    if(filtered.length === 0){
+      out += '<div class="empty">No hay registros de transacciones comerciales en este filtro.</div>';
+    } else {
+      out += '<div class="fin-list">';
+      filtered.forEach(function(m){
+        var mSign = m.type === 'ingreso' ? '+' : '-';
+        out += '<div class="fin-item">' +
+                 '<div class="fin-item-dot ' + m.type + '"></div>' +
+                 '<div class="fin-item-desc">' + escapeHtml(m.desc) + '</div>' +
+                 '<div class="fin-item-cat">' + escapeHtml(m.cat || 'General') + '</div>' +
+                 '<div class="fin-item-date">' + fmtDate(m.date) + '</div>' +
+                 '<div class="fin-item-amount ' + m.type + '">' + mSign + '$' + m.amount.toFixed(2) + '</div>' +
+                 '<button type="button" class="fin-item-del" data-id="' + m.id + '">✕</button>' +
+               '</div>';
+      });
+      out += '</div>';
+    }
+    return out;
+  }
+
+  function renderFinProgramados(){
+    var out = '<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:18px; align-items:start">';
+    
+    // Left: Finanzas fijas
+    out += '<div class="fin-capture" style="margin-bottom:0">' +
+             '<div class="fin-block-label" style="font-family:var(--mono); font-size:11px; text-transform:uppercase; color:var(--brass); margin-bottom:10px">Transacción Periódica (Fija)</div>' +
+             '<div class="fin-type-toggle">' +
+               '<button type="button" class="fin-type-btn ' + (progType==='gasto'?'active':'') + '" id="progTypeGasto">Gasto</button>' +
+               '<button type="button" class="fin-type-btn ' + (progType==='ingreso'?'active':'') + '" id="progTypeIngreso">Ingreso</button>' +
+             '</div>' +
+             '<form id="progForm" style="display:flex; flex-direction:column; gap:8px">' +
+               '<input type="text" id="progDesc" class="fin-input" placeholder="Ej: Suscripción Netflix" required autocomplete="off">' +
+               '<input type="number" id="progAmount" class="fin-input" placeholder="Monto ($)" step="0.01" required>' +
+               '<input type="text" id="progCat" class="fin-input" placeholder="Categoría (ej: Servicios)">' +
+               '<select id="progFreq" class="fin-input" style="background:var(--ink); color:var(--parchment)">' +
+                 '<option value="diario">Diario</option>' +
+                 '<option value="semanal">Semanal</option>' +
+                 '<option value="quincenal">Quincenal</option>' +
+                 '<option value="mensual" selected>Mensual</option>' +
+               '</select>' +
+               '<input type="date" id="progDate" class="fin-input" required>' +
+               '<button type="submit" class="fin-submit" style="margin-top:4px">Agendar Fijo</button>' +
+             '</form>' +
+           '</div>';
+
+    // Right: Entradas periódicas (Tareas/Recordatorios)
+    out += '<div class="fin-capture" style="margin-bottom:0">' +
+             '<div class="fin-block-label" style="font-family:var(--mono); font-size:11px; text-transform:uppercase; color:var(--sage); margin-bottom:10px">Generador Recurrente de Acciones</div>' +
+             '<div class="fin-type-toggle">' +
+               '<button type="button" class="fin-type-btn ' + (epType==='tarea'?'active':'') + '" id="epTypeTarea">Tarea</button>' +
+               '<button type="button" class="fin-type-btn ' + (epType==='recordatorio'?'active':'') + '" id="epTypeRec">Recordatorio</button>' +
+               '<button type="button" class="fin-type-btn ' + (epType==='nota'?'active':'') + '" id="epTypeNota">Nota</button>' +
+             '</div>' +
+             '<form id="epForm" style="display:flex; flex-direction:column; gap:8px">' +
+               '<input type="text" id="epTitle" class="fin-input" placeholder="Título (ej: Revisar medidor gas, #rutina)" required autocomplete="off">' +
+               '<select id="epFreq" class="fin-input" style="background:var(--ink); color:var(--parchment)">' +
+                 '<option value="diario">Diario</option>' +
+                 '<option value="semanal" selected>Semanal</option>' +
+                 '<option value="quincenal">Quincenal</option>' +
+                 '<option value="mensual">Mensual</option>' +
+               '</select>' +
+               '<input type="date" id="epDate" class="fin-input" required>' +
+               '<button type="submit" class="fin-submit" style="margin-top:4px">Agendar Acción</button>' +
+             '</form>' +
+           '</div></div>';
+
+    out += '<div class="section-label">Flujos Monetarios Programados</div>';
+    if(programados.length === 0){
+      out += '<div class="empty" style="margin-bottom:18px">No hay automatizaciones de tesorería programadas.</div>';
+    } else {
+      out += '<div class="fin-list" style="margin-bottom:18px">';
+      programados.forEach(function(p){
+        var pSign = p.type === 'ingreso' ? '+' : '-';
+        out += '<div class="prog-item">' +
+                 '<div class="prog-item-dot ' + p.type + '"></div>' +
+                 '<div class="prog-item-desc"><b>' + escapeHtml(p.desc) + '</b></div>' +
+                 '<div class="fin-item-cat">' + escapeHtml(p.cat || 'General') + '</div>' +
+                 '<div class="prog-item-freq">' + p.freq + '</div>' +
+                 '<div class="prog-item-next">Prox: ' + fmtDate(p.nextDate) + '</div>' +
+                 '<div class="prog-item-amount ' + p.type + '">' + pSign + '$' + p.amount.toFixed(2) + '</div>' +
+                 '<button type="button" class="prog-item-del" data-id="' + p.id + '">✕</button>' +
+               '</div>';
+      });
+      out += '</div>';
+    }
+
+    out += '<div class="section-label">Acciones y Entradas de Contenido Programadas</div>';
+    if(entradasProg.length === 0){
+      out += '<div class="empty">No hay automatizaciones de tareas o notas configuradas en el sistema.</div>';
+    } else {
+      out += '<div class="fin-list">';
+      entradasProg.forEach(function(p){
+        var typeLabels = { tarea: 'Tarea', recordatorio: 'Recordatorio', nota: 'Nota' };
+        out += '<div class="prog-item" style="border-left:3px solid var(--sage)">' +
+                 '<div class="prog-item-desc"><b>' + escapeHtml(p.title) + '</b> <span style="font-size:11px; opacity:0.6">(' + typeLabels[p.type] + ')</span></div>' +
+                 '<div class="prog-item-freq">' + p.freq + '</div>' +
+                 '<div class="prog-item-next">Prox: ' + fmtDate(p.nextDate) + '</div>' +
+                 '<button type="button" class="prog-ep-del" data-id="' + p.id + '" style="background:none; border:none; color:rgba(243,239,230,0.25); cursor:pointer; font-size:12px; padding:2px 4px; margin-left:auto">✕</button>' +
+               '</div>';
+      });
+      out += '</div>';
+    }
+
+    return out;
+  }
+
+  function getWeekRangeStrings(offset) {
+    var today = new Date();
+    var currentDay = today.getDay(); 
+    var distanceToMonday = currentDay === 0 ? -6 : 1 - currentDay; 
+    
+    var monday = new Date(today);
+    monday.setDate(today.getDate() + distanceToMonday + (offset * 7));
+    
+    var sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+    
+    return {
+      start: monday.getFullYear() + '-' + pad2(monday.getMonth()+1) + '-' + pad2(monday.getDate()),
+      end: sunday.getFullYear() + '-' + pad2(sunday.getMonth()+1) + '-' + pad2(sunday.getDate())
+    };
+  }
+
+  function renderFinBudget(){
+    var range = getWeekRangeStrings(budgetWeekOffset);
+    var weekMovs = movimientos.filter(m => m.date >= range.start && m.date <= range.end);
+    var weekGastos = weekMovs.filter(m => m.type === 'gasto').reduce((a,c) => a + c.amount, 0);
+    var weekIngresos = weekMovs.filter(m => m.type === 'ingreso').reduce((a,c) => a + c.amount, 0);
+
+    var labelStr = 'Semana: ' + fmtDate(range.start) + ' al ' + fmtDate(range.end);
+    if(budgetWeekOffset === 0) labelStr += ' (Actual)';
+
+    var out = '<div class="budget-week-nav">' +
+                '<button type="button" class="budget-nav-btn" id="budgetPrevWeek">◀ Anterior</button>' +
+                '<div class="budget-week-label">' + labelStr + '</div>' +
+                '<button type="button" class="budget-nav-btn" id="budgetNextWeek" ' + (budgetWeekOffset===0?'disabled':'') + '>Siguiente ▶</button>' +
+              '</div>';
+
+    out += '<div class="budget-week-stats">' +
+             '<div class="budget-week-stat"><div class="budget-week-stat-label">Ingresos Semana</div><div class="budget-week-stat-val" style="color:#7BBF9A">+$' + weekIngresos.toFixed(2) + '</div></div>' +
+             '<div class="budget-week-stat"><div class="budget-week-stat-label">Gastos Semana</div><div class="budget-week-stat-val" style="color:#C47676">-$' + weekGastos.toFixed(2) + '</div></div>' +
+             '<div class="budget-week-stat"><div class="budget-week-stat-label">Balance Neto</div><div class="budget-week-stat-val">' + ((weekIngresos-weekGastos)>=0?'+':'') + '$' + (weekIngresos-weekGastos).toFixed(2) + '</div></div>' +
+           '</div>';
+
+    var cats = {};
+    weekMovs.filter(m => m.type==='gasto').forEach(function(m){
+      cats[m.cat] = cats[m.cat] || { total: 0, count: 0 };
+      cats[m.cat].total += m.amount;
+      cats[m.cat].count++;
+    });
+    var sortedCats = Object.keys(cats).sort((a,b) => cats[b].total - cats[a].total);
+
+    if(sortedCats.length === 0){
+      out += '<div class="budget-empty-week">No hay egresos registrados en este periodo semanal.</div>';
+    } else {
+      out += '<div class="section-label">Desglose por Categoría (Esta Semana)</div><div class="budget-spending-grid">';
+      var maxGasto = Math.max(...Object.keys(cats).map(k => cats[k].total));
+      sortedCats.forEach(function(c){
+        var pct = maxGasto > 0 ? (cats[c].total / maxGasto) * 100 : 0;
+        out += '<div class="budget-cat-row">' +
+                 '<div class="budget-cat-name">' + escapeHtml(c) + '</div>' +
+                 '<div class="budget-cat-amount">$' + cats[c].total.toFixed(2) + '</div>' +
+                 '<div class="budget-cat-count">' + cats[c].count + ' trans.</div>' +
+                 '<div class="budget-cat-bar"><div class="budget-cat-bar-fill" style="width:' + pct + '%"></div></div>' +
+               '</div>';
+      });
+      out += '</div>';
+    }
+
+    if(!budgetResult && !budgetLoading){
+      out += '<div style="margin-top:20px">' +
+               '<button type="button" class="budget-ai-trigger" id="budgetAiBtn">' +
+                 '<span class="icon">📊</span>' +
+                 '<div>' +
+                   '<span>Auditoría de Presupuesto y Plan de Ahorro con IA</span>' +
+                   '<span class="sub">Analiza el patrón de consumo actual para trazar metas y recortes</span>' +
+                 '</div>' +
+               '</button>' +
+             '</div>';
+    }
+    if(budgetLoading){
+      out += '<div style="margin-top:20px"><div class="budget-ai-trigger loading"><span class="icon">⏳</span> <span>Computando matrices financieras y optimizando plan de ahorro…</span></div></div>';
+    }
+    if(budgetError){
+      out += '<div class="ai-error" style="margin-top:14px">Error: ' + escapeHtml(budgetError) + '</div>';
+    }
+    if(budgetResult){
+      out += '<div class="budget-result" style="margin-top:24px">' +
+               '<div style="font-family:var(--mono); font-size:11px; margin-bottom:10px; color:var(--parchment-dim); display:flex; justify-content:space-between">' +
+                 '<span>AUDITORÍA INTELIGENTE</span><span>' + fmtDateTime(budgetResult.timestamp) + '</span>' +
+               '</div>' +
+               
+               '<div class="budget-block analysis"><div class="tabstrip"></div>' +
+                 '<div class="budget-block-label">Análisis de Patrones de Consumo</div>' +
+                 '<div class="budget-block-body">' + escapeHtml(budgetResult.analysis) + '</div>' +
+               '</div>' +
+
+               '<div class="budget-block budget-plan"><div class="tabstrip"></div>' +
+                 '<div class="budget-block-label">Estructura de Presupuesto Recomendada</div>' +
+                 '<div class="budget-block-body budget-table">' + escapeHtml(budgetResult.budget) + '</div>' +
+               '</div>' +
+
+               '<div class="budget-block cuts"><div class="tabstrip"></div>' +
+                 '<div class="budget-block-label">Estrategia de Recorte Sugerida</div>' +
+                 '<div class="budget-block-body">' + escapeHtml(budgetResult.cuts) + '</div>' +
+               '</div>' +
+               
+               '<button type="button" class="budget-regen" id="budgetClearBtn" style="color:var(--parchment); border-color:var(--line-strong)">Cerrar Auditoría</button>' +
+             '</div>';
+    }
+
+    return out;
+  }
+
+  // ---------- building HTML components ----------
+  function buildCardHtml(e){
+    var isJustAdded = e.id === lastAddedId;
+    var classes = 'card type-' + e.type + (isJustAdded ? ' just-added' : '');
+    var out = '<div class="' + classes + '" data-id="' + e.id + '"><div class="tabstrip"></div>';
+    
+    out += '<div class="card-top">';
+    if(e.type === 'tarea'){
+      out += '<input type="checkbox" class="card-check" ' + (e.done?'checked':'') + '>';
+    }
+    out += '<input type="text" class="card-title' + (e.done?' done':'') + '" value="' + escapeHtml(e.title) + '">';
+    out += '<span class="card-stamp">' + fmtDate(e.createdAt) + '</span>';
+    out += '</div>';
+
+    out += '<textarea class="card-body" placeholder="Añadir notas o apuntes descriptivos...">' + escapeHtml(e.body || '') + '</textarea>';
+
+    out += '<div class="card-row">';
+    var displayTags = e.tags && e.tags.length > 0 ? e.tags.map(t => '#' + t).join(' ') : '';
+    out += '<input type="text" class="card-tags" placeholder="#etiquetas" value="' + escapeHtml(displayTags) + '">';
+    
+    if(e.type === 'tarea'){
+      out += '<span class="priority-dot ' + (e.priority || 'media') + '"></span>';
+      out += '<select class="card-priority">' +
+               '<option value="baja" ' + (e.priority==='baja'?'selected':'') + '>Baja</option>' +
+               '<option value="media" ' + (e.priority==='media'?'selected':'') + '>Media</option>' +
+               '<option value="alta" ' + (e.priority==='alta'?'selected':'') + '>Alta</option>' +
+             '</select>';
+      out += '<input type="date" class="card-date" value="' + (e.dueAt || '') + '">';
+      if(isOverdueTask(e)){ out += '<span class="overdue-flag">Vencida</span>'; }
+    }
+    
+    if(e.type === 'recordatorio'){
+      out += '<input type="datetime-local" class="card-date" value="' + (e.remindAt || '') + '" style="font-size:10px">';
+    }
+
+    out += '<button type="button" class="card-del" title="Eliminar del sistema">✕</button>';
+    out += '</div>';
+
+    out += '</div>';
+    return out;
+  }
+
+  // ---------- event bindings for core lifecycle ----------
+  function bindCardEvents(renderedList){
+    var els = content.querySelectorAll('.card');
+    els.forEach(function(cardEl){
+      var id = cardEl.getAttribute('data-id');
+      var entry = entries.find(e => e.id === id);
+      if(!entry) return;
+
+      var titleInput = cardEl.querySelector('.card-title');
+      titleInput.addEventListener('change', function(){
+        entry.title = titleInput.value.trim() || 'Sin título';
+        persist();
+      });
+
+      var bodyText = cardEl.querySelector('.card-body');
+      bodyText.addEventListener('input', function(){
+        entry.body = bodyText.value;
+        persist();
+      });
+
+      var tagsInput = cardEl.querySelector('.card-tags');
+      tagsInput.addEventListener('change', function(){
+        var parsed = parseContent(tagsInput.value);
+        entry.tags = parsed.tags;
+        persist();
+        setTimeout(render, 1000); 
+      });
+
+      var delBtn = cardEl.querySelector('.card-del');
+      delBtn.addEventListener('click', function(){
+        entries = entries.filter(e => e.id !== id);
+        cardEl.remove();
+        persist();
+        if(entries.length === 0 || visibleEntriesCount() === 0) render();
+      });
+
+      if(entry.type === 'tarea'){
+        var chk = cardEl.querySelector('.card-check');
+        chk.addEventListener('change', function(){
+          entry.done = chk.checked;
+          if(entry.done) titleInput.classList.add('done');
+          else titleInput.classList.remove('done');
+          persist();
+          setTimeout(render, 400);
+        });
+
+        var prio = cardEl.querySelector('.card-priority');
+        prio.addEventListener('change', function(){
+          entry.priority = prio.value;
+          var dot = cardEl.querySelector('.priority-dot');
+          dot.className = 'priority-dot ' + prio.value;
+          persist();
+        });
+
+        var dt = cardEl.querySelector('.card-date');
+        dt.addEventListener('change', function(){
+          entry.dueAt = dt.value || null;
+          persist();
+          setTimeout(render, 1000);
+        });
+      }
+
+      if(entry.type === 'recordatorio'){
+        var rDt = cardEl.querySelector('.card-date');
+        rDt.addEventListener('change', function(){
+          entry.remindAt = rDt.value || null;
+          persist();
+        });
+      }
+    });
+  }
+
+  function visibleEntriesCount(){ return getVisibleEntries().length; }
+
+  function bindFinEvents(){
+    // sub tabs
+    Array.from(content.querySelectorAll('.fin-tab')).forEach(function(btn){
+      btn.addEventListener('click', function(){
+        finSubview = btn.getAttribute('data-sub');
+        renderFinanzas();
+      });
+    });
+
+    if(finSubview === 'movimientos'){
+      // toggles de tipo
+      Array.from(content.querySelectorAll('.fin-type-btn')).forEach(function(b){
+        b.addEventListener('click', function(){
+          finType = b.getAttribute('data-fintype');
+          renderFinanzas();
+        });
+      });
+      // default input date
+      var dInput = document.getElementById('finDate');
+      if(dInput && !dInput.value) dInput.value = todayStr();
+
+      // submit form
+      var f = document.getElementById('finForm');
+      if(f){
+        f.addEventListener('submit', function(e){
+          e.preventDefault();
+          var desc = document.getElementById('finDesc').value.trim();
+          var amount = parseFloat(document.getElementById('finAmount').value);
+          var cat = document.getElementById('finCat').value.trim() || 'General';
+          var date = document.getElementById('finDate').value || todayStr();
+
+          if(!desc || isNaN(amount)) return;
+
+          movimientos.push({ id: uid(), type: finType, desc: desc, amount: amount, cat: cat, date: date });
+          persistFin();
+          showToast('Movimiento registrado');
+          renderFinanzas();
+        });
+      }
+
+      // filtros hitorial
+      Array.from(content.querySelectorAll('.fin-filter-btn')).forEach(function(b){
+        b.addEventListener('click', function(){
+          finFilter = b.getAttribute('data-filt');
+          renderFinanzas();
+        });
+      });
+
+      // borrar movimiento
+      Array.from(content.querySelectorAll('.fin-item-del')).forEach(function(b){
+        b.addEventListener('click', function(){
+          var id = b.getAttribute('data-id');
+          movimientos = movimientos.filter(m => m.id !== id);
+          persistFin();
+          renderFinanzas();
+        });
+      });
+    }
+
+    if(finSubview === 'programados'){
+      // toggles fijos
+      var ptG = document.getElementById('progTypeGasto');
+      var ptI = document.getElementById('progTypeIngreso');
+      if(ptG && ptI){
+        ptG.addEventListener('click', function(){ progType='gasto'; renderFinanzas(); });
+        ptI.addEventListener('click', function(){ progType='ingreso'; renderFinanzas(); });
+      }
+      var pInputDate = document.getElementById('progDate');
+      if(pInputDate && !pInputDate.value) pInputDate.value = todayStr();
+
+      var pForm = document.getElementById('progForm');
+      if(pForm){
+        pForm.addEventListener('submit', function(e){
+          e.preventDefault();
+          var desc = document.getElementById('progDesc').value.trim();
+          var amount = parseFloat(document.getElementById('progAmount').value);
+          var cat = document.getElementById('progCat').value.trim() || 'General';
+          var freq = document.getElementById('progFreq').value;
+          var baseDate = document.getElementById('progDate').value || todayStr();
+
+          if(!desc || isNaN(amount)) return;
+          programados.push({ id: uid(), type: progType, desc: desc, amount: amount, cat: cat, freq: freq, nextDate: baseDate });
+          persistProg();
+          applyProgramados();
+          renderFinanzas();
+        });
+      }
+
+      // toggles acciones recurrentes
+      var etT = document.getElementById('epTypeTarea');
+      var etR = document.getElementById('epTypeRec');
+      var etN = document.getElementById('epTypeNota');
+      if(etT && etR && etN){
+        etT.addEventListener('click', function(){ epType='tarea'; renderFinanzas(); });
+        etR.addEventListener('click', function(){ epType='recordatorio'; renderFinanzas(); });
+        etN.addEventListener('click', function(){ epType='nota'; renderFinanzas(); });
+      }
+      var epInputDate = document.getElementById('epDate');
+      if(epInputDate && !epInputDate.value) epInputDate.value = todayStr();
+
+      var epForm = document.getElementById('epForm');
+      if(epForm){
+        epForm.addEventListener('submit', function(e){
+          e.preventDefault();
+          var fullTitle = document.getElementById('epTitle').value.trim();
+          var freq = document.getElementById('epFreq').value;
+          var baseDate = document.getElementById('epDate').value || todayStr();
+
+          if(!fullTitle) return;
+          var parsed = parseContent(fullTitle);
+          
+          entradasProg.push({
+            id: uid(),
+            type: epType,
+            title: parsed.title,
+            tags: parsed.tags,
+            freq: freq,
+            nextDate: baseDate,
+            priority: 'media'
+          });
+          persistEP();
+          applyEntradasProg();
+          renderFinanzas();
+        });
+      }
+
+      // eliminar programados
+      Array.from(content.querySelectorAll('.prog-item-del')).forEach(function(b){
+        b.addEventListener('click', function(){
+          var id = b.getAttribute('data-id');
+          programados = programados.filter(p => p.id !== id);
+          persistProg();
+          renderFinanzas();
+        });
+      });
+      Array.from(content.querySelectorAll('.prog-ep-del')).forEach(function(b){
+        b.addEventListener('click', function(){
+          var id = b.getAttribute('data-id');
+          entradasProg = entradasProg.filter(p => p.id !== id);
+          persistEP();
+          renderFinanzas();
+        });
+      });
+    }
+
+    if(finSubview === 'budget'){
+      document.getElementById('budgetPrevWeek').addEventListener('click', function(){ budgetWeekOffset--; renderFinanzas(); });
+      var nBtn = document.getElementById('budgetNextWeek');
+      if(nBtn) nBtn.addEventListener('click', function(){ if(budgetWeekOffset < 0){ budgetWeekOffset++; renderFinanzas(); } });
+      
+      var bAi = document.getElementById('budgetAiBtn');
+      if(bAi) bAi.addEventListener('click', runBudgetAiRoutine);
+
+      var bClr = document.getElementById('budgetClearBtn');
+      if(bClr) bClr.addEventListener('click', function(){ budgetResult = null; renderFinanzas(); });
+    }
+  }
+
+  // ---------- AI processing modules ----------
+  async function runAiRoutine(){
+    aiLoading = true; aiError = null; render();
+    
+    var localTasks = entries.filter(e => e.type === 'tarea' && !e.done);
+    var localReminders = entries.filter(e => e.type === 'recordatorio' && !e.dismissed);
+    var localNotes = entries.filter(e => e.type === 'nota');
+
+    var prompt = "Eres el núcleo analítico de un Segundo Cerebro. Analiza objetivamente los datos adjuntos y genera un informe estructurado, asertivo y de prosa limpia.\n" +
+                 "Hoy es " + todayStr() + ".\n\n" +
+                 "=== TAREAS PENDIENTES ===\n";
+    if(localTasks.length===0) prompt += "Ninguna.\n";
+    else localTasks.forEach(t => prompt += "- [" + (t.priority||'media') + "] " + t.title + (t.dueAt?" (Vence: "+t.dueAt+")":"") + "\n");
+
+    prompt += "\n=== RECORDATORIOS ===\n";
+    if(localReminders.length===0) prompt += "Ninguno.\n";
+    else localReminders.forEach(r => prompt += "- " + r.title + " (" + (r.remindAt||'') + ")\n");
+
+    prompt += "\n=== NOTAS RECIENTES CONSOLIDADAS ===\n";
+    var recNotes = localNotes.slice(0, 7);
+    if(recNotes.length===0) prompt += "Ninguna.\n";
+    else recNotes.forEach(n => prompt += "• " + n.title + ": " + (n.body?n.body.slice(0,60):'') + "\n");
+
+    prompt += "\nEscribe un resumen ejecutivo breve dividiéndolo en:\n" +
+              "1. DIAGNÓSTICO DEL DÍA (Evalúa la carga de tareas críticas o vencidas).\n" +
+              "2. SECUENCIA DE ACCIÓN RECOMENDADA (Orden cronológico o de impacto para ejecutar hoy).\n" +
+              "3. NEXOS SUTILES (Asociaciones o reflexiones entre tus notas recientes y las tareas vigentes).\n" +
+              "Usa un tono estoico, claro y sofisticado. Evita introducciones corporativas o cierres conversacionales.";
+
+    try {
+      var reply = await window.ai.ask(prompt);
+      aiAnalysis = reply;
+      aiTimestamp = new Date().toISOString();
+    } catch(err) {
+      aiError = err.message || String(err);
+    } finally {
+      aiLoading = false;
+      render();
+    }
+  }
+
+  async function runBudgetAiRoutine(){
+    budgetLoading = true; budgetError = null; renderFinanzas();
+
+    var range = getWeekRangeStrings(budgetWeekOffset);
+    var weekMovs = movimientos.filter(m => m.date >= range.start && m.date <= range.end);
+    var weekGastos = weekMovs.filter(m => m.type === 'gasto');
+    var weekIngresos = weekMovs.filter(m => m.type === 'ingreso').reduce((a,c) => a + c.amount, 0);
+
+    var prompt = "Actúa como un auditor de finanzas cuantitativas. Analiza el flujo de caja semanal que se te proporciona y genera un plan estructurado de optimización.\n" +
+                 "Rango analizado: " + range.start + " al " + range.end + ".\n" +
+                 "Ingresos totales declarados en la semana: $" + weekIngresos.toFixed(2) + ".\n\n" +
+                 "=== HISTORIAL DE EGRESOS SEMANALES ===\n";
+    
+    if(weekGastos.length === 0) prompt += "No se registraron egresos.\n";
+    else weekGastos.forEach(g => prompt += "- " + g.date + " | " + g.cat + " | " + g.desc + " : $" + g.amount.toFixed(2) + "\n");
+
+    prompt += "\nRequisitos de salida (Divide estrictamente en estos 3 bloques usando marcas legibles):\n" +
+              "[BLOQUE_1_ANALISIS]\nAnaliza de forma matemática dónde están las fugas o concentraciones anómalas de capital.\n" +
+              "[BLOQUE_2_PRESUPUESTO]\nGenera una tabla de distribución ideal para la siguiente semana basada en la regla 50/30/20 o la que consideres óptima según el nivel de ingresos. Formato texto monoespaciado limpio.\n" +
+              "[BLOQUE_3_RECORTES]\n3 recomendaciones quirúrgicas de reducción de gasto directo basadas explícitamente en la lista dada.\n" +
+              "Mantén un tono analítico, frío y de alta competencia. No añadas introducciones o saludos.";
+
+    try {
+      var reply = await window.ai.ask(prompt);
+      
+      var analysis = "Análisis no disponible.";
+      var budgetTable = "Tabla no disponible.";
+      var cuts = "Recomendaciones no disponibles.";
+
+      var b1 = reply.indexOf('[BLOQUE_1_ANALISIS]');
+      var b2 = reply.indexOf('[BLOQUE_2_PRESUPUESTO]');
+      var b3 = reply.indexOf('[BLOQUE_3_RECORTES]');
+
+      if(b1 !== -1 && b2 !== -1){
+        analysis = reply.slice(b1 + 19, b2).trim();
+      }
+      if(b2 !== -1 && b3 !== -1){
+        budgetTable = reply.slice(b2 + 22, b3).trim();
+      }
+      if(b3 !== -1){
+        cuts = reply.slice(b3 + 19).trim();
+      }
+
+      if(b1 === -1 && b2 === -1 && b3 === -1){
+        analysis = reply; 
+      }
+
+      budgetResult = {
+        analysis: analysis,
+        budget: budgetTable,
+        cuts: cuts,
+        timestamp: new Date().toISOString()
+      };
+    } catch(err) {
+      budgetError = err.message || String(err);
+    } finally {
+      budgetLoading = false;
+      renderFinanzas();
+    }
+  }
+
+  // ---------- top navigation and main capture events ----------
+  function updateTabs(){
+    Array.from(document.getElementById('tabs').children).forEach(function(btn){
+      if(btn.getAttribute('data-view') === view) btn.classList.add('active');
+      else btn.classList.remove('active');
+    });
+  }
 
   document.getElementById('tabs').addEventListener('click', function(e){
-    if(!e.target.classList.contains('tab')) return;
-    Array.from(this.children).forEach(b => b.classList.remove('active'));
-    e.target.classList.add('active');
-    view = e.target.getAttribute('data-view');
+    var tgt = e.target;
+    if(!tgt.classList.contains('tab')) return;
+    view = tgt.getAttribute('data-view');
+    activeTag = null;
+    updateTabs();
     render();
   });
 
-  // Exportación original en formato JSON estructurado
-  document.getElementById('exportBtn').addEventListener('click', function(){
-    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({entries: entries, movimientos: movimientos}));
-    var downloadAnchor = document.createElement('a');
-    downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", "segundo_cerebro_upgraded.json");
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    downloadAnchor.remove();
+  Array.from(document.getElementById('typeToggle').children).forEach(function(btn){
+    btn.addEventListener('click', function(){
+      Array.from(document.getElementById('typeToggle').children).forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      captureType = btn.getAttribute('data-type');
+      
+      var phs = { nota: '¿Qué tienes en mente? Usa #etiquetas para clasificar...', tarea: 'Nueva tarea... Pon #etiqueta o asigna prioridad abajo', recordatorio: 'Agendar recordatorio cronológico...' };
+      document.getElementById('captureInput').placeholder = phs[captureType] || '';
+    });
   });
 
-  // Inicialización de la App
+  document.getElementById('captureForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var inp = document.getElementById('captureInput');
+    var val = inp.value.trim();
+    if(!val) return;
+
+    var parsed = parseContent(val);
+    var id = uid();
+    
+    var item = {
+      id: id,
+      type: captureType,
+      title: parsed.title,
+      body: '',
+      tags: parsed.tags,
+      createdAt: new Date().toISOString()
+    };
+
+    if(captureType === 'tarea'){ item.dueAt = todayStr(); item.priority = 'media'; item.done = false; }
+    if(captureType === 'recordatorio'){ item.remindAt = nowLocalStr(); item.dismissed = false; }
+
+    entries.unshift(item);
+    lastAddedId = id;
+    inp.value = '';
+    
+    persist();
+    
+    if(captureType === 'nota') view = 'notas';
+    else if(captureType === 'tarea') view = 'tareas';
+    else if(captureType === 'recordatorio') view = 'recordatorios';
+    
+    updateTabs();
+    render();
+    
+    showToast('Añadido a ' + captureType);
+    
+    setTimeout(function(){
+      lastAddedId = null;
+      var el = content.querySelector('.card[data-id="'+id+'"]');
+      if(el) el.classList.remove('just-added');
+    }, 1500);
+  });
+
+  document.getElementById('searchInput').addEventListener('input', function(e){
+    search = e.target.value;
+    render();
+  });
+
+  // ---------- system reminders notification engine ----------
+  var notifTimer = null;
+  function checkRemindersRoutine(){
+    clearTimeout(notifTimer);
+    var ahora = nowLocalStr(); 
+    var modificado = false;
+
+    entries.forEach(function(e){
+      if(e.type === 'recordatorio' && !e.dismissed && e.remindAt && e.remindAt <= ahora){
+        triggerSystemNotification(e.title, e.body || 'Alerta de recordatorio agendado.');
+        e.dismissed = true;
+        modificado = true;
+      }
+    });
+
+    if(modificado){ persist(); render(); }
+    notifTimer = setTimeout(checkRemindersRoutine, 20000); 
+  }
+
+  function triggerSystemNotification(title, body){
+    if(Notification.permission === 'granted'){
+      new Notification(title, { body: body, icon: 'https://cdn-icons-png.flaticon.com/512/3114/3114810.png' });
+    } else {
+      showToast('🔔 RECORDATORIO: ' + title);
+    }
+  }
+
+  document.getElementById('notifBtn').addEventListener('click', function(){
+    if(!('Notification' in window)){ showToast('Tu navegador no soporta alertas del sistema'); return; }
+    Notification.requestPermission().then(function(perm){
+      if(perm === 'granted') showToast('Avisos del sistema activados correctamente');
+      else showToast('Permiso de notificaciones denegado');
+    });
+  });
+
+  // ---------- data import/export backup systems ----------
+  document.getElementById('exportBtn').addEventListener('click', function(){
+    var packet = { entries: entries, movimientos: movimientos, programados: programados, entradasProg: entradasProg };
+    var blob = new Blob([JSON.stringify(packet, null, 2)], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'segundo-cerebro-backup-' + todayStr() + '.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    showToast('Archivo de respaldo exportado');
+  });
+
+  document.getElementById('importInput').addEventListener('change', function(e){
+    var file = e.target.files[0];
+    if(!file) return;
+    var reader = new FileReader();
+    reader.onload = function(){
+      try{
+        var data = JSON.parse(reader.result);
+        if(Array.isArray(data)){
+          entries = data;
+          persist();
+        } else if(data && Array.isArray(data.entries)){
+          entries = data.entries;
+          movimientos = Array.isArray(data.movimientos) ? data.movimientos : movimientos;
+          programados = Array.isArray(data.programados) ? data.programados : programados;
+          entradasProg = Array.isArray(data.entradasProg) ? data.entradasProg : entradasProg;
+          persist(); persistFin(); persistProg(); persistEP();
+        } else {
+          showToast('El archivo no posee una firma estructural válida');
+          return;
+        }
+        applyProgramados();
+        applyEntradasProg();
+        render();
+        showToast('Respaldo restaurado e importado con éxito');
+      }catch(err){
+        showToast('Error crítico: No se pudo descodificar el JSON');
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  });
+
+  // ---------- init ----------
   loadEntries();
-  document.getElementById('dateToday').innerText = todayStr();
-  render();
+  setTimeout(checkRemindersRoutine, 2000);
 
 })();
 </script>
